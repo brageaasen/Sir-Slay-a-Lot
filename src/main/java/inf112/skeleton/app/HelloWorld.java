@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class HelloWorld implements ApplicationListener {
     private SpriteBatch batch;
     private BitmapFont font;
+    private int textX = 0;
 
     @Override
     public void create() {
@@ -30,7 +31,8 @@ public class HelloWorld implements ApplicationListener {
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
-        font.draw(batch, "Hello World", 200, 200);
+        font.draw(batch, "Hello World", textX % 480, 200);
+        textX++;
         batch.end();
     }
 
