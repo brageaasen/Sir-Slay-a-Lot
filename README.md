@@ -1,27 +1,26 @@
-[![pipeline status](https://git.app.uib.no/inf112/23v/textutils/badges/main/pipeline.svg)](https://git.app.uib.no/inf112/23v/textutils/-/commits/main) [![coverage report](https://git.app.uib.no/inf112/23v/textutils/badges/main/coverage.svg)](https://git.app.uib.no/inf112/23v/textutils/-/commits/main)
+# INF112 Prosjekt - *Platformspill*
 
-# INF112 TextUtils (for Øving 1)
+* Team: *Bit by bit* (Gruppe 5): Brage Aasen, Ole Kristian Breivik, Vetle Knutsen, Tarjei Landøy, Kavya Malhotra, Thomas Claussen Stakset*
 
-* Se [Øving 1](https://git.app.uib.no/inf112/23v/inf112.23v/-/wikis/lab-01-intro/oving1)
-
-
-# INF112 Project – *Slash N Dash*
-
-* Team: *Bit by Bit* (Gruppe 5): *Ole Kristian Breivik, Vetle Mathiesen Knutsen, Brage Aasen, Kavya Malhotra, Thomas Claussen Stakset, Tarjei Landøy*
-* Gitlab: https://git.app.uib.no/bit-by-bit/platformer-java-thing
+* Gitlab lenke: https://git.app.uib.no/bit-by-bit
 * Trello: https://trello.com/b/sPdGmGpN/bit-by-bit
 
-
 ## Om spillet
-Platformspill, Slash N Dash, Slåss mot fiender, Overleve game loop, Samle hjerter, 
+*«Du er flytter til en annen verden med fiender. Du har ingenting utenom en kniv. Klarer du å overleve hauer av fiender?»*
 
 ## Kjøring
-* Kompileres med `mvn package`.
-* Kjøres med `java -jar target/kurt-mario-1.0-SNAPSHOT-fat.jar`
-* Krever Java 15 eller senere
+* Krever Java 17 eller Java 19
 
 ## Kjente feil
-Kurt-Mario blir *mindre* – ikke større – når han spiser sopp fra Nygårdsparken.
+* ???
 
 ## Credits
-Tileset fra https://opengameart.org/content/2d-cave-platformer-tileset-16x16
+* LibGDX for rammeverk
+
+# Hvordan fungerer spillet?
+* Figuren kan bevege seg høyre eller venstre i 2D verden. Figuren kan også hoppe på høyere flater
+* Fiender også kan bevege seg og er skadelig
+* Spilleren kan få poeng ved å skade og drepe fiendene
+* Spilleren kan bli skadet/drept av fiendene
+* Poengene kan brukes til å kjøpe nye veier og nye våpner
+* Power-ups kan gi midlertidig fordeler (f.eks insta-kill, alle fiender har 1 health-point, eller double points, der du får dobbel så mange poeng for å skade/drepe fiender  enn vanlig)
