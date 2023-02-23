@@ -41,7 +41,7 @@ public class GameScreen extends ScreenAdapter{
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.setupMap();
         
-        this.sprite = new Sprite(new Texture("hero.png"));
+        this.sprite = new Sprite(new Texture("assets/hero.png"));
         
 
         this.viewport = new FitViewport(camera.viewportWidth, camera.viewportHeight, camera);
