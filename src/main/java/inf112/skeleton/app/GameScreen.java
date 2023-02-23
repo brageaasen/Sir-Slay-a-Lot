@@ -28,7 +28,6 @@ public class GameScreen extends ScreenAdapter{
     private TileMapHelper tileMapHelper;
 
     private Player player;
-    private Sprite sprite;
 
     private static final float PPM = 16.0f;
 
@@ -40,8 +39,6 @@ public class GameScreen extends ScreenAdapter{
 
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.setupMap();
-        
-        this.sprite = new Sprite(new Texture("assets/hero.png"));
         
 
         this.viewport = new FitViewport(camera.viewportWidth, camera.viewportHeight, camera);
@@ -82,15 +79,8 @@ public class GameScreen extends ScreenAdapter{
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         orthogonalTiledMapRenderer.render();
-
-        float x = player.x - player.width / 2;
-        float y = player.y - player.height / 2;
-
         batch.begin();
-            sprite.setPosition(x,y);
-            
-            sprite.draw(batch);
-        
+        player.render(batch);
         batch.end();
         box2dDebugRenderer.render(world,camera.combined.scl(PPM));
 
