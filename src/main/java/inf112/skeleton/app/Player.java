@@ -43,7 +43,7 @@ public class Player extends GameEntity{
         sprite.draw(batch);
 
         if (holdKnife) {
-            knife.setPosition(dx + width,dy);
+            knife.setPosition(dx + (sprite.isFlipX() ? -width : width),dy);
             knife.draw(batch);
         }
     }
@@ -52,9 +52,15 @@ public class Player extends GameEntity{
         velX = 0;
         if(Gdx.input.isKeyPressed(Input.Keys.D)){
             velX = 1;
+            if (sprite.isFlipX()) {    // If just flipped
+                flip();
+            }
         }
         if(Gdx.input.isKeyPressed(Input.Keys.A)){
             velX = -1;
+            if (!sprite.isFlipX()) {    // If just flipped
+                flip();
+            }
         }
         holdKnife = Gdx.input.isKeyPressed(Input.Keys.ENTER);
 
@@ -72,6 +78,11 @@ public class Player extends GameEntity{
 
         body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 25 ? body.getLinearVelocity().y : 25);
 
+    }
+
+    private void flip() {
+        sprite.flip(true, false);
+        knife.flip(true, false);
     }
     
 }
