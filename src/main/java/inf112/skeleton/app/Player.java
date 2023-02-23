@@ -22,7 +22,7 @@ public class Player extends GameEntity{
         this.jumpCounter = 0;
 
         this.sprite = new Sprite(new Texture("assets/hero.png"));
-        this.knife = new Sprite(new Texture("assets/hero.png"));    // temp
+        this.knife = new Sprite(new Texture("assets/knife.png"));    // temp
     }
 
     @Override
