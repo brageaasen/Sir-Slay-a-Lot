@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 public class Player extends GameEntity{
 
     private int jumpCounter;
+    private long start = 0;
     private static final int PPM = 16;
     private final Sprite sprite;
     private final Sprite knife;
@@ -59,14 +60,16 @@ public class Player extends GameEntity{
         holdKnife = Gdx.input.isKeyPressed(Input.Keys.ENTER);
 
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && jumpCounter < 2){
+            start = System.currentTimeMillis();
             float force = body.getMass() * 18 * 2;
             body.setLinearVelocity(body.getLinearVelocity().x, 0);
             body.applyLinearImpulse(new Vector2(0,force), body.getPosition(), true);
             jumpCounter++;
 
         }
-
-        if(body.getLinearVelocity().y == 0){
+        long finish = System.currentTimeMillis();
+        long timeElapsed = finish - start;
+        if(body.getLinearVelocity().y == 0 && timeElapsed >= 250){
             jumpCounter = 0;
         }
 
