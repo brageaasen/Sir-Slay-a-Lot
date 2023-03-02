@@ -78,9 +78,10 @@ public class GameScreen extends ScreenAdapter{
 
         orthogonalTiledMapRenderer.render();
         batch.begin();
+     
         player.render(batch);
         batch.end();
-        box2dDebugRenderer.render(world,camera.combined.scl(PPM));
+        // box2dDebugRenderer.render(world,camera.combined.scl(PPM));  // used for debugging purposes. Remove this line to remove visible boxes. 
 
     }
 

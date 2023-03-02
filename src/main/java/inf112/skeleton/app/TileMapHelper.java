@@ -52,23 +52,21 @@ public class TileMapHelper {
                                 rectangle.getY() + rectangle.getHeight()/2, 
                                 rectangle.getWidth(), rectangle.getHeight(), false, gameScreen.getWorld());
 
-                    
                     gameScreen.setPlayer(new Player(rectangle.getWidth(),rectangle.getHeight(), body));
-
-                }
-                
+                }   
             }
-
         }
-
     }
 
     private void createStaticBody(PolygonMapObject polygonMapObject){
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
         Body body = gameScreen.getWorld().createBody(bodyDef);
+        
         Shape shape = createPolygonShape(polygonMapObject);
+        
         body.createFixture(shape,1000);
+        
         shape.dispose();
 
     }
@@ -85,9 +83,8 @@ public class TileMapHelper {
 
         PolygonShape shape = new PolygonShape();
         shape.set(worldVertices);
-    
+        
         return shape;
-
     }
 
    

@@ -8,6 +8,7 @@ public class Main {
         Lwjgl3ApplicationConfiguration cfg = new Lwjgl3ApplicationConfiguration();
         cfg.setTitle("hello-world");
         cfg.setWindowedMode(1280, 640);
+        
 
         new Lwjgl3Application(new GameScreenLauncher(), cfg);
     }

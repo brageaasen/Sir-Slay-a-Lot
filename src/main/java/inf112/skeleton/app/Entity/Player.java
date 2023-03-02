@@ -73,7 +73,7 @@ public class Player extends GameEntity {
 
     private void spriteChecker(){
         spriteCounter++;
-        if (spriteCounter>20){
+        if (spriteCounter>10){
             if(spriteNum == 1){
                 spriteNum = 2;
             } else if (spriteNum == 2){
