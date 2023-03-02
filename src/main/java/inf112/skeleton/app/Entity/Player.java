@@ -15,8 +15,8 @@ public class Player extends GameEntity {
     private int spriteNum;
     private Direction direction;
     private final Sprite knife;
-    private final KeyHandler keyH;    //?? Should this _really_ be package private?
-    private final Sprite sprite;   //?? Make private final and change texture?
+    private final KeyHandler keyH;
+    private final Sprite sprite;
     public Player(float width, float height, Body body) {
         super(width, height, body);
         this.speed = 15f;   //?? Introduce constant?
@@ -26,7 +26,7 @@ public class Player extends GameEntity {
         this.spriteNum = 1;
         this.jumpCounter = 0;
         this.direction = Direction.NONE;
-        this.sprite = new Sprite(new Texture("assets/boy_down_1.png")); //?? Should we preload all textures?
+        this.sprite = new Sprite(new Texture("assets/boy_down_1.png")); //?? Should we preload textures instead of loading them every time? (does it even matter?)
         this.knife = new Sprite(new Texture("assets/knife.png"));
         this.keyH = new KeyHandler(this);   //?? Should the player class hold input handling?
     }
@@ -36,7 +36,7 @@ public class Player extends GameEntity {
         x = body.getPosition().x * PPM;
         y = body.getPosition().y * PPM;
         
-        getPlayerSprite();
+        updateSprite();
         keyH.checkUserInput();
     }
     @Override
@@ -52,8 +52,8 @@ public class Player extends GameEntity {
             knife.draw(batch);
         }
     }
-    public void getPlayerSprite(){  //?? Rename to `update` or `set` since nothing is returned?
-        //?? Would it be better to associate the texture with the enum? (assuming it will be implemented that way)
+    public void updateSprite(){
+        //?? Would it be better to associate the texture with the enum? (e.g. "assets/boy_NONE_1.png")
         if (direction == Direction.NONE) {
             sprite.setTexture(new Texture("assets/boy_down_1.png"));
         } else {
