@@ -3,23 +3,19 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
 public class KeyHandler {
-    Player player;
+    private final Player player;
     public KeyHandler(Player player){
         this.player = player;
     }
     
-    public void checkUserInput(){
+    public void checkUserInput() {
         player.velX = 0;
         if(Gdx.input.isKeyPressed(Input.Keys.D)){
-            player.direction = "right";
-            player.velX = 1;
-        }
-        else if(Gdx.input.isKeyPressed(Input.Keys.A)){
-            player.direction = "left";
-            player.velX = -1;
-        }
-        else{
-            player.direction = "normal";
+            player.move("right");
+        } else if(Gdx.input.isKeyPressed(Input.Keys.A)){
+            player.move("left");
+        } else{
+            player.move("normal");
         }
         player.holdKnife = Gdx.input.isKeyPressed(Input.Keys.ENTER);
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && player.jumpCounter < 2){

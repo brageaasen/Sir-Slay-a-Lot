@@ -29,4 +29,10 @@ public abstract class GameEntity{
     public Body getBody(){
         return body;
     }
+
+    /**
+     * Move the entity in the specified direction.
+     * @param direction The direction to move in.
+     */
+    public abstract void move(String direction);
 }

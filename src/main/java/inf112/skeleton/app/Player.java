@@ -26,6 +26,7 @@ public class Player extends GameEntity{
         this.direction = "normal";
         this.sprite = new Sprite(new Texture("assets/boy_down_1.png")); //?? Should we preload all textures?
         this.knife = new Sprite(new Texture("assets/knife.png"));    //?? replace with new texture
+        this.keyH = new KeyHandler(this);   //?? Should the player class hold input handling?
     }
     @Override
     public void update() {
@@ -34,7 +35,6 @@ public class Player extends GameEntity{
         y = body.getPosition().y * PPM;
         
         getPlayerSprite();
-        this.keyH = new KeyHandler(this);
         keyH.checkUserInput();
     }
     @Override
@@ -84,5 +84,14 @@ public class Player extends GameEntity{
         sprite.flip(true, false);
         knife.flip(true, false);
     }
-    
+
+    @Override
+    public void move(String direction) {
+        this.direction = direction;
+        switch (direction) { //?? again, we should probably replace this with an enum!!
+            case "right" -> velX = 1;
+            case "left" -> velX = -1;
+            default -> velX = 0;
+        }
+    }
 }
