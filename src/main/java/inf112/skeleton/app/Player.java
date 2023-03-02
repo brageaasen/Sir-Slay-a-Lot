@@ -69,7 +69,7 @@ public class Player extends GameEntity{
         }
         long finish = System.currentTimeMillis();
         long timeElapsed = finish - start;
-        if(body.getLinearVelocity().y == 0 && timeElapsed >= 250){
+        if(body.getLinearVelocity().y == 0 && timeElapsed >= 1000){
             jumpCounter = 0;
         }
 
