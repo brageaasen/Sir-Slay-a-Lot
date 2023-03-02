@@ -56,6 +56,16 @@ public class TileMapHelper {
 
                 }
                 
+                if(rectangleName.equals("monster")){
+                    Body body = BodyHelper.createBody(
+                                rectangle.getX() + rectangle.getWidth()/2, 
+                                rectangle.getY() + rectangle.getHeight()/2, 
+                                rectangle.getWidth(), rectangle.getHeight(), false, gameScreen.getWorld());
+
+                    
+                    gameScreen.setMonster(new Monster(rectangle.getWidth(),rectangle.getHeight(), body));
+
+                }
             }
 
         }

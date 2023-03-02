@@ -28,6 +28,7 @@ public class GameScreen extends ScreenAdapter{
     private TileMapHelper tileMapHelper;
 
     private Player player;
+    private Monster monster;
 
     private static final float PPM = 16.0f;
 
@@ -54,6 +55,7 @@ public class GameScreen extends ScreenAdapter{
         batch.setProjectionMatrix(camera.combined);
         orthogonalTiledMapRenderer.setView(camera);
         player.update();
+        monster.update();
 
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
             Gdx.app.exit();
@@ -81,6 +83,7 @@ public class GameScreen extends ScreenAdapter{
         orthogonalTiledMapRenderer.render();
         batch.begin();
         player.render(batch);
+        monster.render(batch);
         batch.end();
         box2dDebugRenderer.render(world,camera.combined.scl(PPM));
 
@@ -92,6 +95,11 @@ public class GameScreen extends ScreenAdapter{
  
     public void setPlayer(Player player){
         this.player = player;
+        
+    }
+
+    public void setMonster(Monster monster){
+        this.monster = monster;
         
     }
 

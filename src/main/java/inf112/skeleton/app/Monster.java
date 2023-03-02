@@ -8,23 +8,24 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
-public class Player extends GameEntity{
+import inf112.skeleton.app.Player;
+
+
+public class Monster extends GameEntity{
 
     private int jumpCounter;
-    private long start = 0;
-    private static final int PPM = 16;
     private final Sprite sprite;
-    private final Sprite knife;
-    private boolean holdKnife = false;
-    public static float playerPos;
+    private static final int PPM = 16;
 
-    public Player(float width, float height, Body body) {
+    private long start = 0;
+    float playerPosition;
+
+    public Monster(float width, float height, Body body) {
         super(width, height, body);
-        this.speed = 15f;
+        this.speed = 7f;
         this.jumpCounter = 0;
 
         this.sprite = new Sprite(new Texture("assets/hero.png"));
-        this.knife = new Sprite(new Texture("assets/hero.png"));    // temp
     }
 
     @Override
@@ -32,8 +33,7 @@ public class Player extends GameEntity{
         x = body.getPosition().x * PPM;
         y = body.getPosition().y * PPM;
         
-        checkUserInput();
-
+        updatePosition();
     }
 
     @Override
@@ -43,39 +43,35 @@ public class Player extends GameEntity{
 
         sprite.setPosition(dx,dy);
         sprite.draw(batch);
-
-        if (holdKnife) {
-            knife.setPosition(dx + width,dy);
-            knife.draw(batch);
-        }
     }
-
-    private void checkUserInput(){
+    
+    private void updatePosition(){
         velX = 0;
-        if(Gdx.input.isKeyPressed(Input.Keys.D)){
+        playerPosition = Player.playerPos;
+
+        if(body.getPosition().x < playerPosition){
             velX = 1;
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.A)){
+        }else if(body.getPosition().x > playerPosition){
             velX = -1;
         }
-        holdKnife = Gdx.input.isKeyPressed(Input.Keys.ENTER);
 
-        if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && jumpCounter < 2){
+        
+        long random = Math.round(Math.random());
+        if(random == 1 && jumpCounter < 2){
             start = System.currentTimeMillis();
             float force = body.getMass() * 18 * 2;
             body.setLinearVelocity(body.getLinearVelocity().x, 0);
             body.applyLinearImpulse(new Vector2(0,force), body.getPosition(), true);
             jumpCounter++;
-
         }
+
         long finish = System.currentTimeMillis();
         long timeElapsed = finish - start;
-        if(body.getLinearVelocity().y == 0 && timeElapsed >= 1000){
+        if(body.getLinearVelocity().y == 0 && timeElapsed >= 3000){
             jumpCounter = 0;
         }
-
-        body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 25 ? body.getLinearVelocity().y : 25);
-        playerPos = body.getPosition().x;
-    }
     
+        body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 25 ? body.getLinearVelocity().y : 25);
+    }
+
 }
