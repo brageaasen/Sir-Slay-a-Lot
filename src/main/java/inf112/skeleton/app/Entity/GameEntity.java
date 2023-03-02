@@ -5,6 +5,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
 public abstract class GameEntity{
+    public enum Direction {
+        NONE,
+        LEFT,
+        RIGHT,
+    }
     
     protected float x,y,velX,velY,speed;
     protected float width,height;
@@ -59,5 +64,5 @@ public abstract class GameEntity{
      * Move the entity in the specified direction.
      * @param direction The direction to move in.
      */
-    public abstract void move(String direction);
+    public abstract void move(Direction direction);
 }

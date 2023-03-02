@@ -8,14 +8,15 @@ import inf112.skeleton.app.KeyHandler;
 
 public class Player extends GameEntity {
     private static final int PPM = 16; //?? what does this mean???
-    public Sprite sprite;   //?? Make private final and change texture?
-    private final Sprite knife;
+
     public boolean holdKnife;   //?? Set to private, change using API (e.g. 'slashKnife')
     public int jumpCounter;     //?? Set to private, change using API (e.g. 'Jump')
-    public int spriteCounter;   //?? Set to private, change using API (e.g. 'updateSprite')
-    public int spriteNum;       //?? Set to private, change using API (e.g. 'updateSprite')
-    KeyHandler keyH;    //?? Should this _really_ be package private?
-    public String direction; //?? Replace with 'player state' enum? also change access using API
+    private int spriteCounter;
+    private int spriteNum;
+    private Direction direction;
+    private final Sprite knife;
+    private final KeyHandler keyH;    //?? Should this _really_ be package private?
+    private final Sprite sprite;   //?? Make private final and change texture?
     public Player(float width, float height, Body body) {
         super(width, height, body);
         this.speed = 15f;   //?? Introduce constant?
@@ -24,9 +25,9 @@ public class Player extends GameEntity {
         this.spriteCounter = 0;
         this.spriteNum = 1;
         this.jumpCounter = 0;
-        this.direction = "normal";
+        this.direction = Direction.NONE;
         this.sprite = new Sprite(new Texture("assets/boy_down_1.png")); //?? Should we preload all textures?
-        this.knife = new Sprite(new Texture("assets/knife.png"));    //?? replace with new texture
+        this.knife = new Sprite(new Texture("assets/knife.png"));
         this.keyH = new KeyHandler(this);   //?? Should the player class hold input handling?
     }
     @Override
@@ -47,17 +48,18 @@ public class Player extends GameEntity {
         sprite.draw(batch);
 
         if (holdKnife) {
-            knife.setPosition(dx + (direction.equals("left") ? -width : width),dy);
+            knife.setPosition(dx + (direction == Direction.LEFT ? -width : width),dy);
             knife.draw(batch);
         }
     }
     public void getPlayerSprite(){  //?? Rename to `update` or `set` since nothing is returned?
         //?? Would it be better to associate the texture with the enum? (assuming it will be implemented that way)
-        if (direction.equals("normal")) {
-            sprite = new Sprite(new Texture("assets/boy_down_1.png"));
+        if (direction == Direction.NONE) {
+            sprite.setTexture(new Texture("assets/boy_down_1.png"));
         } else {
             //?? Do we really need one for both left and right? Note that it _is_ possible to flip the sprite.
-            sprite = new Sprite(new Texture("assets/boy_%s_%d.png".formatted(direction, spriteNum)));
+            String dir = direction == Direction.LEFT ? "left" : "right"; // TODO: create constants? or rename to fit enum names
+            sprite.setTexture(new Texture("assets/boy_%s_%d.png".formatted(dir, spriteNum)));
         }
     }
 
@@ -87,11 +89,11 @@ public class Player extends GameEntity {
     }
 
     @Override
-    public void move(String direction) {
+    public void move(Direction direction) {
         this.direction = direction;
-        switch (direction) { //?? again, we should probably replace this with an enum!!
-            case "right" -> velX = 1;
-            case "left" -> velX = -1;
+        switch (direction) {
+            case RIGHT -> velX = 1;
+            case LEFT-> velX = -1;
             default -> velX = 0;
         }
     }

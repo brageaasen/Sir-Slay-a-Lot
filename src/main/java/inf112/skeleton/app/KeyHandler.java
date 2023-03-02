@@ -1,6 +1,7 @@
 package inf112.skeleton.app;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import inf112.skeleton.app.Entity.GameEntity;
 import inf112.skeleton.app.Entity.Player;
 
 public class KeyHandler {
@@ -11,11 +12,11 @@ public class KeyHandler {
     
     public void checkUserInput() {
         if(Gdx.input.isKeyPressed(Input.Keys.D)){
-            player.move("right");
+            player.move(GameEntity.Direction.RIGHT);
         } else if(Gdx.input.isKeyPressed(Input.Keys.A)){
-            player.move("left");
+            player.move(GameEntity.Direction.LEFT);
         } else{
-            player.move("normal");
+            player.move(GameEntity.Direction.NONE);
         }
         player.holdKnife = Gdx.input.isKeyPressed(Input.Keys.ENTER);
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && player.jumpCounter < 2){
