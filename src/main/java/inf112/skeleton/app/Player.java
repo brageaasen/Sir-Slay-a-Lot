@@ -1,86 +1,77 @@
 package inf112.skeleton.app;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-
 public class Player extends GameEntity{
-
-    private int jumpCounter;
     private static final int PPM = 16;
-    private final Sprite sprite;
+    public Sprite sprite;
     private final Sprite knife;
-    private boolean holdKnife = false;
-
+    public boolean holdKnife;
+    public int jumpCounter;
+    public int spriteCounter;
+    public int spriteNum;
+    KeyHandler keyH;
+    public String direction;
     public Player(float width, float height, Body body) {
         super(width, height, body);
         this.speed = 15f;
-        this.jumpCounter = 0;
-
-        this.sprite = new Sprite(new Texture("assets/hero.png"));
+        this.holdKnife = false;
+        
+        this.spriteCounter = 0;
+        this.spriteNum = 1;
+        this.jumpCounter=0;
+        this.direction = "normal";
+        this.sprite = new Sprite(new Texture("assets/boy_down_1.png"));
         this.knife = new Sprite(new Texture("assets/knife.png"));    // temp
     }
-
     @Override
     public void update() {
         x = body.getPosition().x * PPM;
         y = body.getPosition().y * PPM;
         
-        checkUserInput();
-
+        getPlayerSprite();
+        this.keyH = new KeyHandler(this);
+        keyH.checkUserInput();
     }
-
     @Override
     public void render(SpriteBatch batch) {
         float dx = x - width / 2;
         float dy = y - height / 2;
-
         sprite.setPosition(dx,dy);
         sprite.draw(batch);
-
         if (holdKnife) {
             knife.setPosition(dx + (sprite.isFlipX() ? -width : width),dy);
             knife.draw(batch);
         }
     }
-
-    private void checkUserInput(){
-        velX = 0;
-        if(Gdx.input.isKeyPressed(Input.Keys.D)){
-            velX = 1;
-            if (sprite.isFlipX()) {    // If just flipped
-                flip();
-            }
+    
+    public void getPlayerSprite(){
+        switch(direction){
+            case "right":
+                if (spriteNum == 1){
+                    sprite = new Sprite(new Texture("assets/boy_right_2.png"));
+                }
+                if (spriteNum == 2){
+                    sprite = new Sprite(new Texture("assets/boy_right_1.png"));
+                }
+                break;
+            case "left":
+                if (spriteNum == 1){
+                    sprite = new Sprite(new Texture("assets/boy_left_1.png"));
+                }
+                if (spriteNum == 2){
+                    sprite = new Sprite(new Texture("assets/boy_left_2.png"));
+                }
+                break;
+            case "normal":
+                sprite = new Sprite(new Texture("assets/boy_down_1.png"));
+                break;
+        
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.A)){
-            velX = -1;
-            if (!sprite.isFlipX()) {    // If just flipped
-                flip();
-            }
-        }
-        holdKnife = Gdx.input.isKeyPressed(Input.Keys.ENTER);
-
-        if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && jumpCounter < 2){
-            float force = body.getMass() * 18 * 2;
-            body.setLinearVelocity(body.getLinearVelocity().x, 0);
-            body.applyLinearImpulse(new Vector2(0,force), body.getPosition(), true);
-            jumpCounter++;
-
-        }
-
-        if(body.getLinearVelocity().y == 0){
-            jumpCounter = 0;
-        }
-
-        body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 25 ? body.getLinearVelocity().y : 25);
-
     }
 
-    private void flip() {
+    private void flip() { // TODO
         sprite.flip(true, false);
         knife.flip(true, false);
     }
