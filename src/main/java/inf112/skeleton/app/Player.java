@@ -2,6 +2,7 @@ package inf112.skeleton.app;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
 public class Player extends GameEntity{
@@ -28,6 +29,7 @@ public class Player extends GameEntity{
     }
     @Override
     public void update() {
+        spriteChecker();
         x = body.getPosition().x * PPM;
         y = body.getPosition().y * PPM;
         
@@ -44,7 +46,7 @@ public class Player extends GameEntity{
         sprite.draw(batch);
 
         if (holdKnife) {
-            knife.setPosition(dx + (sprite.isFlipX() ? -width : width),dy);
+            knife.setPosition(dx + (direction.equals("left") ? -width : width),dy);
             knife.draw(batch);
         }
     }
@@ -55,6 +57,26 @@ public class Player extends GameEntity{
         } else {
             //?? Do we really need one for both left and right? Note that it _is_ possible to flip the sprite.
             sprite = new Sprite(new Texture("assets/boy_%s_%d.png".formatted(direction, spriteNum)));
+        }
+    }
+
+    public void jump(){
+        float force = body.getMass() * 18 * 2;
+        body.setLinearVelocity(body.getLinearVelocity().x, 0);
+        body.applyLinearImpulse(new Vector2(0,force), body.getPosition(), true);
+        jumpCounter++;
+    }
+
+    private void spriteChecker(){
+        spriteCounter++;
+        if (spriteCounter>20){
+            if(spriteNum == 1){
+                spriteNum = 2;
+            }
+            else if (spriteNum == 2){
+                spriteNum = 1;
+            }
+            spriteCounter =0;
         }
     }
 
