@@ -1,11 +1,12 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.Entity;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import inf112.skeleton.app.KeyHandler;
 
-public class Player extends GameEntity{
+public class Player extends GameEntity {
     private static final int PPM = 16; //?? what does this mean???
     public Sprite sprite;   //?? Make private final and change texture?
     private final Sprite knife;

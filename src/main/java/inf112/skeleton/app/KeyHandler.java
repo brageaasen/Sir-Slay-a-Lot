@@ -1,6 +1,7 @@
 package inf112.skeleton.app;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import inf112.skeleton.app.Entity.Player;
 
 public class KeyHandler {
     private final Player player;
@@ -9,7 +10,6 @@ public class KeyHandler {
     }
     
     public void checkUserInput() {
-        player.velX = 0;
         if(Gdx.input.isKeyPressed(Input.Keys.D)){
             player.move("right");
         } else if(Gdx.input.isKeyPressed(Input.Keys.A)){
@@ -21,9 +21,9 @@ public class KeyHandler {
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && player.jumpCounter < 2){
             player.jump();
         }
-        if(player.body.getLinearVelocity().y == 0){
+        if(player.getBody().getLinearVelocity().y == 0){
             player.jumpCounter = 0;
         }
-        player.body.setLinearVelocity(player.velX * player.speed, player.body.getLinearVelocity().y < 25 ? player.body.getLinearVelocity().y : 25);
+        player.getBody().setLinearVelocity(player.getVelocity().x * player.getSpeed(), player.getBody().getLinearVelocity().y < 25 ? player.getBody().getLinearVelocity().y : 25);
     }
 }

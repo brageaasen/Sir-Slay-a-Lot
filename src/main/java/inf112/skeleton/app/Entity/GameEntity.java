@@ -1,6 +1,7 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.Entity;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
 public abstract class GameEntity{
@@ -28,6 +29,30 @@ public abstract class GameEntity{
 
     public Body getBody(){
         return body;
+    }
+
+    /**
+     * Get the Position of the entity.
+     * @return The position as a Vector2
+     */
+    public Vector2 getPosition() {
+        return new Vector2(x, y);
+    }
+
+    /**
+     * Get the velocity of the entity.
+     * @return The velocity as a Vector2
+     */
+    public Vector2 getVelocity() {
+        return new Vector2(velX, velY);
+    }
+
+    /**
+     * Get the speed of the entity.
+     * @return The speed as a floating point number.
+     */
+    public float getSpeed() {
+        return speed;
     }
 
     /**
