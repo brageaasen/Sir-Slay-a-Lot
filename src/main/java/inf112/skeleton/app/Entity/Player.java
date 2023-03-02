@@ -13,7 +13,7 @@ public class Player extends GameEntity {
     public int jumpCounter;     //?? Set to private, change using API (e.g. 'Jump')
     private int spriteCounter;
     private int spriteNum;
-    private Direction direction;
+    private Direction facing;
     private final Sprite knife;
     private final KeyHandler keyH;
     private final Sprite sprite;
@@ -25,7 +25,7 @@ public class Player extends GameEntity {
         this.spriteCounter = 0;
         this.spriteNum = 1;
         this.jumpCounter = 0;
-        this.direction = Direction.NONE;
+        this.facing = Direction.NONE;
         this.sprite = new Sprite(new Texture("assets/boy_down_1.png")); //?? Should we preload textures instead of loading them every time? (does it even matter?)
         this.knife = new Sprite(new Texture("assets/knife.png"));
         this.keyH = new KeyHandler(this);   //?? Should the player class hold input handling?
@@ -48,17 +48,16 @@ public class Player extends GameEntity {
         sprite.draw(batch);
 
         if (holdKnife) {
-            knife.setPosition(dx + (direction == Direction.LEFT ? -width : width),dy);
+            knife.setPosition(dx + (facing == Direction.LEFT ? -width : width),dy);
             knife.draw(batch);
         }
     }
     public void updateSprite(){
         //?? Would it be better to associate the texture with the enum? (e.g. "assets/boy_NONE_1.png")
-        if (direction == Direction.NONE) {
+        if (facing == Direction.NONE) {
             sprite.setTexture(new Texture("assets/boy_down_1.png"));
         } else {
-            //?? Do we really need one for both left and right? Note that it _is_ possible to flip the sprite.
-            String dir = direction == Direction.LEFT ? "left" : "right"; // TODO: create constants? or rename to fit enum names
+            String dir = "right"; // TODO: create constants? or rename to fit enum names
             sprite.setTexture(new Texture("assets/boy_%s_%d.png".formatted(dir, spriteNum)));
         }
     }
@@ -75,8 +74,7 @@ public class Player extends GameEntity {
         if (spriteCounter>20){
             if(spriteNum == 1){
                 spriteNum = 2;
-            }
-            else if (spriteNum == 2){
+            } else if (spriteNum == 2){
                 spriteNum = 1;
             }
             spriteCounter =0;
@@ -91,10 +89,18 @@ public class Player extends GameEntity {
     @Override
     public void move(Direction direction) {
         switch (direction) {
-            case RIGHT -> velX = 1;
-            case LEFT-> velX = -1;
+            case RIGHT -> {
+                velX = 1;
+                if (this.facing != Direction.RIGHT && sprite.isFlipX())
+                    flip();
+            }
+            case LEFT-> {
+                velX = -1;
+                if (this.facing != Direction.LEFT && !sprite.isFlipX())
+                    flip();
+            }
             default -> velX = 0;
         }
-        this.direction = direction; // Update afterwards, so we can change properties when they 'just happened' (e.g. 'just moved left')
+        this.facing = direction; // Update afterwards, so we can change properties when they 'just happened' (e.g. 'just moved left')
     }
 }
