@@ -3,27 +3,28 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
+
 public class Player extends GameEntity{
-    private static final int PPM = 16;
-    public Sprite sprite;
+    private static final int PPM = 16; //?? what does this mean???
+    public Sprite sprite;   //?? Make private final and change texture?
     private final Sprite knife;
-    public boolean holdKnife;
-    public int jumpCounter;
-    public int spriteCounter;
-    public int spriteNum;
-    KeyHandler keyH;
-    public String direction;
+    public boolean holdKnife;   //?? Set to private, change using API (e.g. 'slashKnife')
+    public int jumpCounter;     //?? Set to private, change using API (e.g. 'Jump')
+    public int spriteCounter;   //?? Set to private, change using API (e.g. 'updateSprite')
+    public int spriteNum;       //?? Set to private, change using API (e.g. 'updateSprite')
+    KeyHandler keyH;    //?? Should this _really_ be package private?
+    public String direction; //?? Replace with 'player state' enum? also change access using API
     public Player(float width, float height, Body body) {
         super(width, height, body);
-        this.speed = 15f;
+        this.speed = 15f;   //?? Introduce constant?
         this.holdKnife = false;
         
         this.spriteCounter = 0;
         this.spriteNum = 1;
-        this.jumpCounter=0;
+        this.jumpCounter = 0;
         this.direction = "normal";
-        this.sprite = new Sprite(new Texture("assets/boy_down_1.png"));
-        this.knife = new Sprite(new Texture("assets/knife.png"));    // temp
+        this.sprite = new Sprite(new Texture("assets/boy_down_1.png")); //?? Should we preload all textures?
+        this.knife = new Sprite(new Texture("assets/knife.png"));    //?? replace with new texture
     }
     @Override
     public void update() {
@@ -38,40 +39,26 @@ public class Player extends GameEntity{
     public void render(SpriteBatch batch) {
         float dx = x - width / 2;
         float dy = y - height / 2;
+
         sprite.setPosition(dx,dy);
         sprite.draw(batch);
+
         if (holdKnife) {
             knife.setPosition(dx + (sprite.isFlipX() ? -width : width),dy);
             knife.draw(batch);
         }
     }
-    
-    public void getPlayerSprite(){
-        switch(direction){
-            case "right":
-                if (spriteNum == 1){
-                    sprite = new Sprite(new Texture("assets/boy_right_2.png"));
-                }
-                if (spriteNum == 2){
-                    sprite = new Sprite(new Texture("assets/boy_right_1.png"));
-                }
-                break;
-            case "left":
-                if (spriteNum == 1){
-                    sprite = new Sprite(new Texture("assets/boy_left_1.png"));
-                }
-                if (spriteNum == 2){
-                    sprite = new Sprite(new Texture("assets/boy_left_2.png"));
-                }
-                break;
-            case "normal":
-                sprite = new Sprite(new Texture("assets/boy_down_1.png"));
-                break;
-        
+    public void getPlayerSprite(){  //?? Rename to `update` or `set` since nothing is returned?
+        //?? Would it be better to associate the texture with the enum? (assuming it will be implemented that way)
+        if (direction.equals("normal")) {
+            sprite = new Sprite(new Texture("assets/boy_down_1.png"));
+        } else {
+            //?? Do we really need one for both left and right? Note that it _is_ possible to flip the sprite.
+            sprite = new Sprite(new Texture("assets/boy_%s_%d.png".formatted(direction, spriteNum)));
         }
     }
 
-    private void flip() { // TODO
+    public void flip() { // TODO?: replace unneeded texture?
         sprite.flip(true, false);
         knife.flip(true, false);
     }
