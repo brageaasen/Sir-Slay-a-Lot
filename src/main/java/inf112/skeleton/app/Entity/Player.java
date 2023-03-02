@@ -90,11 +90,11 @@ public class Player extends GameEntity {
 
     @Override
     public void move(Direction direction) {
-        this.direction = direction;
         switch (direction) {
             case RIGHT -> velX = 1;
             case LEFT-> velX = -1;
             default -> velX = 0;
         }
+        this.direction = direction; // Update afterwards, so we can change properties when they 'just happened' (e.g. 'just moved left')
     }
 }
