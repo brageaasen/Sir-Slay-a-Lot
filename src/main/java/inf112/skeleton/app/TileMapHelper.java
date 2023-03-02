@@ -85,6 +85,7 @@ public class TileMapHelper {
 
         PolygonShape shape = new PolygonShape();
         shape.set(worldVertices);
+    
         return shape;
 
     }
