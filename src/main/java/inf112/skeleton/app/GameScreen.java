@@ -11,15 +11,18 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.ui.Table.Debug;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.skeleton.app.Entity.Player;
+import inf112.skeleton.app.Entity.GameEntity.Direction;
 
 public class GameScreen extends ScreenAdapter{
 
     private OrthographicCamera camera;
     private SpriteBatch batch;
     private Texture img;
+    private ParallaxLayer[] layers;
     private World world;
     private Box2DDebugRenderer box2dDebugRenderer;
     private Viewport viewport;
@@ -37,11 +40,24 @@ public class GameScreen extends ScreenAdapter{
         this.world = new World(new Vector2(0,-25f),false);
         this.box2dDebugRenderer = new Box2DDebugRenderer();
 
+        
+        this.viewport = new FitViewport(camera.viewportWidth, camera.viewportHeight, camera);
+        
+        layers = new ParallaxLayer[6];
+        //layers[0] = new ParallaxLayer(new Texture("assets/Background/test.png"), 0.1f, true, false);
+		layers[0] = new ParallaxLayer(new Texture("assets/Background/6.png"), 0.1f, true, false);
+		layers[1] = new ParallaxLayer(new Texture("assets/Background/5.png"), 0.2f, true, false);
+		layers[2] = new ParallaxLayer(new Texture("assets/Background/4.png"), 0.3f, true, false);
+		layers[3] = new ParallaxLayer(new Texture("assets/Background/3.png"), 0.5f, true, false);
+		layers[4] = new ParallaxLayer(new Texture("assets/Background/2.png"), 0.8f, true, false);
+		layers[5] = new ParallaxLayer(new Texture("assets/Background/1.png"), 1.0f, true, false);
+        
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.setupMap();
         
-
-        this.viewport = new FitViewport(camera.viewportWidth, camera.viewportHeight, camera);
+		for (ParallaxLayer layer : layers) {
+			layer.setCamera(camera);
+		}
         
     }   
     
@@ -66,7 +82,8 @@ public class GameScreen extends ScreenAdapter{
         //  Vector3 position = camera.position;
         // position.x = Math.round(player.getBody().getPosition().x * PPM * 10) / 10f;
         // position.y = Math.round(player.getBody().getPosition().y * PPM * 10) / 10f;
-        camera.position.set(new Vector2(camera.viewportWidth/2,camera.viewportHeight/2),100);
+        //camera.position.set(new Vector2(camera.viewportWidth/2,camera.viewportHeight/2),100);
+        //camera.position.set(player.getBody().getPosition().x, player.getBody().getPosition().y, 0);
         
         camera.update();
     }
@@ -74,16 +91,39 @@ public class GameScreen extends ScreenAdapter{
     @Override 
     public void render(float delta){
         this.update();
-
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        int speed = 100;
+        
+        // Check if player is within bounds of map
+        //if (player.getBody().getPosition().x <= 78 || player.getBody().getPosition().x >= 2)
 
-        orthogonalTiledMapRenderer.render();
+        // Check if player is moving
+        // TODO: Only activate if statement if player is actually moving. Currently activating on player input
+        if (player.getVelocity().x != 0)
+        {
+
+            if (Gdx.input.isKeyPressed(Input.Keys.W)) camera.position.y -= speed * Gdx.graphics.getDeltaTime();
+            if (Gdx.input.isKeyPressed(Input.Keys.S)) camera.position.y += speed * Gdx.graphics.getDeltaTime();
+
+            if (player.getDirection().equals(Direction.LEFT)) camera.position.x -= speed * Gdx.graphics.getDeltaTime();
+            if (player.getDirection().equals(Direction.RIGHT)) camera.position.x += speed * Gdx.graphics.getDeltaTime();
+        }
+        camera.update();
+		batch.setProjectionMatrix(camera.combined);
+        
+        // Render Parralax background
         batch.begin();
+		for (ParallaxLayer layer : layers) {
+			layer.render(batch);
+		}
+        batch.end();
+
+        batch.begin();
+        orthogonalTiledMapRenderer.render();
         player.render(batch);
         batch.end();
         box2dDebugRenderer.render(world,camera.combined.scl(PPM));
-
     }
 
     public World getWorld(){
@@ -99,5 +139,11 @@ public class GameScreen extends ScreenAdapter{
     public void resize(int width, int height){
         viewport.update(width, height);
     }
+
+    @Override
+	public void dispose () {
+		batch.dispose();
+		img.dispose();
+	}
 
 }

@@ -5,14 +5,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-public class ParralaxLayer {
+public class ParallaxLayer {
     Texture texture;
     float factor;
     boolean wrapHorizontally;
     boolean wrapVertically;
     Camera camera;
 
-    ParralaxLayer(Texture texture, float factor, boolean wrapHorizontally, boolean wrapVertically) {
+    ParallaxLayer(Texture texture, float factor, boolean wrapHorizontally, boolean wrapVertically) {
         this.texture = texture;
         this.factor = factor;
         this.wrapHorizontally = wrapHorizontally;

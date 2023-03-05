@@ -17,6 +17,7 @@ public class Player extends GameEntity {
     private final Sprite knife;
     private final KeyHandler keyH;
     private final Sprite sprite;
+
     public Player(float width, float height, Body body) {
         super(width, height, body);
         this.speed = 15f;   //?? Introduce constant?
@@ -32,6 +33,7 @@ public class Player extends GameEntity {
         this.keyH = new KeyHandler(this);   //?? Should the player class hold input handling?
         this.sprite.setScale(2);
     }
+
     @Override
     public void update() {
         spriteChecker();
@@ -98,6 +100,12 @@ public class Player extends GameEntity {
     public void flip() { // TODO?: replace unneeded texture?
         sprite.flip(true, false);
         knife.flip(true, false);
+    }
+
+    // Get direction player is facing
+    public Direction getDirection()
+    {
+        return this.facing;
     }
 
     @Override
