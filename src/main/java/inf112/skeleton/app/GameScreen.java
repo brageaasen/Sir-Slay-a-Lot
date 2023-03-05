@@ -78,13 +78,19 @@ public class GameScreen extends ScreenAdapter{
 
     }
 
-    private void cameraUpdate() {
-        //  Vector3 position = camera.position;
-        // position.x = Math.round(player.getBody().getPosition().x * PPM * 10) / 10f;
-        // position.y = Math.round(player.getBody().getPosition().y * PPM * 10) / 10f;
-        //camera.position.set(new Vector2(camera.viewportWidth/2,camera.viewportHeight/2),100);
-        //camera.position.set(player.getBody().getPosition().x, player.getBody().getPosition().y, 0);
+    private void cameraUpdate()
+    {
+        // Camera follow player on y axis based on current y, e.g: Camera doesn't follow current y axis when player at bottom of map
+
+        if (player.getBody().getPosition().y * player.getPPM() > 400) // Camera follow player in both x and y axis
+        {
+            camera.position.set(player.getBody().getPosition().x * player.getPPM() + 5, player.getBody().getPosition().y * player.getPPM() - 40, 0);
+        }
         
+        else // Camera follow player in x axis
+        {
+            camera.position.set(player.getBody().getPosition().x * player.getPPM() + 5, camera.viewportHeight/2, 0);
+        }
         camera.update();
     }
 
@@ -93,27 +99,11 @@ public class GameScreen extends ScreenAdapter{
         this.update();
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        int speed = 100;
-        
-        // Check if player is within bounds of map
-        //if (player.getBody().getPosition().x <= 78 || player.getBody().getPosition().x >= 2)
 
-        // Check if player is moving
-        // TODO: Only activate if statement if player is actually moving. Currently activating on player input
-        if (player.getVelocity().x != 0)
-        {
-
-            if (Gdx.input.isKeyPressed(Input.Keys.W)) camera.position.y -= speed * Gdx.graphics.getDeltaTime();
-            if (Gdx.input.isKeyPressed(Input.Keys.S)) camera.position.y += speed * Gdx.graphics.getDeltaTime();
-
-            if (player.getDirection().equals(Direction.LEFT)) camera.position.x -= speed * Gdx.graphics.getDeltaTime();
-            if (player.getDirection().equals(Direction.RIGHT)) camera.position.x += speed * Gdx.graphics.getDeltaTime();
-        }
         camera.update();
 		batch.setProjectionMatrix(camera.combined);
         
-        // Render Parralax background
-        batch.begin();
+        batch.begin(); // Render Parralax background
 		for (ParallaxLayer layer : layers) {
 			layer.render(batch);
 		}

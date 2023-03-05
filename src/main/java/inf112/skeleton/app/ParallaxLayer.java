@@ -29,10 +29,10 @@ public class ParallaxLayer {
 
     void render(SpriteBatch batch) {
         int xOffset = (int) (camera.position.x * factor);
-        int yOffset = (int) (camera.position.y * factor);
+        //int yOffset = (int) (camera.position.y * factor);
         TextureRegion region = new TextureRegion(texture);
         region.setRegionX(xOffset % texture.getWidth());
-        region.setRegionY(yOffset % texture.getHeight());
+        //region.setRegionY(yOffset % texture.getHeight());
         region.setRegionWidth(wrapHorizontally ? (int) camera.viewportWidth : texture.getWidth());
         region.setRegionHeight(wrapVertically ? (int) camera.viewportHeight : texture.getHeight());
         batch.draw(region, camera.position.x - camera.viewportWidth/2, camera.position.y - camera.viewportHeight/2);

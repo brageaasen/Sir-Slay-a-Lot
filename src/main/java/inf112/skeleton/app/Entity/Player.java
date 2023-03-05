@@ -108,6 +108,12 @@ public class Player extends GameEntity {
         return this.facing;
     }
 
+    // Get PPM of player entity
+    public int getPPM()
+    {
+        return Player.PPM;
+    }
+
     @Override
     public void move(Direction direction) {
         switch (direction) {
