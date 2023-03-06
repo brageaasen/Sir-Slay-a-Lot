@@ -1,4 +1,4 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.view;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
@@ -14,6 +14,9 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 
+import inf112.skeleton.app.controller.Player;
+import inf112.skeleton.app.model.BodyHelper;
+
 
 public class TileMapHelper {
     
@@ -26,8 +29,6 @@ public class TileMapHelper {
     }
 
     public OrthogonalTiledMapRenderer setupMap(){
-
-
         tiledMap = new TmxMapLoader().load("assets/map.tmx");
         parseMapObjects(tiledMap.getLayers().get("objects").getObjects());
 
@@ -88,6 +89,8 @@ public class TileMapHelper {
 
     }
 
-   
+    public TiledMap getMap() {
+        return tiledMap;
+    }
 
 }

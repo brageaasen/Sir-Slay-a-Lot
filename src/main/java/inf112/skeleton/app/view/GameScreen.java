@@ -1,4 +1,7 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.view;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -8,13 +11,20 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
+import inf112.skeleton.app.controller.Player;
 
 public class GameScreen extends ScreenAdapter{
 
@@ -23,6 +33,7 @@ public class GameScreen extends ScreenAdapter{
     private World world;
     private Box2DDebugRenderer box2dDebugRenderer;
     private Viewport viewport;
+    private ShapeRenderer shapeRenderer;
 
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
     private TileMapHelper tileMapHelper;
@@ -30,6 +41,8 @@ public class GameScreen extends ScreenAdapter{
     private Player player;
 
     private static final float PPM = 16.0f;
+    private HealthBar healthBar;
+    private Timer regenTimer;
 
     public GameScreen(OrthographicCamera camera){
         this.camera = camera;
@@ -40,26 +53,38 @@ public class GameScreen extends ScreenAdapter{
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.setupMap();
         
-
         this.viewport = new FitViewport(camera.viewportWidth, camera.viewportHeight, camera);
         
+        float screenWidth = Gdx.graphics.getWidth();
+        float screenHeight = Gdx.graphics.getHeight();
+        float barWidth = (float) (screenWidth * 0.5);
+        float barHeight = (float) (screenHeight * 0.025);
+        healthBar = new HealthBar(player.getPlayerHealth(), barWidth, barHeight, screenWidth, screenHeight);
+
+        shapeRenderer = new ShapeRenderer();
+        regenTimer = new Timer();
+        regenTimer.scheduleTask(new Timer.Task() {
+
+            @Override
+            public void run() {
+                healthBar.renderRegen(shapeRenderer);
+            }
+            
+        }, 5, 2);
+
+        // contactChecker = new ContactChecker(player);
+        // world.setContactListener(contactChecker);
     }   
     
 
     private void update() {
-
         world.step(1/60f, 6, 2);
         cameraUpdate();
 
         batch.setProjectionMatrix(camera.combined);
         orthogonalTiledMapRenderer.setView(camera);
         player.update();
-
-        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
-            Gdx.app.exit();
-        }
-
-
+        //endGameCondition();
     }
 
     private void cameraUpdate() {
@@ -72,7 +97,7 @@ public class GameScreen extends ScreenAdapter{
     }
 
     @Override 
-    public void render(float delta){
+    public void render(float delta) {
         this.update();
 
         Gdx.gl.glClearColor(0,0,0,1);
@@ -82,17 +107,23 @@ public class GameScreen extends ScreenAdapter{
         batch.begin();
         player.render(batch);
         batch.end();
+        healthBar.render(shapeRenderer);
         box2dDebugRenderer.render(world,camera.combined.scl(PPM));
 
     }
 
-    public World getWorld(){
+    public World getWorld() {
         return this.world;
     }
  
     public void setPlayer(Player player){
         this.player = player;
         
+    }
+
+    public void endGameCondition() {
+        if (player.isDead())
+            Gdx.app.exit();
     }
 
     @Override 

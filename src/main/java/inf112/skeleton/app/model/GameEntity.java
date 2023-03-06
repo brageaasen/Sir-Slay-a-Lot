@@ -1,9 +1,9 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.model;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 
-public abstract class GameEntity{
+public abstract class GameEntity {
     
     protected float x,y,velX,velY,speed;
     protected float width,height;
