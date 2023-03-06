@@ -104,7 +104,12 @@ public class GameScreen extends ScreenAdapter{
 		batch.setProjectionMatrix(camera.combined);
         
         batch.begin(); // Render Parralax background
-		for (ParallaxLayer layer : layers) {
+		for (ParallaxLayer layer : layers)
+        {
+            if (layer.equals(layers[0]))
+            {
+                layer.renderInfiniteY(batch);
+            }
 			layer.render(batch);
 		}
         batch.end();
