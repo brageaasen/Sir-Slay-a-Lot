@@ -1,4 +1,4 @@
-package inf112.skeleton.app.controller;
+package inf112.skeleton.app.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -8,11 +8,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
+import inf112.skeleton.app.controller.PlayerController;
 import inf112.skeleton.app.model.GameEntity;
 import inf112.skeleton.app.model.Health;
 import inf112.skeleton.app.model.PlayerModel;
 
-public class Player extends GameEntity {
+public class PlayerView extends GameEntity {
 
     private int jumpCounter;
     private static final int PPM = 16;
@@ -24,7 +25,7 @@ public class Player extends GameEntity {
     private PlayerModel playerModel;
     private PlayerController playerController;
 
-    public Player(float width, float height, Body body) {
+    public PlayerView(float width, float height, Body body) {
         super(width, height, body);
         this.speed = 15f;
         this.jumpCounter = 0;
@@ -44,7 +45,7 @@ public class Player extends GameEntity {
         y = body.getPosition().y * PPM;
         
         playerController.checkUserInput(velX, holdKnife, body, jumpCounter, speed);
-        checkFallDamage();
+        playerModel.checkFallDamage();
     }
 
     @Override
@@ -61,25 +62,13 @@ public class Player extends GameEntity {
         }
     }
 
-    /**
-     * Checks if the player has fallen from too high and how much damage is inflicted
-     */
-    public void checkFallDamage() {
-        float verticalSpeed = body.getLinearVelocity().y;
-
-        if (verticalSpeed < -10) {
-            int damageScale = (int) ((Math.abs(verticalSpeed) - 10));
-
-            playerHP.decreaseHP(damageScale);
-        }
-    }
 
     /**
      * Getter method for using the instantiated Health object
      * @return the Health object
      */
     public Health getPlayerHealth() {
-        return playerHP;
+        return playerModel.getPlayerHealth();
     }
 
     /**
@@ -87,7 +76,7 @@ public class Player extends GameEntity {
      * @return true if the player is dead, false otherwise
      */
     public boolean isDead() {
-        return playerHP.getHP() <= 0;
+        return playerModel.isDead();
     }
 
     /**
@@ -95,7 +84,7 @@ public class Player extends GameEntity {
      * @return true if the player is on a surface, false otherwise
      */
     public boolean isGrounded() {
-        return body.getLinearVelocity().y == 0;
+        return playerModel.isGrounded();
     }
     
 }

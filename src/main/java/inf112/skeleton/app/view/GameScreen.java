@@ -24,9 +24,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import inf112.skeleton.app.controller.Player;
-
-public class GameScreen extends ScreenAdapter{
+public class GameScreen extends ScreenAdapter {
 
     private OrthographicCamera camera;
     private SpriteBatch batch;
@@ -38,7 +36,7 @@ public class GameScreen extends ScreenAdapter{
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
     private TileMapHelper tileMapHelper;
 
-    private Player player;
+    private PlayerView player;
 
     private static final float PPM = 16.0f;
     private HealthBar healthBar;
@@ -70,7 +68,7 @@ public class GameScreen extends ScreenAdapter{
                 healthBar.renderRegen(shapeRenderer);
             }
             
-        }, 5, 2);
+        }, 3, 3);
 
         // contactChecker = new ContactChecker(player);
         // world.setContactListener(contactChecker);
@@ -104,9 +102,11 @@ public class GameScreen extends ScreenAdapter{
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         orthogonalTiledMapRenderer.render();
+        
         batch.begin();
         player.render(batch);
         batch.end();
+        
         healthBar.render(shapeRenderer);
         box2dDebugRenderer.render(world,camera.combined.scl(PPM));
 
@@ -116,7 +116,7 @@ public class GameScreen extends ScreenAdapter{
         return this.world;
     }
  
-    public void setPlayer(Player player){
+    public void setPlayer(PlayerView player){
         this.player = player;
         
     }

@@ -14,7 +14,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 
-import inf112.skeleton.app.controller.Player;
 import inf112.skeleton.app.model.BodyHelper;
 
 
@@ -53,7 +52,7 @@ public class TileMapHelper {
                                 rectangle.getWidth(), rectangle.getHeight(), false, gameScreen.getWorld());
 
                     
-                    gameScreen.setPlayer(new Player(rectangle.getWidth(),rectangle.getHeight(), body));
+                    gameScreen.setPlayer(new PlayerView(rectangle.getWidth(),rectangle.getHeight(), body));
 
                 }
                 
