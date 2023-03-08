@@ -6,6 +6,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -51,6 +52,7 @@ public class GameScreen extends ScreenAdapter{
 		layers[3] = new ParallaxLayer(new Texture("assets/Background/3.png"), 0.5f, true, false);
 		layers[4] = new ParallaxLayer(new Texture("assets/Background/2.png"), 0.8f, true, false);
 		layers[5] = new ParallaxLayer(new Texture("assets/Background/1.png"), 1.0f, true, false);
+        
         
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.setupMap();

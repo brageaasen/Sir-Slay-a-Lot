@@ -13,10 +13,12 @@ public class Player extends GameEntity {
     public int jumpCounter;     //?? Set to private, change using API (e.g. 'Jump')
     private int spriteCounter;
     private int spriteNum;
+    private CurrentSprite currentSprite;
     private Direction facing;
     private final Sprite knife;
     private final KeyHandler keyH;
     private final Sprite sprite;
+
 
     public Player(float width, float height, Body body) {
         super(width, height, body);
@@ -26,6 +28,8 @@ public class Player extends GameEntity {
         
         this.spriteCounter = 0;
         this.spriteNum = 1;
+        this.currentSprite = CurrentSprite.IDLE;
+
         this.jumpCounter = 0;
         this.facing = Direction.NONE;
         this.sprite = new Sprite(new Texture("assets/Idle/Idle1.png")); //?? Should we preload textures instead of loading them every time? (does it even matter?)
@@ -59,8 +63,26 @@ public class Player extends GameEntity {
     public void updateSprite(){
         //?? Would it be better to associate the texture with the enum? (e.g. "assets/boy_NONE_1.png")
         if (facing == Direction.NONE) {
-            sprite.setTexture(new Texture("assets/Idle/Idle1.png"));
+            this.currentSprite = CurrentSprite.IDLE;
+
+            if (spriteNum > 4) // Check if spriteNum is out of bounds for Idle
+                spriteNum = 1;
+
+            sprite.setTexture(new Texture("assets/Idle/Idle%d.png".formatted(spriteNum)));
+        } else if (this.getBody().getLinearVelocity().y > 0) // Checking if player is jumping
+        {
+            if (spriteNum > 3) // Check if spriteNum is out of bounds for Jumping
+            spriteNum = 1;
+
+        sprite.setTexture(new Texture("assets/Jumping/Jumping%d.png".formatted(spriteNum)));
+        } else if (this.getBody().getLinearVelocity().y < 0) // Checking if player is falling
+        {
+            if (spriteNum > 3) // Check if spriteNum is out of bounds for Falling
+            spriteNum = 1;
+
+        sprite.setTexture(new Texture("assets/Falling/Falling%d.png".formatted(spriteNum)));
         } else {
+            this.currentSprite = CurrentSprite.RUNNING;
             String dir = "right"; // TODO: create constants? or rename to fit enum names
             sprite.setTexture(new Texture("assets/Running/Running%d.png".formatted(spriteNum)));
         }
@@ -75,7 +97,7 @@ public class Player extends GameEntity {
 
     private void spriteChecker(){
         spriteCounter++;
-        if (spriteCounter>20){
+        if (spriteCounter > 10){
             if(spriteNum == 1){
                 spriteNum = 2;
             } else if (spriteNum == 2){
