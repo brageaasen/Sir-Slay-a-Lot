@@ -36,7 +36,7 @@ public class GameScreen extends ScreenAdapter {
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
     private TileMapHelper tileMapHelper;
 
-    private PlayerView player;
+    private PlayerView playerView;
 
     private static final float PPM = 16.0f;
     private HealthBar healthBar;
@@ -57,7 +57,7 @@ public class GameScreen extends ScreenAdapter {
         float screenHeight = Gdx.graphics.getHeight();
         float barWidth = (float) (screenWidth * 0.5);
         float barHeight = (float) (screenHeight * 0.025);
-        healthBar = new HealthBar(player.getPlayerHealth(), barWidth, barHeight, screenWidth, screenHeight);
+        healthBar = new HealthBar(playerView.getPlayerHealth(), barWidth, barHeight, screenWidth, screenHeight);
 
         shapeRenderer = new ShapeRenderer();
         regenTimer = new Timer();
@@ -81,7 +81,7 @@ public class GameScreen extends ScreenAdapter {
 
         batch.setProjectionMatrix(camera.combined);
         orthogonalTiledMapRenderer.setView(camera);
-        player.update();
+        playerView.update();
         //endGameCondition();
     }
 
@@ -104,7 +104,7 @@ public class GameScreen extends ScreenAdapter {
         orthogonalTiledMapRenderer.render();
         
         batch.begin();
-        player.render(batch);
+        playerView.render(batch);
         batch.end();
         
         healthBar.render(shapeRenderer);
@@ -116,13 +116,13 @@ public class GameScreen extends ScreenAdapter {
         return this.world;
     }
  
-    public void setPlayer(PlayerView player){
-        this.player = player;
+    public void setPlayerView(PlayerView player){
+        this.playerView = player;
         
     }
 
     public void endGameCondition() {
-        if (player.isDead())
+        if (playerView.isDead())
             Gdx.app.exit();
     }
 

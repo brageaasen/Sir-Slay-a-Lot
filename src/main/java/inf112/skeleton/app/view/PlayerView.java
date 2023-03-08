@@ -32,7 +32,7 @@ public class PlayerView extends GameEntity {
         
         playerHP = new Health();
         playerModel = new PlayerModel(body);
-        playerController = new PlayerController();
+        playerController = new PlayerController(playerModel);
 
         this.sprite = new Sprite(new Texture("assets/hero.png"));
         this.knife = new Sprite(new Texture("assets/hero.png"));    // temp
@@ -45,7 +45,7 @@ public class PlayerView extends GameEntity {
         y = body.getPosition().y * PPM;
         
         playerController.checkUserInput(velX, holdKnife, body, jumpCounter, speed);
-        playerModel.checkFallDamage();
+        playerModel.update();
     }
 
     @Override

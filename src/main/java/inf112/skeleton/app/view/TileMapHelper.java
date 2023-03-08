@@ -52,7 +52,7 @@ public class TileMapHelper {
                                 rectangle.getWidth(), rectangle.getHeight(), false, gameScreen.getWorld());
 
                     
-                    gameScreen.setPlayer(new PlayerView(rectangle.getWidth(),rectangle.getHeight(), body));
+                    gameScreen.setPlayerView(new PlayerView(rectangle.getWidth(),rectangle.getHeight(), body));
 
                 }
                 

@@ -8,7 +8,7 @@ public class GameScreenLauncher extends Game {
     public static GameScreenLauncher instance;
     private OrthographicCamera ortographicCamera;
 
-    public GameScreenLauncher(){
+    public GameScreenLauncher() {
         instance = this;
     }
 

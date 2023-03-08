@@ -15,6 +15,11 @@ public class PlayerModel {
         return playerHealth;
     }
 
+    public void update() {
+        this.checkFallDamage();
+        this.isDead();
+    }
+
     /**
      * Checks if the player is dead by checking HP
      * @return true if the player is dead, false otherwise
@@ -31,7 +36,7 @@ public class PlayerModel {
         return body.getLinearVelocity().y == 0;
     }
 
-        /**
+    /**
      * Checks if the player has fallen from too high and how much damage is inflicted
      */
     public void checkFallDamage() {
