@@ -53,7 +53,7 @@ public class GameScreen extends ScreenAdapter{
 		layers[4] = new ParallaxLayer(new Texture("assets/Background/2.png"), 0.8f, true, false);
 		layers[5] = new ParallaxLayer(new Texture("assets/Background/1.png"), 1.0f, true, false);
         
-        
+
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.setupMap();
         
@@ -120,7 +120,7 @@ public class GameScreen extends ScreenAdapter{
         orthogonalTiledMapRenderer.render();
         player.render(batch);
         batch.end();
-        box2dDebugRenderer.render(world,camera.combined.scl(PPM));
+        //box2dDebugRenderer.render(world,camera.combined.scl(PPM));
     }
 
     public World getWorld(){

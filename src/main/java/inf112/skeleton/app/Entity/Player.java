@@ -62,7 +62,7 @@ public class Player extends GameEntity {
     }
     public void updateSprite(){
         //?? Would it be better to associate the texture with the enum? (e.g. "assets/boy_NONE_1.png")
-        if (facing == Direction.NONE) {
+        if (facing == Direction.NONE && this.getBody().getLinearVelocity().y == 0) {
             this.currentSprite = CurrentSprite.IDLE;
 
             if (spriteNum > 4) // Check if spriteNum is out of bounds for Idle
