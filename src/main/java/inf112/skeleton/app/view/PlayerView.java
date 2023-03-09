@@ -12,54 +12,65 @@ import inf112.skeleton.app.controller.PlayerController;
 import inf112.skeleton.app.model.GameEntity;
 import inf112.skeleton.app.model.Health;
 import inf112.skeleton.app.model.PlayerModel;
+import inf112.skeleton.app.model.GameEntity.Direction;
 
-public class PlayerView extends GameEntity {
+public class PlayerView {
 
-    private int jumpCounter;
     private static final int PPM = 16;
     private final Sprite sprite;
     private final Sprite knife;
     private boolean holdKnife = false;
-    private Health playerHP;
-    private boolean isOnSurface;
+
+    private int spriteCounter;
+    private int spriteNum;
     private PlayerModel playerModel;
-    private PlayerController playerController;
+
+    private float width;
+    private float height;
+    private float x;
+    private float y;
+
 
     public PlayerView(float width, float height, Body body) {
-        super(width, height, body);
-        this.speed = 15f;
-        this.jumpCounter = 0;
-        
-        playerHP = new Health();
-        playerModel = new PlayerModel(body);
-        playerController = new PlayerController(playerModel);
+        // this.speed = 15f;
+
+        playerModel = new PlayerModel(width, height, body);
+        //playerController = new PlayerController(playerModel);
 
         this.sprite = new Sprite(new Texture("assets/hero.png"));
         this.knife = new Sprite(new Texture("assets/hero.png"));    // temp
-        isOnSurface = true;
+        
+        spriteCounter = 0;
+        spriteNum = 1;
+
+        width = playerModel.getWidth();
+        height = playerModel.getHeight();
+        x = playerModel.getX();
+        y = playerModel.getY();
     }
 
-    @Override
     public void update() {
-        x = body.getPosition().x * PPM;
-        y = body.getPosition().y * PPM;
+
+        x = playerModel.getBody().getPosition().x * PPM;
+        y = playerModel.getBody().getPosition().y * PPM;
         
-        playerController.checkUserInput(velX, holdKnife, body, jumpCounter, speed);
+        //playerController.checkUserInput(velX, holdKnife, body, jumpCounter, speed);
         playerModel.update();
     }
 
-    @Override
     public void render(SpriteBatch batch) {
         float dx = x - width / 2;
         float dy = y - height / 2;
+        Direction facing = playerModel.getDir();
 
         sprite.setPosition(dx,dy);
         sprite.draw(batch);
 
         if (holdKnife) {
-            knife.setPosition(dx + width,dy);
+            knife.setPosition(dx + (facing == Direction.LEFT ? -width : width), dy);
             knife.draw(batch);
         }
+
     }
 
 
@@ -86,5 +97,24 @@ public class PlayerView extends GameEntity {
     public boolean isGrounded() {
         return playerModel.isGrounded();
     }
+
+
+    private void spriteChecker(){
+        spriteCounter++;
+        if (spriteCounter > 20){
+            if (spriteNum == 1){
+                spriteNum = 2;
+            } else if (spriteNum == 2){
+                spriteNum = 1;
+            }
+            spriteCounter = 0;
+        }
+    }
+
+    public void flip() {
+        sprite.flip(true, false);
+        knife.flip(true, false);
+    }
+
     
 }

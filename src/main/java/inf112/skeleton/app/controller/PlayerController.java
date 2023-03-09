@@ -5,43 +5,47 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
+import inf112.skeleton.app.model.GameEntity;
 import inf112.skeleton.app.model.PlayerModel;
+import inf112.skeleton.app.view.PlayerView;
 
 public class PlayerController {
     
     private PlayerModel playerModel;
+    private PlayerView playerView;
 
-    public PlayerController(PlayerModel playerModel) {
+    public PlayerController(PlayerModel playerModel, PlayerView playerView) {
         this.playerModel = playerModel;
+        this.playerView = playerView;
     }
 
-    public void checkUserInput(float velX, boolean holdKnife, Body body, int jumpCounter, float speed) {
-        velX = 0;
+    public void update() {
+        this.checkUserInput();
+    }
+
+    public void checkUserInput() {
         if(Gdx.input.isKeyPressed(Input.Keys.D)){
-            velX = 1;
+            playerModel.move(GameEntity.Direction.RIGHT);
+        } else if(Gdx.input.isKeyPressed(Input.Keys.A)){
+            playerModel.move(GameEntity.Direction.LEFT);
+        } else{
+            playerModel.move(GameEntity.Direction.NONE);
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.A)){
-            velX = -1;
+        playerModel.setKnife(Gdx.input.isKeyPressed(Input.Keys.ENTER));
+        
+        if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && playerModel.getJump() < 2){
+            playerModel.jump();
         }
-        holdKnife = Gdx.input.isKeyPressed(Input.Keys.ENTER);
-
-        if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && jumpCounter < 2){
-            float force = body.getMass() * 18 * 2;
-            body.setLinearVelocity(body.getLinearVelocity().x, 0);
-            body.applyLinearImpulse(new Vector2(0,force), body.getPosition(), true);
-            jumpCounter++;
-
+        
+        if(playerModel.getBody().getLinearVelocity().y == 0){
+            playerModel.setJump(0);
         }
+        playerModel.getBody().setLinearVelocity(playerModel.getVelocity().x * playerModel.getSpeed(), playerModel.getBody().getLinearVelocity().y < 25 ? playerModel.getBody().getLinearVelocity().y : 25);
+    }
 
-        if(body.getLinearVelocity().y == 0){
-            jumpCounter = 0;
-        }
-
-        body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 25 ? body.getLinearVelocity().y : 25);
-
-
-        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
-            Gdx.app.exit();
-        }
+    public PlayerModel getModel() {
+        return playerModel;
     }
 }
+
+
