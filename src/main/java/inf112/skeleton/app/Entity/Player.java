@@ -31,7 +31,7 @@ public class Player extends GameEntity {
     private final KeyHandler keyH;
     private final Sprite sprite;
 
-    private Health playerHealth;
+    private final Health playerHealth;
 
 
     public Player(float width, float height, Body body) {
@@ -113,7 +113,7 @@ public class Player extends GameEntity {
             spriteCounter = 0;
             spriteNum++;
             if (spriteNum > 8)
-                spriteNum = 0;
+                spriteNum = 1;
         }
     }
 
