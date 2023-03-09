@@ -22,7 +22,7 @@ public class Player extends GameEntity {
 
     public Player(float width, float height, Body body) {
         super(width, height, body);
-        this.speed = 15f;   //?? Introduce constant?
+        this.speed = 25f;   //?? Introduce constant?
         
         this.holdKnife = false;
         
@@ -89,7 +89,7 @@ public class Player extends GameEntity {
     }
 
     public void jump(){
-        float force = body.getMass() * 10 * 2;
+        float force = body.getMass() * 40 * 2;
         body.setLinearVelocity(body.getLinearVelocity().x, 0);
         body.applyLinearImpulse(new Vector2(0,force), body.getPosition(), true);
         jumpCounter++;
