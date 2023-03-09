@@ -5,16 +5,22 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+
+import inf112.skeleton.app.Health;
 import inf112.skeleton.app.KeyHandler;
 
 public class Player extends GameEntity {
-
     public enum CurrentSprite {
-        Idle,
-        Running,
-        Hurt,
-        Jumping,
-        Falling,
+        Idle(4),
+        Running(8),
+        Hurt(1),
+        Jumping(3),
+        Falling(3);
+
+        final int frames;
+        CurrentSprite(int i) {
+            frames = i;
+        }
     }
 
     private static final int PPM = 16; //?? what does this mean???
@@ -28,6 +34,8 @@ public class Player extends GameEntity {
     private final Sprite knife;
     private final KeyHandler keyH;
     private final Sprite sprite;
+
+    private final Health playerHealth;
 
 
     public Player(float width, float height, Body body) {
@@ -46,6 +54,8 @@ public class Player extends GameEntity {
         this.knife = new Sprite(new Texture("assets/knife.png"));
         this.keyH = new KeyHandler(this);   //?? Should the player class hold input handling?
         this.sprite.setScale(2);
+
+        playerHealth = new Health();
     }
 
     @Override
@@ -56,6 +66,7 @@ public class Player extends GameEntity {
 
         updateSprite();
         keyH.checkUserInput();
+        this.checkFallDamage();
     }
 
     @Override
@@ -73,23 +84,19 @@ public class Player extends GameEntity {
     }
 
     public void updateSprite() {
-        if (facing == Direction.NONE && this.getBody().getLinearVelocity().y == 0) {
-            if (spriteNum > 4) // Check if spriteNum is out of bounds for Idle
-                spriteNum = 1;
+        if (facing == Direction.NONE && getBody().getLinearVelocity().y == 0) {
             currentSprite = CurrentSprite.Idle;
-        } else if (this.getBody().getLinearVelocity().y > 0) {  // Checking if player is jumping
-            if (spriteNum > 3) // Check if spriteNum is out of bounds for Jumping
-                spriteNum = 1;
-
+        } else if (getBody().getLinearVelocity().y > 0) {  // Checking if player is jumping
             currentSprite = CurrentSprite.Jumping;
-        } else if (this.getBody().getLinearVelocity().y < 0) {  // Checking if player is falling
-            if (spriteNum > 3) // Check if spriteNum is out of bounds for Falling
-                spriteNum = 1;
-
+        } else if (getBody().getLinearVelocity().y < 0) {  // Checking if player is falling
             currentSprite = CurrentSprite.Falling;
         } else {
             currentSprite = CurrentSprite.Running;
         }
+
+        if (spriteNum > currentSprite.frames) // Check if spriteNum is out of bounds for the given animation
+            spriteNum = 1;
+
         sprite.setTexture(new Texture("assets/Player/%s/%s%d.png".formatted(currentSprite.toString(), currentSprite.toString(), spriteNum)));
     }
 
@@ -106,10 +113,6 @@ public class Player extends GameEntity {
             spriteCounter = 0;
 
             spriteNum++;
-
-            if (spriteNum > 8)
-                spriteNum = 1;
-
         }
     }
 
@@ -145,4 +148,44 @@ public class Player extends GameEntity {
         }
         this.facing = direction; // Update afterwards, so we can change properties when they 'just happened' (e.g. 'just moved left')
     }
+
+
+    /**
+     * Getter method for using the instantiated Health object
+     * @return the Health object
+     */
+    public Health getPlayerHealth() {
+        return playerHealth;
+    }
+
+
+    /**
+     * Checks if the player is dead by checking HP
+     * @return true if the player is dead, false otherwise
+     */
+    public boolean isDead() {
+        return playerHealth.getHP() <= 0;
+    }
+
+    /**
+     * Checks if a player is on the ground/surface and not midair
+     * @return true if the player is on a surface, false otherwise
+     */
+    public boolean isGrounded() {
+        return body.getLinearVelocity().y == 0;
+    }
+
+    /**
+     * Checks if the player has fallen from too high and how much damage is inflicted
+     */
+    public void checkFallDamage() {
+        float verticalSpeed = body.getLinearVelocity().y;
+
+        if (verticalSpeed < -10) {
+            int damageScale = (int) ((Math.abs(verticalSpeed) - 10));
+
+            playerHealth.decreaseHP(damageScale);
+        }
+    }
+
 }
