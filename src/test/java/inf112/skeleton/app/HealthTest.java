@@ -6,6 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Testing Health.java
+ */
 public class HealthTest {
     
     Health healthModel;
