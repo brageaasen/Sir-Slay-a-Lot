@@ -12,14 +12,18 @@ public class Monster extends GameEntity{
     private final Sprite sprite;
     private static final int PPM = 16;
 
-    private long start = 0;
+    private long startTime = 0;
+    private long endTime;
+    private long elapsedTime;
     private float playerPosition;
+    private float monsterPosition;
     public static float monsterPos;
+    private final float adjustments = 1380; //number of pixels between player and monster(almost)
     private  final Player player;
 
     public Monster(float width, float height, Body body, Player player) {
         super(width, height, body);
-        this.speed = 7f;
+        this.speed = 5f;
         this.jumpCounter = 0;
         this.player = player;
 
@@ -53,17 +57,31 @@ public class Monster extends GameEntity{
         if (player == null)
             return;
         playerPosition = player.getPosition().x;
-
-        if(body.getPosition().x < playerPosition){
+        monsterPosition = body.getPosition().x + adjustments;
+        //System.out.println("Player: "+playerPosition+" Monster: "+ monsterPosition);
+        if(monsterPosition < playerPosition){
             velX = 1;
-        }else if(body.getPosition().x > playerPosition){
+        }else if(monsterPosition > playerPosition){
             velX = -1;
         }
         
-
-    
         body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 25 ? body.getLinearVelocity().y : 25);
         monsterPos = body.getPosition().x;
+
+        double random = Math.random(); //for random jumping
+        if(random <= 0.01 && jumpCounter < 2){
+            startTime = System.currentTimeMillis();
+            float force = body.getMass() * 10 * 2;
+            body.setLinearVelocity(body.getLinearVelocity().x, 0);
+            body.applyLinearImpulse(new Vector2(0, force), body.getPosition(), true);
+            jumpCounter++;
+        }
+    
+        endTime = System.currentTimeMillis();
+        elapsedTime = endTime - startTime;
+        if(body.getLinearVelocity().y == 0 && elapsedTime >= 250){
+            jumpCounter = 0;
+        }
     }
 
 }
