@@ -18,7 +18,6 @@ public class Monster extends GameEntity{
     private float playerPosition;
     private float monsterPosition;
     public static float monsterPos;
-    private final float adjustments = 1380; //number of pixels between player and monster(almost)
     private  final Player player;
 
     public Monster(float width, float height, Body body, Player player) {
@@ -28,12 +27,13 @@ public class Monster extends GameEntity{
         this.player = player;
 
         this.sprite = new Sprite(new Texture("assets/Enemy/Run/Run1.png"));
+        this.sprite.setScale(2);
     }
 
     @Override
     public void update() {
-        x = body.getPosition().x * PPM;
-        y = body.getPosition().y * PPM;
+        x = body.getPosition().x * PPM + 5;
+        y = body.getPosition().y * PPM + 17;
         
         updatePosition();
     }
@@ -57,7 +57,7 @@ public class Monster extends GameEntity{
         if (player == null)
             return;
         playerPosition = player.getPosition().x;
-        monsterPosition = body.getPosition().x + adjustments;
+        monsterPosition = body.getPosition().x * PPM + 5;
         //System.out.println("Player: "+playerPosition+" Monster: "+ monsterPosition);
         if(monsterPosition < playerPosition){
             velX = 1;
