@@ -16,7 +16,8 @@ public class GameScreenLauncher extends Game{
     public void create() {
        
         this.ortographicCamera = new OrthographicCamera();
-        this.ortographicCamera.setToOrtho(false,1280,640);
+        this.ortographicCamera.setToOrtho(false,1280,720);
+        
         setScreen(new GameScreen(ortographicCamera));
     }
     
