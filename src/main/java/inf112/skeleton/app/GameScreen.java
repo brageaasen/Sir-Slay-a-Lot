@@ -5,15 +5,16 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import inf112.skeleton.app.Entity.Monster;
 import inf112.skeleton.app.Entity.Player;
 
 public class GameScreen extends ScreenAdapter{
@@ -89,6 +90,7 @@ public class GameScreen extends ScreenAdapter{
         batch.setProjectionMatrix(camera.combined);
         orthogonalTiledMapRenderer.setView(camera);
         player.update();
+        monster.update();
 
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
             Gdx.app.exit();
@@ -138,6 +140,7 @@ public class GameScreen extends ScreenAdapter{
         batch.begin();
         orthogonalTiledMapRenderer.render();
         player.render(batch);
+        monster.render(batch);
         batch.end();
         //box2dDebugRenderer.render(world,camera.combined.scl(PPM));
     }
@@ -148,7 +151,14 @@ public class GameScreen extends ScreenAdapter{
  
     public void setPlayer(Player player){
         this.player = player;
-        
+    }
+
+    public Player getPlayer(){
+        return player;
+    }
+
+    public void setMonster(Monster monster){
+        this.monster = monster;
     }
 
     @Override 

@@ -9,7 +9,11 @@ public class KeyHandler {
     public KeyHandler(Player player){
         this.player = player;
     }
-    
+    //Time related variables
+    long startTime = 0;
+    long endTime;
+    long elapsedTime;
+
     public void checkUserInput() {
         if(Gdx.input.isKeyPressed(Input.Keys.D)){
             player.move(GameEntity.Direction.RIGHT);
@@ -20,11 +24,15 @@ public class KeyHandler {
         }
 
         player.holdKnife = Gdx.input.isKeyPressed(Input.Keys.ENTER);
-
+        
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && player.jumpCounter < 2){
+            startTime = System.currentTimeMillis();
             player.jump();
         }
-        if(player.getBody().getLinearVelocity().y == 0){
+
+        endTime = System.currentTimeMillis();
+        elapsedTime = endTime - startTime;
+        if(player.getBody().getLinearVelocity().y == 0 && elapsedTime >= 250){
             player.jumpCounter = 0;
         }
 
