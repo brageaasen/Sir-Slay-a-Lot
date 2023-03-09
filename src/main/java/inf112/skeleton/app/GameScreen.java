@@ -5,17 +5,17 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import inf112.skeleton.app.Entity.Monster;
 import inf112.skeleton.app.Entity.Player;
+import inf112.skeleton.app.Entity.Monster;
 
 public class GameScreen extends ScreenAdapter{
 
@@ -29,6 +29,7 @@ public class GameScreen extends ScreenAdapter{
     private final TileMapHelper tileMapHelper;
 
     private Player player;
+    private Monster monster;
     private HealthBar healthBar;
     private ShapeRenderer shapeRenderer;
     private Timer regenTimer;
@@ -151,14 +152,17 @@ public class GameScreen extends ScreenAdapter{
  
     public void setPlayer(Player player){
         this.player = player;
+        
     }
 
     public Player getPlayer(){
         return player;
     }
 
+
     public void setMonster(Monster monster){
         this.monster = monster;
+        
     }
 
     @Override 

@@ -13,14 +13,14 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
-import inf112.skeleton.app.Entity.Monster;
 import inf112.skeleton.app.Entity.Player;
+import inf112.skeleton.app.Entity.Monster;
 
 
 public class TileMapHelper {
     
     private TiledMap tiledMap;
-    private final GameScreen gameScreen;
+    private GameScreen gameScreen;
     private static final int PPM = 16;
 
     public TileMapHelper(GameScreen gameScreen){
@@ -57,7 +57,6 @@ public class TileMapHelper {
                     gameScreen.setPlayer(new Player(rectangle.getWidth(),rectangle.getHeight(), body));
 
                 }
-                
                 if(rectangleName.equals("monster")){
                     Body body = BodyHelper.createBody(
                                 rectangle.getX() + rectangle.getWidth()/2, 
@@ -68,6 +67,7 @@ public class TileMapHelper {
                     gameScreen.setMonster(new Monster(rectangle.getWidth(),rectangle.getHeight(), body, gameScreen.getPlayer()));
 
                 }
+                
             }
 
         }

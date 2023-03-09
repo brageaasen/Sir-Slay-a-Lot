@@ -78,6 +78,6 @@
    <polygon points="0,0 0,-608 128,-608 128,0"/>
   </object>
   <object id="28" name="player" x="1441.95" y="617.685" width="25.4954" height="52.1497"/>
-  <object id="29" name="monster" x="1000.00" y="617.685" width="25.4954" height="52.1497"/>
+  <object id="29" name="monster" x="1000.95" y="617.685" width="25.4954" height="52.1497"/>
  </objectgroup>
 </map>

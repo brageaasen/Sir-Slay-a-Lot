@@ -111,12 +111,11 @@ public class Player extends GameEntity {
         spriteCounter++;
         if (spriteCounter > 10) {
             spriteCounter = 0;
-
             spriteNum++;
         }
     }
 
-    public void flip() {
+    public void flip() { // TODO?: replace unneeded texture?
         sprite.flip(true, false);
         knife.flip(true, false);
     }
