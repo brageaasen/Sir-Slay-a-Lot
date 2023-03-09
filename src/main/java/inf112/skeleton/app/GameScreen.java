@@ -91,7 +91,9 @@ public class GameScreen extends ScreenAdapter{
         batch.setProjectionMatrix(camera.combined);
         orthogonalTiledMapRenderer.setView(camera);
         player.update();
-        monster.update();
+
+        if (!monster.monsterIsDead())
+            monster.update();
 
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
             Gdx.app.exit();
@@ -141,7 +143,9 @@ public class GameScreen extends ScreenAdapter{
         batch.begin();
         orthogonalTiledMapRenderer.render();
         player.render(batch);
-        monster.render(batch);
+
+        if (!monster.monsterIsDead())
+            monster.render(batch);
         batch.end();
         //box2dDebugRenderer.render(world,camera.combined.scl(PPM));
     }

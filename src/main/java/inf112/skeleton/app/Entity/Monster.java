@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
-public class Monster extends GameEntity{
+import inf112.skeleton.app.Health;
+
+public class Monster extends GameEntity {
 
     private int jumpCounter;
     private final Sprite sprite;
@@ -18,7 +20,8 @@ public class Monster extends GameEntity{
     private float playerPosition;
     private float monsterPosition;
     public static float monsterPos;
-    private  final Player player;
+    private final Player player;
+    private Health monsterHealth;
 
     public Monster(float width, float height, Body body, Player player) {
         super(width, height, body);
@@ -28,6 +31,7 @@ public class Monster extends GameEntity{
 
         this.sprite = new Sprite(new Texture("assets/Enemy/Run/Run1.png"));
         this.sprite.setScale(2);
+        monsterHealth = new Health();
     }
 
     @Override
@@ -36,6 +40,7 @@ public class Monster extends GameEntity{
         y = body.getPosition().y * PPM + 17;
         
         updatePosition();
+        damage();
     }
 
     @Override
@@ -82,6 +87,19 @@ public class Monster extends GameEntity{
         if(body.getLinearVelocity().y == 0 && elapsedTime >= 250){
             jumpCounter = 0;
         }
+    }
+
+    public void damage() {
+        playerPosition = player.getPosition().x;
+        monsterPosition = body.getPosition().x * PPM + 5;
+
+        if (Math.abs(playerPosition - monsterPosition) < 8 && player.holdKnife) {
+            monsterHealth.decreaseHP(15);
+        }
+    }
+
+    public boolean monsterIsDead() {
+        return monsterHealth.getHP() <= 0;
     }
 
 }

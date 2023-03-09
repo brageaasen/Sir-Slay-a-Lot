@@ -6,7 +6,7 @@
 * Trello: https://trello.com/b/sPdGmGpN/bit-by-bit
 
 ## Om spillet
-*«Du er flytter til en annen verden med fiender. Du har ingenting utenom en kniv. Klarer du å overleve hauer av fiender?»*
+*«Du er flyttet til en annen verden med fiender. Du har ingenting utenom sverd. Klarer du å overleve hauer av fiender?»*
 
 ## Kjøring
 * Krever Java 17 eller Java 19
@@ -23,4 +23,4 @@
 * Spilleren kan få poeng ved å skade og drepe fiendene
 * Spilleren kan bli skadet/drept av fiendene
 * Poengene kan brukes til å kjøpe nye veier og nye våpner
-* Power-ups kan gi midlertidig fordeler (f.eks insta-kill, alle fiender har 1 health-point, eller double points, der du får dobbel så mange poeng for å skade/drepe fiender  enn vanlig)
+* Power-ups kan gi midlertidig fordeler (f.eks insta-kill, alle fiender har 1 health-point, eller double points, der du får dobbel så mange poeng for å skade/drepe fiender enn vanlig)
