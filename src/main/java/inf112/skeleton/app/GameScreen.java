@@ -6,30 +6,24 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.ui.Table.Debug;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.skeleton.app.Entity.Player;
-import inf112.skeleton.app.Entity.GameEntity.Direction;
 
 public class GameScreen extends ScreenAdapter{
 
-    private OrthographicCamera camera;
-    private SpriteBatch batch;
-    private Texture img;
-    private ParallaxLayer[] layers;
-    private World world;
-    private Box2DDebugRenderer box2dDebugRenderer;
-    private Viewport viewport;
+    private final OrthographicCamera camera;
+    private final SpriteBatch batch;
+    private final ParallaxLayer[] layers;
+    private final World world;
+    private final Viewport viewport;
 
-    private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
-    private TileMapHelper tileMapHelper;
+    private final OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
+    private final TileMapHelper tileMapHelper;
 
     private Player player;
 
@@ -39,9 +33,8 @@ public class GameScreen extends ScreenAdapter{
         this.camera = camera;
         this.batch = new SpriteBatch();
         this.world = new World(new Vector2(0,-25f),false);
-        this.box2dDebugRenderer = new Box2DDebugRenderer();
 
-        
+
         this.viewport = new FitViewport(camera.viewportWidth, camera.viewportHeight, camera);
         
         layers = new ParallaxLayer[6];
@@ -52,7 +45,7 @@ public class GameScreen extends ScreenAdapter{
 		layers[3] = new ParallaxLayer(new Texture("assets/Background/3.png"), 0.5f, true, false);
 		layers[4] = new ParallaxLayer(new Texture("assets/Background/2.png"), 0.8f, true, false);
 		layers[5] = new ParallaxLayer(new Texture("assets/Background/1.png"), 1.0f, true, false);
-        
+
 
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.setupMap();
@@ -65,7 +58,6 @@ public class GameScreen extends ScreenAdapter{
     
 
     private void update() {
-
         world.step(1/60f, 6, 2);
         cameraUpdate();
 
@@ -105,7 +97,7 @@ public class GameScreen extends ScreenAdapter{
         camera.update();
 		batch.setProjectionMatrix(camera.combined);
         
-        batch.begin(); // Render Parralax background
+        batch.begin(); // Render Parallax background
 		for (ParallaxLayer layer : layers)
         {
             if (layer.equals(layers[0]))
@@ -140,7 +132,6 @@ public class GameScreen extends ScreenAdapter{
     @Override
 	public void dispose () {
 		batch.dispose();
-		img.dispose();
 	}
 
 }

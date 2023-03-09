@@ -1,4 +1,5 @@
 package inf112.skeleton.app.Entity;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -7,6 +8,15 @@ import com.badlogic.gdx.physics.box2d.Body;
 import inf112.skeleton.app.KeyHandler;
 
 public class Player extends GameEntity {
+
+    public enum CurrentSprite {
+        Idle,
+        Running,
+        Hurt,
+        Jumping,
+        Falling,
+    }
+
     private static final int PPM = 16; //?? what does this mean???
 
     public boolean holdKnife;   //?? Set to private, change using API (e.g. 'slashKnife')
@@ -23,12 +33,12 @@ public class Player extends GameEntity {
     public Player(float width, float height, Body body) {
         super(width, height, body);
         this.speed = 15f;   //?? Introduce constant?
-        
+
         this.holdKnife = false;
-        
+
         this.spriteCounter = 0;
         this.spriteNum = 1;
-        this.currentSprite = CurrentSprite.IDLE;
+        this.currentSprite = CurrentSprite.Idle;
 
         this.jumpCounter = 0;
         this.facing = Direction.NONE;
@@ -43,79 +53,60 @@ public class Player extends GameEntity {
         spriteChecker();
         x = body.getPosition().x * PPM + 5;
         y = body.getPosition().y * PPM + 17;
-        
+
         updateSprite();
         keyH.checkUserInput();
     }
+
     @Override
     public void render(SpriteBatch batch) {
         float dx = x - width / 2;
         float dy = y - height / 2;
 
-        sprite.setPosition(dx,dy);
+        sprite.setPosition(dx, dy);
         sprite.draw(batch);
 
         if (holdKnife) {
-            knife.setPosition(dx + (facing == Direction.LEFT ? -width : width),dy);
+            knife.setPosition(dx + (facing == Direction.LEFT ? -width : width), dy);
             knife.draw(batch);
         }
     }
-    public void updateSprite(){
-        //?? Would it be better to associate the texture with the enum? (e.g. "assets/boy_NONE_1.png")
-        if (facing == Direction.NONE && this.getBody().getLinearVelocity().y == 0) {
-            this.currentSprite = CurrentSprite.IDLE;
 
+    public void updateSprite() {
+        if (facing == Direction.NONE && this.getBody().getLinearVelocity().y == 0) {
             if (spriteNum > 4) // Check if spriteNum is out of bounds for Idle
                 spriteNum = 1;
-
-            sprite.setTexture(new Texture("assets/Player/Idle/Idle%d.png".formatted(spriteNum)));
-        } else if (this.getBody().getLinearVelocity().y > 0) // Checking if player is jumping
-        {
+            currentSprite = CurrentSprite.Idle;
+        } else if (this.getBody().getLinearVelocity().y > 0) {  // Checking if player is jumping
             if (spriteNum > 3) // Check if spriteNum is out of bounds for Jumping
-            spriteNum = 1;
+                spriteNum = 1;
 
-        sprite.setTexture(new Texture("assets/Player/Jumping/Jumping%d.png".formatted(spriteNum)));
-        } else if (this.getBody().getLinearVelocity().y < 0) // Checking if player is falling
-        {
+            currentSprite = CurrentSprite.Jumping;
+        } else if (this.getBody().getLinearVelocity().y < 0) {  // Checking if player is falling
             if (spriteNum > 3) // Check if spriteNum is out of bounds for Falling
-            spriteNum = 1;
+                spriteNum = 1;
 
-        sprite.setTexture(new Texture("assets/Player/Falling/Falling%d.png".formatted(spriteNum)));
+            currentSprite = CurrentSprite.Falling;
         } else {
-            this.currentSprite = CurrentSprite.RUNNING;
-            String dir = "right"; // TODO: create constants? or rename to fit enum names
-            sprite.setTexture(new Texture("assets/Player/Running/Running%d.png".formatted(spriteNum)));
+            currentSprite = CurrentSprite.Running;
         }
+        sprite.setTexture(new Texture("assets/Player/%s/%s%d.png".formatted(currentSprite.toString(), currentSprite.toString(), spriteNum)));
     }
 
-    public void jump(){
+    public void jump() {
         float force = body.getMass() * 10 * 2;
         body.setLinearVelocity(body.getLinearVelocity().x, 0);
-        body.applyLinearImpulse(new Vector2(0,force), body.getPosition(), true);
+        body.applyLinearImpulse(new Vector2(0, force), body.getPosition(), true);
         jumpCounter++;
     }
 
-    private void spriteChecker(){
+    private void spriteChecker() {
         spriteCounter++;
-        if (spriteCounter > 10){
-            if(spriteNum == 1){
-                spriteNum = 2;
-            } else if (spriteNum == 2){
-                spriteNum = 3;
-            } else if (spriteNum == 3){
-                spriteNum = 4;
-            } else if (spriteNum == 4){
-                spriteNum = 5;
-            } else if (spriteNum == 5){
-                spriteNum = 6;
-            } else if (spriteNum == 6){
-                spriteNum = 7;
-            } else if (spriteNum == 7){
-                spriteNum = 8;
-            } else if (spriteNum == 8){
-                spriteNum = 1;
-            }
+        if (spriteCounter > 10) {
             spriteCounter = 0;
+            spriteNum++;
+            if (spriteNum > 8)
+                spriteNum = 0;
         }
     }
 
@@ -125,14 +116,12 @@ public class Player extends GameEntity {
     }
 
     // Get direction player is facing
-    public Direction getDirection()
-    {
+    public Direction getDirection() {
         return this.facing;
     }
 
     // Get PPM of player entity
-    public int getPPM()
-    {
+    public int getPPM() {
         return Player.PPM;
     }
 
@@ -144,7 +133,7 @@ public class Player extends GameEntity {
                 if (this.facing != Direction.RIGHT && sprite.isFlipX())
                     flip();
             }
-            case LEFT-> {
+            case LEFT -> {
                 velX = -1;
                 if (this.facing != Direction.LEFT && !sprite.isFlipX())
                     flip();

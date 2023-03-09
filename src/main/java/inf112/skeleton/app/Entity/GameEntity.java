@@ -10,13 +10,6 @@ public abstract class GameEntity{
         LEFT,
         RIGHT,
     }
-
-    public enum CurrentSprite {
-        IDLE,
-        RUNNING,
-        HURT,
-        JUMPING
-    }
     
     protected float x,y,velX,velY,speed;
     protected float width,height;

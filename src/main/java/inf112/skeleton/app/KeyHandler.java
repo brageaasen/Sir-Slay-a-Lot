@@ -18,13 +18,16 @@ public class KeyHandler {
         } else{
             player.move(GameEntity.Direction.NONE);
         }
+
         player.holdKnife = Gdx.input.isKeyPressed(Input.Keys.ENTER);
+
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && player.jumpCounter < 2){
             player.jump();
         }
         if(player.getBody().getLinearVelocity().y == 0){
             player.jumpCounter = 0;
         }
+
         player.getBody().setLinearVelocity(player.getVelocity().x * player.getSpeed(), player.getBody().getLinearVelocity().y < 25 ? player.getBody().getLinearVelocity().y : 25);
     }
 }
