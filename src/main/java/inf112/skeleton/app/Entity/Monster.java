@@ -60,26 +60,7 @@ public class Monster extends GameEntity{
             velX = -1;
         }
         
-        if(Math.abs(playerPosition - body.getPosition().x) > 10){
-            float force = body.getMass() * 18 * 2;
-            body.setLinearVelocity(body.getLinearVelocity().x, 0);
-            body.applyLinearImpulse(new Vector2(0,force), body.getPosition(), true);
-        }
 
-        double random = Math.random(); //for at monsteret hopper i tilfeldig tider
-        if(random < 0.01 && jumpCounter < 2){
-            start = System.currentTimeMillis();
-            float force = body.getMass() * 18 * 2;
-            body.setLinearVelocity(body.getLinearVelocity().x, 0);
-            body.applyLinearImpulse(new Vector2(0,force), body.getPosition(), true);
-            jumpCounter++;
-        }
-
-        long finish = System.currentTimeMillis();
-        long timeElapsed = finish - start;
-        if(body.getLinearVelocity().y == 0 && timeElapsed >= 1000){
-            jumpCounter = 0;
-        }
     
         body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 25 ? body.getLinearVelocity().y : 25);
         monsterPos = body.getPosition().x;
