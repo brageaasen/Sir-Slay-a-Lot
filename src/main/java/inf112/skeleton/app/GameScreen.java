@@ -7,9 +7,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.skeleton.app.Entity.Player;
@@ -26,6 +28,9 @@ public class GameScreen extends ScreenAdapter{
     private final TileMapHelper tileMapHelper;
 
     private Player player;
+    private HealthBar healthBar;
+    private ShapeRenderer shapeRenderer;
+    private Timer regenTimer;
 
     private static final float PPM = 16.0f;
 
@@ -53,6 +58,26 @@ public class GameScreen extends ScreenAdapter{
 		for (ParallaxLayer layer : layers) {
 			layer.setCamera(camera);
 		}
+
+        shapeRenderer = new ShapeRenderer();
+
+        float screenWidth = Gdx.graphics.getWidth();
+        float screenHeight = Gdx.graphics.getHeight();
+        float barWidth = (float) (screenWidth * 0.5);
+        float barHeight = (float) (screenHeight * 0.025);
+        healthBar = new HealthBar(player.getPlayerHealth(), barWidth, barHeight, screenWidth, screenHeight);
+
+        regenTimer = new Timer();
+        regenTimer.scheduleTask(new Timer.Task() {
+
+            @Override
+            public void run() {
+                healthBar.renderRegen(shapeRenderer);
+            }
+            
+        }, 3, 3);
+
+
         
     }   
     
@@ -107,6 +132,8 @@ public class GameScreen extends ScreenAdapter{
 			layer.render(batch);
 		}
         batch.end();
+
+        healthBar.render(shapeRenderer);
 
         batch.begin();
         orthogonalTiledMapRenderer.render();

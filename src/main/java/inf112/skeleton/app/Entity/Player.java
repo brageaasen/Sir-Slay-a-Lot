@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+
+import inf112.skeleton.app.Health;
 import inf112.skeleton.app.KeyHandler;
 
 public class Player extends GameEntity {
@@ -29,6 +31,8 @@ public class Player extends GameEntity {
     private final KeyHandler keyH;
     private final Sprite sprite;
 
+    private Health playerHealth;
+
 
     public Player(float width, float height, Body body) {
         super(width, height, body);
@@ -46,6 +50,8 @@ public class Player extends GameEntity {
         this.knife = new Sprite(new Texture("assets/knife.png"));
         this.keyH = new KeyHandler(this);   //?? Should the player class hold input handling?
         this.sprite.setScale(2);
+
+        playerHealth = new Health();
     }
 
     @Override
@@ -56,6 +62,7 @@ public class Player extends GameEntity {
 
         updateSprite();
         keyH.checkUserInput();
+        this.checkFallDamage();
     }
 
     @Override
@@ -142,4 +149,44 @@ public class Player extends GameEntity {
         }
         this.facing = direction; // Update afterwards, so we can change properties when they 'just happened' (e.g. 'just moved left')
     }
+
+
+    /**
+     * Getter method for using the instantiated Health object
+     * @return the Health object
+     */
+    public Health getPlayerHealth() {
+        return playerHealth;
+    }
+
+
+    /**
+     * Checks if the player is dead by checking HP
+     * @return true if the player is dead, false otherwise
+     */
+    public boolean isDead() {
+        return playerHealth.getHP() <= 0;
+    }
+
+    /**
+     * Checks if a player is on the ground/surface and not midair
+     * @return true if the player is on a surface, false otherwise
+     */
+    public boolean isGrounded() {
+        return body.getLinearVelocity().y == 0;
+    }
+
+    /**
+     * Checks if the player has fallen from too high and how much damage is inflicted
+     */
+    public void checkFallDamage() {
+        float verticalSpeed = body.getLinearVelocity().y;
+
+        if (verticalSpeed < -10) {
+            int damageScale = (int) ((Math.abs(verticalSpeed) - 10));
+
+            playerHealth.decreaseHP(damageScale);
+        }
+    }
+
 }
