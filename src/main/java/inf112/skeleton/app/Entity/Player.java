@@ -32,7 +32,7 @@ public class Player extends GameEntity {
 
         this.jumpCounter = 0;
         this.facing = Direction.NONE;
-        this.sprite = new Sprite(new Texture("assets/Idle/Idle1.png")); //?? Should we preload textures instead of loading them every time? (does it even matter?)
+        this.sprite = new Sprite(new Texture("assets/Player/Idle/Idle1.png")); //?? Should we preload textures instead of loading them every time? (does it even matter?)
         this.knife = new Sprite(new Texture("assets/knife.png"));
         this.keyH = new KeyHandler(this);   //?? Should the player class hold input handling?
         this.sprite.setScale(2);
@@ -68,23 +68,23 @@ public class Player extends GameEntity {
             if (spriteNum > 4) // Check if spriteNum is out of bounds for Idle
                 spriteNum = 1;
 
-            sprite.setTexture(new Texture("assets/Idle/Idle%d.png".formatted(spriteNum)));
+            sprite.setTexture(new Texture("assets/Player/Idle/Idle%d.png".formatted(spriteNum)));
         } else if (this.getBody().getLinearVelocity().y > 0) // Checking if player is jumping
         {
             if (spriteNum > 3) // Check if spriteNum is out of bounds for Jumping
             spriteNum = 1;
 
-        sprite.setTexture(new Texture("assets/Jumping/Jumping%d.png".formatted(spriteNum)));
+        sprite.setTexture(new Texture("assets/Player/Jumping/Jumping%d.png".formatted(spriteNum)));
         } else if (this.getBody().getLinearVelocity().y < 0) // Checking if player is falling
         {
             if (spriteNum > 3) // Check if spriteNum is out of bounds for Falling
             spriteNum = 1;
 
-        sprite.setTexture(new Texture("assets/Falling/Falling%d.png".formatted(spriteNum)));
+        sprite.setTexture(new Texture("assets/Player/Falling/Falling%d.png".formatted(spriteNum)));
         } else {
             this.currentSprite = CurrentSprite.RUNNING;
             String dir = "right"; // TODO: create constants? or rename to fit enum names
-            sprite.setTexture(new Texture("assets/Running/Running%d.png".formatted(spriteNum)));
+            sprite.setTexture(new Texture("assets/Player/Running/Running%d.png".formatted(spriteNum)));
         }
     }
 
