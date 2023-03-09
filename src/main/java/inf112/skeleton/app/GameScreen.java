@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.skeleton.app.Entity.Player;
+import inf112.skeleton.app.Entity.Monster;
 
 public class GameScreen extends ScreenAdapter{
 
@@ -28,6 +29,7 @@ public class GameScreen extends ScreenAdapter{
     private final TileMapHelper tileMapHelper;
 
     private Player player;
+    private Monster monster;
     private HealthBar healthBar;
     private ShapeRenderer shapeRenderer;
     private Timer regenTimer;
@@ -89,6 +91,7 @@ public class GameScreen extends ScreenAdapter{
         batch.setProjectionMatrix(camera.combined);
         orthogonalTiledMapRenderer.setView(camera);
         player.update();
+        monster.update();
 
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
             Gdx.app.exit();
@@ -138,6 +141,7 @@ public class GameScreen extends ScreenAdapter{
         batch.begin();
         orthogonalTiledMapRenderer.render();
         player.render(batch);
+        monster.render(batch);
         batch.end();
         //box2dDebugRenderer.render(world,camera.combined.scl(PPM));
     }
@@ -148,6 +152,16 @@ public class GameScreen extends ScreenAdapter{
  
     public void setPlayer(Player player){
         this.player = player;
+        
+    }
+
+    public Player getPlayer(){
+        return player;
+    }
+
+
+    public void setMonster(Monster monster){
+        this.monster = monster;
         
     }
 
