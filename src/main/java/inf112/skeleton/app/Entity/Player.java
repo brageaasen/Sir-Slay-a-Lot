@@ -10,13 +10,17 @@ import inf112.skeleton.app.Health;
 import inf112.skeleton.app.KeyHandler;
 
 public class Player extends GameEntity {
-
     public enum CurrentSprite {
-        Idle,
-        Running,
-        Hurt,
-        Jumping,
-        Falling,
+        Idle(4),
+        Running(8),
+        Hurt(1),
+        Jumping(3),
+        Falling(3);
+
+        final int frames;
+        CurrentSprite(int i) {
+            frames = i;
+        }
     }
 
     private static final int PPM = 16; //?? what does this mean???
@@ -80,23 +84,19 @@ public class Player extends GameEntity {
     }
 
     public void updateSprite() {
-        if (facing == Direction.NONE && this.getBody().getLinearVelocity().y == 0) {
-            if (spriteNum > 4) // Check if spriteNum is out of bounds for Idle
-                spriteNum = 1;
+        if (facing == Direction.NONE && getBody().getLinearVelocity().y == 0) {
             currentSprite = CurrentSprite.Idle;
-        } else if (this.getBody().getLinearVelocity().y > 0) {  // Checking if player is jumping
-            if (spriteNum > 3) // Check if spriteNum is out of bounds for Jumping
-                spriteNum = 1;
-
+        } else if (getBody().getLinearVelocity().y > 0) {  // Checking if player is jumping
             currentSprite = CurrentSprite.Jumping;
-        } else if (this.getBody().getLinearVelocity().y < 0) {  // Checking if player is falling
-            if (spriteNum > 3) // Check if spriteNum is out of bounds for Falling
-                spriteNum = 1;
-
+        } else if (getBody().getLinearVelocity().y < 0) {  // Checking if player is falling
             currentSprite = CurrentSprite.Falling;
         } else {
             currentSprite = CurrentSprite.Running;
         }
+
+        if (spriteNum > currentSprite.frames) // Check if spriteNum is out of bounds for the given animation
+            spriteNum = 1;
+
         sprite.setTexture(new Texture("assets/Player/%s/%s%d.png".formatted(currentSprite.toString(), currentSprite.toString(), spriteNum)));
     }
 
@@ -112,8 +112,6 @@ public class Player extends GameEntity {
         if (spriteCounter > 10) {
             spriteCounter = 0;
             spriteNum++;
-            if (spriteNum > 8)
-                spriteNum = 1;
         }
     }
 
