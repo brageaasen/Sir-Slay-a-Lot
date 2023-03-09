@@ -18,7 +18,8 @@ public class Monster extends GameEntity{
     private static final int PPM = 16;
 
     private long start = 0;
-    float playerPosition;
+    private float playerPosition;
+    public static float monsterPos;
 
     public Monster(float width, float height, Body body) {
         super(width, height, body);
@@ -54,10 +55,15 @@ public class Monster extends GameEntity{
         }else if(body.getPosition().x > playerPosition){
             velX = -1;
         }
-
         
-        long random = Math.round(Math.random());
-        if(random == 1 && jumpCounter < 2){
+        if(Math.abs(playerPosition - body.getPosition().x) > 10){
+            float force = body.getMass() * 18 * 2;
+            body.setLinearVelocity(body.getLinearVelocity().x, 0);
+            body.applyLinearImpulse(new Vector2(0,force), body.getPosition(), true);
+        }
+
+        double random = Math.random(); //for at monsteret hopper i tilfeldig tider
+        if(random < 0.01 && jumpCounter < 2){
             start = System.currentTimeMillis();
             float force = body.getMass() * 18 * 2;
             body.setLinearVelocity(body.getLinearVelocity().x, 0);
@@ -67,11 +73,12 @@ public class Monster extends GameEntity{
 
         long finish = System.currentTimeMillis();
         long timeElapsed = finish - start;
-        if(body.getLinearVelocity().y == 0 && timeElapsed >= 3000){
+        if(body.getLinearVelocity().y == 0 && timeElapsed >= 1000){
             jumpCounter = 0;
         }
     
         body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 25 ? body.getLinearVelocity().y : 25);
+        monsterPos = body.getPosition().x;
     }
 
 }

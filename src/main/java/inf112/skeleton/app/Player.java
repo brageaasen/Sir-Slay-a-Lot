@@ -16,12 +16,15 @@ public class Player extends GameEntity{
     private final Sprite sprite;
     private final Sprite knife;
     private boolean holdKnife = false;
-    public static float playerPos;
+    private int hp;
+    private float monsterPosition;
+    public static float playerPos; //monsteret følger etter denne posisjonen
 
     public Player(float width, float height, Body body) {
         super(width, height, body);
         this.speed = 15f;
         this.jumpCounter = 0;
+        this.hp = 1;
 
         this.sprite = new Sprite(new Texture("assets/hero.png"));
         this.knife = new Sprite(new Texture("assets/hero.png"));    // temp
