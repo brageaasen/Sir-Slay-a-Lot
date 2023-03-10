@@ -11,10 +11,18 @@ public class Health {
         regenPerSecond = 10;
     }
 
+    /**
+     * Returns the current health of the player
+     * @return the health
+     */
     public int getHP() {
         return hitPoints;
     }
 
+    /**
+     * Decreases the health of the player by a set quantity
+     * @param quantity amount to decrease health by
+     */
     public void decreaseHP(int quantity) {
         hitPoints -= quantity;
 
@@ -23,6 +31,9 @@ public class Health {
         }
     }
 
+    /**
+     * Regenerates health by a fixed amount
+     */
     public void regenHealth() {
         if (hitPoints < 90) {
             hitPoints += regenPerSecond;

@@ -37,5 +37,29 @@ public class HealthTest {
         health = healthModel.getHP();
         assertEquals(0, health);
     }
+
+    @Test
+    void testHealthRegen() {
+        healthModel.decreaseHP(30);
+
+        int health = healthModel.getHP();
+        assertEquals(70, health);
+
+        healthModel.regenHealth();
+        health = healthModel.getHP();
+        assertEquals(80, health);
+    }
+
+    @Test
+    void testHealthRegenAbove90() {
+        healthModel.decreaseHP(5);
+
+        int health = healthModel.getHP();
+        assertEquals(95, health);
+
+        healthModel.regenHealth();
+        health = healthModel.getHP();
+        assertEquals(100, health);
+    }
 }
 

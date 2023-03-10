@@ -120,12 +120,18 @@ public class Player extends GameEntity {
         knife.flip(true, false);
     }
 
-    // Get direction player is facing
+    /**
+     * Get direction player is facing
+     * @return the direction
+     */
     public Direction getDirection() {
         return this.facing;
     }
 
-    // Get PPM of player entity
+    /**
+     * Get PPM of player entity
+     * @return the PPM
+     */
     public int getPPM() {
         return Player.PPM;
     }
