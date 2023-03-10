@@ -31,6 +31,11 @@ public class Player extends GameEntity {
     private int spriteNum;
     private CurrentSprite currentSprite;
     private Direction facing;
+
+    // Combat
+    private int attackDamage;
+    private int attackRange;
+
     private final Sprite knife;
     private final KeyHandler keyH;
     private final Sprite sprite;
@@ -41,6 +46,8 @@ public class Player extends GameEntity {
     public Player(float width, float height, Body body) {
         super(width, height, body);
         this.speed = 15f;   //?? Introduce constant?
+        this.attackDamage = 10;
+        this.attackRange = 5;
 
         this.holdKnife = false;
 
@@ -185,6 +192,14 @@ public class Player extends GameEntity {
 
             playerHealth.decreaseHP(damageScale);
         }
+    }
+
+    public int getAttackDamage() {
+        return this.attackDamage;
+    }
+
+    public int getAttackRange() {
+        return this.attackRange;
     }
 
 }

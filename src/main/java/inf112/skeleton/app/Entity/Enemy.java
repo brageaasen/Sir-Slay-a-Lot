@@ -8,7 +8,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 
 import inf112.skeleton.app.Health;
 
-public class Monster extends GameEntity {
+public class Enemy extends GameEntity {
 
     public enum CurrentSprite {
         // Idle(4),
@@ -34,10 +34,11 @@ public class Monster extends GameEntity {
     private long endTime;
     private long elapsedTime;
     private float playerPosition;
-    private float monsterPosition;
-    public static float monsterPos;
+    private float enemyPosition;
+    public static float enemyPos;
     private final Player player;
-    private Health monsterHealth;
+    private Health enemyHealth;
+    private Health maxHealth;
     private Direction facing;
 
     // Sprite field variables
@@ -45,7 +46,7 @@ public class Monster extends GameEntity {
     private int spriteNum;
     private CurrentSprite currentSprite;
 
-    public Monster(float width, float height, Body body, Player player) {
+    public Enemy(float width, float height, Body body, Player player) {
         super(width, height, body);
         this.speed = 5f;
         this.jumpCounter = 0;
@@ -54,7 +55,7 @@ public class Monster extends GameEntity {
 
         this.sprite = new Sprite(new Texture("assets/Enemy/Run/Run1.png"));
         this.sprite.setScale(2);
-        monsterHealth = new Health();
+        enemyHealth = new Health();
     }
 
     @Override
@@ -88,11 +89,11 @@ public class Monster extends GameEntity {
 
         if (this.getBody().getLinearVelocity().y != 0 && this.isGrounded()) {
             currentSprite = CurrentSprite.Run;
-        } else if (this.getBody().getLinearVelocity().y > 0) {  // Checking if monster is jumping
+        } else if (this.getBody().getLinearVelocity().y > 0) {  // Checking if enemy is jumping
             currentSprite = CurrentSprite.Jump;
-        } else if (this.getBody().getLinearVelocity().y < 0) {  // Checking if monster is falling
+        } else if (this.getBody().getLinearVelocity().y < 0) {  // Checking if enemy is falling
             currentSprite = CurrentSprite.Fall;
-        } else if (monsterIsDead()) {
+        } else if (enemyIsDead()) {
             currentSprite = CurrentSprite.Dead;
         } else {
             currentSprite = CurrentSprite.Run;
@@ -118,22 +119,22 @@ public class Monster extends GameEntity {
         if (player == null)
             return;
         playerPosition = player.getPosition().x;
-        monsterPosition = body.getPosition().x * PPM + 5;
-        //System.out.println("Player: "+playerPosition+" Monster: "+ monsterPosition);
-        if(monsterPosition < playerPosition){
-            if (this.facing != Direction.RIGHT && sprite.isFlipX())
+        enemyPosition = body.getPosition().x * PPM + 5;
+
+        if(enemyPosition < playerPosition){
+            if (this.facing != Direction.RIGHT && sprite.isFlipX()) // Flip sprite if facing wrong way
                 flip();
             this.facing = Direction.RIGHT;
             velX = 1;
-        }else if(monsterPosition > playerPosition){
-            if (this.facing != Direction.LEFT && !sprite.isFlipX())
+        }else if(enemyPosition > playerPosition){
+            if (this.facing != Direction.LEFT && !sprite.isFlipX()) // Flip sprite if facing wrong way
                 flip();
             this.facing = Direction.LEFT;
             velX = -1;
         }
         
         body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 25 ? body.getLinearVelocity().y : 25);
-        monsterPos = body.getPosition().x;
+        enemyPos = body.getPosition().x;
 
         double random = Math.random(); //for random jumping
         if(random <= 0.01 && jumpCounter < 2 && isGrounded()){
@@ -153,15 +154,15 @@ public class Monster extends GameEntity {
 
     public void damage() {
         playerPosition = player.getPosition().x;
-        monsterPosition = body.getPosition().x * PPM + 5;
+        enemyPosition = body.getPosition().x * PPM + 5;
 
-        if (Math.abs(playerPosition - monsterPosition) < 8 && player.holdKnife) {
-            monsterHealth.decreaseHP(15);
+        if (Math.abs(playerPosition - enemyPosition) < player.getAttackRange() && player.holdKnife) {
+            enemyHealth.decreaseHP(player.getAttackDamage());
         }
     }
 
-    public boolean monsterIsDead() {
-        return monsterHealth.getHP() <= 0;
+    public boolean enemyIsDead() {
+        return enemyHealth.getHP() <= 0;
     }
 
     /**
@@ -179,6 +180,14 @@ public class Monster extends GameEntity {
     // Get direction enemy is facing
     public Direction getDirection() {
         return this.facing;
+    }
+
+    public Health getHealth() {
+        return this.enemyHealth;
+    }
+
+    public Health getMaxHealth() {
+        return this.maxHealth;
     }
 
 }
