@@ -14,7 +14,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import inf112.skeleton.app.Entity.Player;
-import inf112.skeleton.app.Entity.Monster;
+import inf112.skeleton.app.Entity.Enemy;
 
 
 public class TileMapHelper {
@@ -64,7 +64,7 @@ public class TileMapHelper {
                                 rectangle.getWidth(), rectangle.getHeight(), false, gameScreen.getWorld());
 
                     
-                    gameScreen.setMonster(new Monster(rectangle.getWidth(),rectangle.getHeight(), body, gameScreen.getPlayer()));
+                    gameScreen.setEnemy(new Enemy(rectangle.getWidth(),rectangle.getHeight(), body, gameScreen.getPlayer()));
 
                 }
                 
