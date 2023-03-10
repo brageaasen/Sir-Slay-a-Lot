@@ -134,7 +134,7 @@ Dette har vi fikset siden sist møte:
 
 
 Klassediagram: 
-![](diagram.png)
+![](classDiagram.png)
 
 
 Ettersom vi har funnet ut at det er vanskelig å teste med JUnit og LibGdx har vi laget noen manuelle tester.
