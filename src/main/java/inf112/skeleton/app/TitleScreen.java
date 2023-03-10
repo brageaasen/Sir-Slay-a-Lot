@@ -7,6 +7,8 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
+    //Førsteutkast!!!
+
 public class TitleScreen extends ScreenAdapter {
 
     GameScreenLauncher game;
@@ -26,6 +28,9 @@ public class TitleScreen extends ScreenAdapter {
                     this.ortographicCamera = new OrthographicCamera();
                     this.ortographicCamera.setToOrtho(false,1280,640);
                     game.setScreen(new GameScreen(ortographicCamera));
+                }
+                if (keyCode == Input.Keys.ESCAPE) {
+                    Gdx.app.exit();
                 }
                 return true;
             }
