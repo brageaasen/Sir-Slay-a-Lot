@@ -10,6 +10,22 @@ import inf112.skeleton.app.Health;
 
 public class Monster extends GameEntity {
 
+    public enum CurrentSprite {
+        // Idle(4),
+        Run(6),
+        Hurt(1),
+        Jump(1),
+        Fall(1),
+        Attack(6),
+        Dead(6),
+        Hit(3);
+
+        final int frames;
+        CurrentSprite(int i) {
+            frames = i;
+        }
+    }
+
     private int jumpCounter;
     private final Sprite sprite;
     private static final int PPM = 16;
@@ -22,12 +38,19 @@ public class Monster extends GameEntity {
     public static float monsterPos;
     private final Player player;
     private Health monsterHealth;
+    private Direction facing;
+
+    // Sprite field variables
+    private int spriteCounter;
+    private int spriteNum;
+    private CurrentSprite currentSprite;
 
     public Monster(float width, float height, Body body, Player player) {
         super(width, height, body);
         this.speed = 5f;
         this.jumpCounter = 0;
         this.player = player;
+        this.spriteNum = 1;
 
         this.sprite = new Sprite(new Texture("assets/Enemy/Run/Run1.png"));
         this.sprite.setScale(2);
@@ -36,10 +59,12 @@ public class Monster extends GameEntity {
 
     @Override
     public void update() {
+        spriteChecker();
         x = body.getPosition().x * PPM + 5;
         y = body.getPosition().y * PPM + 17;
         
         updatePosition();
+        updateSprite();
         damage();
     }
 
@@ -57,6 +82,37 @@ public class Monster extends GameEntity {
 
     }
 
+    public void updateSprite() {
+        System.out.println(facing);
+
+
+        if (this.getBody().getLinearVelocity().y != 0 && this.isGrounded()) {
+            currentSprite = CurrentSprite.Run;
+        } else if (this.getBody().getLinearVelocity().y > 0) {  // Checking if monster is jumping
+            currentSprite = CurrentSprite.Jump;
+        } else if (this.getBody().getLinearVelocity().y < 0) {  // Checking if monster is falling
+            currentSprite = CurrentSprite.Fall;
+        } else if (monsterIsDead()) {
+            currentSprite = CurrentSprite.Dead;
+        } else {
+            currentSprite = CurrentSprite.Run;
+        }
+
+        if (spriteNum > currentSprite.frames) // Check if spriteNum is out of bounds for the given animation
+            spriteNum = 1;
+
+        sprite.setTexture(new Texture("assets/Enemy/%s/%s%d.png".formatted(currentSprite.toString(), currentSprite.toString(), spriteNum)));
+    }
+
+    private void spriteChecker() {
+        spriteCounter++;
+        if (spriteCounter > 10) {
+            spriteCounter = 0;
+            spriteNum++;
+        }
+    }
+
+
     private void updatePosition() {
         velX = 0;
         if (player == null)
@@ -65,8 +121,14 @@ public class Monster extends GameEntity {
         monsterPosition = body.getPosition().x * PPM + 5;
         //System.out.println("Player: "+playerPosition+" Monster: "+ monsterPosition);
         if(monsterPosition < playerPosition){
+            if (this.facing != Direction.RIGHT && sprite.isFlipX())
+                flip();
+            this.facing = Direction.RIGHT;
             velX = 1;
         }else if(monsterPosition > playerPosition){
+            if (this.facing != Direction.LEFT && !sprite.isFlipX())
+                flip();
+            this.facing = Direction.LEFT;
             velX = -1;
         }
         
@@ -74,7 +136,7 @@ public class Monster extends GameEntity {
         monsterPos = body.getPosition().x;
 
         double random = Math.random(); //for random jumping
-        if(random <= 0.01 && jumpCounter < 2){
+        if(random <= 0.01 && jumpCounter < 2 && isGrounded()){
             startTime = System.currentTimeMillis();
             float force = body.getMass() * 10 * 2;
             body.setLinearVelocity(body.getLinearVelocity().x, 0);
@@ -100,6 +162,23 @@ public class Monster extends GameEntity {
 
     public boolean monsterIsDead() {
         return monsterHealth.getHP() <= 0;
+    }
+
+    /**
+     * Checks if a enemy is on the ground/surface and not midair
+     * @return true if the player is on a surface, false otherwise
+     */
+    public boolean isGrounded() {
+        return body.getLinearVelocity().y == 0;
+    }
+
+    public void flip() {
+        sprite.flip(true, false);
+    }
+
+    // Get direction enemy is facing
+    public Direction getDirection() {
+        return this.facing;
     }
 
 }

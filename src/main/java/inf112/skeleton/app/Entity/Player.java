@@ -12,10 +12,10 @@ import inf112.skeleton.app.KeyHandler;
 public class Player extends GameEntity {
     public enum CurrentSprite {
         Idle(4),
-        Running(8),
+        Run(8),
         Hurt(1),
-        Jumping(3),
-        Falling(3);
+        Jump(3),
+        Fall(3);
 
         final int frames;
         CurrentSprite(int i) {
@@ -87,11 +87,11 @@ public class Player extends GameEntity {
         if (facing == Direction.NONE && getBody().getLinearVelocity().y == 0) {
             currentSprite = CurrentSprite.Idle;
         } else if (getBody().getLinearVelocity().y > 0) {  // Checking if player is jumping
-            currentSprite = CurrentSprite.Jumping;
+            currentSprite = CurrentSprite.Jump;
         } else if (getBody().getLinearVelocity().y < 0) {  // Checking if player is falling
-            currentSprite = CurrentSprite.Falling;
+            currentSprite = CurrentSprite.Fall;
         } else {
-            currentSprite = CurrentSprite.Running;
+            currentSprite = CurrentSprite.Run;
         }
 
         if (spriteNum > currentSprite.frames) // Check if spriteNum is out of bounds for the given animation
@@ -180,7 +180,7 @@ public class Player extends GameEntity {
     public void checkFallDamage() {
         float verticalSpeed = body.getLinearVelocity().y;
 
-        if (verticalSpeed < -10) {
+        if (verticalSpeed < -37) {
             int damageScale = (int) ((Math.abs(verticalSpeed) - 10));
 
             playerHealth.decreaseHP(damageScale);
