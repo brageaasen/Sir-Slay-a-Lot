@@ -8,7 +8,7 @@ public class Health {
 
     public Health() {
         hitPoints = 100;
-        regenPerSecond = 10;
+        regenPerSecond = 2;
     }
 
     /**
