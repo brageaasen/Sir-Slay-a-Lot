@@ -23,7 +23,7 @@ public class EnemyTest {
     
         assertEquals(hp, maxHp);
 
-        enemy.damage();
+        enemy.takeDamage();
 
         assertEquals(maxHp.getHP() - player.getAttackDamage(), hp);
     }

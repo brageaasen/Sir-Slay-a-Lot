@@ -35,6 +35,7 @@ public class Player extends GameEntity {
     // Combat
     private int attackDamage;
     private int attackRange;
+    private boolean gotHurt;
 
     private final Sprite knife;
     private final KeyHandler keyH;
@@ -91,7 +92,10 @@ public class Player extends GameEntity {
     }
 
     public void updateSprite() {
-        if (facing == Direction.NONE && getBody().getLinearVelocity().y == 0) {
+        if (this.gotHurt == true) {
+            currentSprite = CurrentSprite.Hurt;
+            this.gotHurt = false;
+        } else if (facing == Direction.NONE && getBody().getLinearVelocity().y == 0) {
             currentSprite = CurrentSprite.Idle;
         } else if (getBody().getLinearVelocity().y > 0) {  // Checking if player is jumping
             currentSprite = CurrentSprite.Jump;
@@ -206,6 +210,10 @@ public class Player extends GameEntity {
 
     public int getAttackRange() {
         return this.attackRange;
+    }
+
+    public void gotHurt() {
+        this.gotHurt = true;
     }
 
 }

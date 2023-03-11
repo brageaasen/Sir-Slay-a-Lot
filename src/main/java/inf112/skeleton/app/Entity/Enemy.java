@@ -11,7 +11,6 @@ import inf112.skeleton.app.Health;
 public class Enemy extends GameEntity {
 
     public enum CurrentSprite {
-        // Idle(4),
         Run(6),
         Hurt(1),
         Jump(1),
@@ -41,6 +40,10 @@ public class Enemy extends GameEntity {
     private Health maxHealth;
     private Direction facing;
 
+    private int attackRange, attackDamage;
+    private boolean attack = false;
+    private boolean justAttacked = false;
+
     // Sprite field variables
     private int spriteCounter;
     private int spriteNum;
@@ -52,6 +55,8 @@ public class Enemy extends GameEntity {
         this.jumpCounter = 0;
         this.player = player;
         this.spriteNum = 1;
+        this.attackRange = 40;
+        this.attackDamage = 1;
 
         this.sprite = new Sprite(new Texture("assets/Enemy/Run/Run1.png"));
         this.sprite.setScale(2);
@@ -64,9 +69,12 @@ public class Enemy extends GameEntity {
         x = body.getPosition().x * PPM + 5;
         y = body.getPosition().y * PPM + 17;
         
-        updatePosition();
+        if (!this.attack)
+            updatePosition();
+        
         updateSprite();
-        damage();
+        takeDamage();
+        dealDamage();
     }
 
     @Override
@@ -84,9 +92,6 @@ public class Enemy extends GameEntity {
     }
 
     public void updateSprite() {
-        System.out.println(facing);
-
-
         if (this.getBody().getLinearVelocity().y != 0 && this.isGrounded()) {
             currentSprite = CurrentSprite.Run;
         } else if (this.getBody().getLinearVelocity().y > 0) {  // Checking if enemy is jumping
@@ -95,13 +100,22 @@ public class Enemy extends GameEntity {
             currentSprite = CurrentSprite.Fall;
         } else if (enemyIsDead()) {
             currentSprite = CurrentSprite.Dead;
-        } else {
+        } else if (this.attack) {
+            if (currentSprite != CurrentSprite.Attack)
+                spriteNum = 1;
+                this.justAttacked = false;
+            currentSprite = CurrentSprite.Attack;
+        } 
+        else {
             currentSprite = CurrentSprite.Run;
         }
 
         if (spriteNum > currentSprite.frames) // Check if spriteNum is out of bounds for the given animation
             spriteNum = 1;
 
+        if (currentSprite == CurrentSprite.Attack && spriteCounter > 6) {
+            this.attack = false;
+        }
         sprite.setTexture(new Texture("assets/Enemy/%s/%s%d.png".formatted(currentSprite.toString(), currentSprite.toString(), spriteNum)));
     }
 
@@ -152,7 +166,10 @@ public class Enemy extends GameEntity {
         }
     }
 
-    public void damage() {
+    /**
+     * Take damage from player based on player current attack damage
+     */
+    public void takeDamage() {
         playerPosition = player.getPosition().x;
         enemyPosition = body.getPosition().x * PPM + 5;
 
@@ -160,6 +177,21 @@ public class Enemy extends GameEntity {
             enemyHealth.decreaseHP(player.getAttackDamage());
         }
     }
+
+    public void dealDamage() {
+        playerPosition = player.getPosition().x;
+        enemyPosition = body.getPosition().x * PPM + 5;
+
+        if (Math.abs(playerPosition - enemyPosition) < this.attackRange) {
+            this.attack = true;
+            if (currentSprite == CurrentSprite.Attack && spriteNum == 4 && this.justAttacked == false) {
+                player.getPlayerHealth().decreaseHP(this.attackDamage);
+                player.gotHurt();
+                this.justAttacked = true;
+            }
+        }
+    }
+
 
     public boolean enemyIsDead() {
         return enemyHealth.getHP() <= 0;
