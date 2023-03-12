@@ -79,7 +79,7 @@ public class Enemy extends GameEntity {
 
     @Override
     public void render(SpriteBatch batch) {
-        float dx = x - width / 2;
+        float dx = x - width - 15;
         float dy = y - height / 2;
 
         sprite.setPosition(dx,dy);
