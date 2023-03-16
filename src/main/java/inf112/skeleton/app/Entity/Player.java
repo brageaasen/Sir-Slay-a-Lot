@@ -97,9 +97,14 @@ public class Player extends GameEntity {
             this.gotHurt = false;
         } else if (facing == Direction.NONE && getBody().getLinearVelocity().y == 0) {
             currentSprite = CurrentSprite.Idle;
-        } else if (getBody().getLinearVelocity().y > 0) {  // Checking if player is jumping
+        } 
+        else if (getBody().getLinearVelocity().y < 0) {
+            currentSprite = CurrentSprite.Idle;
+        }
+        else if (getBody().getLinearVelocity().y > 0) {  // Checking if player is jumping
             currentSprite = CurrentSprite.Jump;
-        } else if (getBody().getLinearVelocity().y < 0) {  // Checking if player is falling
+        } else if (getBody().getLinearVelocity().y < -3) {  // Checking if player is falling
+            System.out.println(getBody().getLinearVelocity().y);
             currentSprite = CurrentSprite.Fall;
         } else {
             currentSprite = CurrentSprite.Run;
@@ -110,6 +115,7 @@ public class Player extends GameEntity {
 
         sprite.setTexture(new Texture("assets/Player/%s/%s%d.png".formatted(currentSprite.toString(), currentSprite.toString(), spriteNum)));
     }
+
 
     public void jump() {
         float force = body.getMass() * 10 * 2;
