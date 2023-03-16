@@ -151,7 +151,7 @@ public class GameScreen extends ScreenAdapter{
         if (!enemy.enemyIsDead())
             enemy.render(batch);
         batch.end();
-        box2dDebugRenderer.render(world,camera.combined.scl(PPM));
+        //box2dDebugRenderer.render(world,camera.combined.scl(PPM));
     }
 
     public World getWorld(){
