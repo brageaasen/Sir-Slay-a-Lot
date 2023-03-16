@@ -17,6 +17,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.skeleton.app.Entity.Player;
 import inf112.skeleton.app.Entity.Enemy;
 
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+
 public class GameScreen extends ScreenAdapter{
 
     private final OrthographicCamera camera;
@@ -24,6 +26,8 @@ public class GameScreen extends ScreenAdapter{
     private final ParallaxLayer[] layers;
     private final World world;
     private final Viewport viewport;
+
+    private Box2DDebugRenderer box2dDebugRenderer;
 
     private final OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
     private final TileMapHelper tileMapHelper;
@@ -41,11 +45,11 @@ public class GameScreen extends ScreenAdapter{
         this.batch = new SpriteBatch();
         this.world = new World(new Vector2(0,-25f),false);
 
+        this.box2dDebugRenderer = new Box2DDebugRenderer();
 
         this.viewport = new FitViewport(camera.viewportWidth, camera.viewportHeight, camera);
         
         layers = new ParallaxLayer[6];
-        //layers[0] = new ParallaxLayer(new Texture("assets/Background/test.png"), 0.1f, true, false);
 		layers[0] = new ParallaxLayer(new Texture("assets/Background/6.png"), 0.1f, true, false);
 		layers[1] = new ParallaxLayer(new Texture("assets/Background/5.png"), 0.2f, true, false);
 		layers[2] = new ParallaxLayer(new Texture("assets/Background/4.png"), 0.3f, true, false);

@@ -27,8 +27,7 @@ public class Player extends GameEntity {
 
     public boolean holdKnife;   //?? Set to private, change using API (e.g. 'slashKnife')
     public int jumpCounter;     //?? Set to private, change using API (e.g. 'Jump')
-    private int spriteCounter;
-    private int spriteNum;
+    private int spriteCounter, spriteNum;
     private CurrentSprite currentSprite;
     private Direction facing;
 
