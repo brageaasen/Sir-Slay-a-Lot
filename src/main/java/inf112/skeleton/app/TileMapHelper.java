@@ -179,3 +179,4 @@ public class TileMapHelper {
         movingPlatform.draw(batch);
     }
 }
+
