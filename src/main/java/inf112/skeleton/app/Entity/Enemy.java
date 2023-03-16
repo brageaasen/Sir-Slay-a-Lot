@@ -1,30 +1,26 @@
 package inf112.skeleton.app.Entity;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
+import inf112.skeleton.app.AnimationHandler;
 import inf112.skeleton.app.Health;
 
 public class Enemy extends GameEntity {
 
-    public enum CurrentSprite {
-        Run(6),
-        Hurt(1),
-        Jump(1),
-        Fall(1),
-        Attack(6),
-        Dead(6),
-        Hit(3);
-
-        final int frames;
-        CurrentSprite(int i) {
-            frames = i;
-        }
+    public enum EnemyState {
+        Run,
+//        Hurt,
+        Jump,
+        Fall,
+        Attack,
+        Dead,
+        Hit,
     }
 
+    private final AnimationHandler<EnemyState> anim;
     private int jumpCounter;
     private final Sprite sprite;
     private static final int PPM = 16;
@@ -36,7 +32,7 @@ public class Enemy extends GameEntity {
     private float enemyPositionX, enemyPositionY;
     public static float enemyPos;
     private final Player player;
-    private Health enemyHealth;
+    private final Health enemyHealth;
     private Health maxHealth;
     private Direction facing;
 
@@ -45,32 +41,37 @@ public class Enemy extends GameEntity {
     private boolean justAttacked = false;
 
     // Sprite field variables
-    private int spriteCounter;
-    private int spriteNum;
-    private CurrentSprite currentSprite;
+    private int attackTimer;
 
     public Enemy(float width, float height, Body body, Player player) {
         super(width, height, body);
         this.speed = 5f;
         this.jumpCounter = 0;
         this.player = player;
-        this.spriteNum = 1;
         this.attackRange = 40;
         this.attackDamage = 1;
 
-        this.sprite = new Sprite(new Texture("assets/Enemy/Run/Run1.png"));
+        anim = new AnimationHandler<>(EnemyState.Run, "assets/Enemy/Run/Run%d.png", 6);
+//        anim.addAnimation(CurrentSprite.Hurt, "assets/Enemy/Hurt/Hurt%d.png", 1);
+        anim.addAnimation(EnemyState.Jump, "assets/Enemy/Jump/Jump%d.png", 1);
+        anim.addAnimation(EnemyState.Fall, "assets/Enemy/Fall/Fall%d.png", 1);
+        anim.addAnimation(EnemyState.Attack, "assets/Enemy/Attack/Attack%d.png", 6);
+        anim.addAnimation(EnemyState.Dead, "assets/Enemy/Dead/Dead%d.png", 6);
+        anim.addAnimation(EnemyState.Hit, "assets/Enemy/Hit/Hit%d.png", 3);
+        this.sprite = new Sprite(anim.getAnimTexture());
         this.sprite.setScale(2);
         enemyHealth = new Health();
     }
 
     @Override
     public void update() {
-        spriteChecker();
         x = body.getPosition().x * PPM + 5;
         y = body.getPosition().y * PPM + 17;
         
         if (!this.attack)
             updatePosition();
+        else
+            attackTimer++;
         
         updateSprite();
         takeDamage();
@@ -93,38 +94,30 @@ public class Enemy extends GameEntity {
 
     public void updateSprite() {
         if (this.getBody().getLinearVelocity().y != 0 && this.isGrounded()) {
-            currentSprite = CurrentSprite.Run;
+            anim.setState(EnemyState.Run);
         } else if (this.getBody().getLinearVelocity().y > 0) {  // Checking if enemy is jumping
-            currentSprite = CurrentSprite.Jump;
+            anim.setState(EnemyState.Jump);
         } else if (this.getBody().getLinearVelocity().y < 0) {  // Checking if enemy is falling
-            currentSprite = CurrentSprite.Fall;
+            anim.setState(EnemyState.Fall);
         } else if (enemyIsDead()) {
-            currentSprite = CurrentSprite.Dead;
+            anim.setState(EnemyState.Dead);
         } else if (this.attack) {
-            if (currentSprite != CurrentSprite.Attack)
-                spriteNum = 1;
+            if (anim.getState() != EnemyState.Attack) {
+                anim.reset();
                 this.justAttacked = false;
-            currentSprite = CurrentSprite.Attack;
+            }
+            anim.setState(EnemyState.Attack);
         } 
         else {
-            currentSprite = CurrentSprite.Run;
+            anim.setState(EnemyState.Run);
         }
 
-        if (spriteNum > currentSprite.frames) // Check if spriteNum is out of bounds for the given animation
-            spriteNum = 1;
-
-        if (currentSprite == CurrentSprite.Attack && spriteCounter > 6) {
+        if (anim.getState() == EnemyState.Attack && attackTimer > 6) {
             this.attack = false;
         }
-        sprite.setTexture(new Texture("assets/Enemy/%s/%s%d.png".formatted(currentSprite.toString(), currentSprite.toString(), spriteNum)));
-    }
 
-    private void spriteChecker() {
-        spriteCounter++;
-        if (spriteCounter > 10) {
-            spriteCounter = 0;
-            spriteNum++;
-        }
+        anim.update();
+        sprite.setTexture(anim.getAnimTexture());
     }
 
 
@@ -188,7 +181,7 @@ public class Enemy extends GameEntity {
 
         if (Math.abs(playerPositionX - enemyPositionX) < this.attackRange && Math.abs(playerPositionY - enemyPositionY) < this.attackRange) {
             this.attack = true;
-            if (currentSprite == CurrentSprite.Attack && spriteNum == 4 && this.justAttacked == false) {
+            if (anim.getState() == EnemyState.Attack && anim.getCurrFrame()== 4 && !this.justAttacked) {
                 player.getPlayerHealth().decreaseHP(this.attackDamage);
                 player.gotHurt();
                 this.justAttacked = true;

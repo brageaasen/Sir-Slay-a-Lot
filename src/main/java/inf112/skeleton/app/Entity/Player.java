@@ -6,29 +6,25 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
+import inf112.skeleton.app.Animation;
+import inf112.skeleton.app.AnimationHandler;
 import inf112.skeleton.app.Health;
 import inf112.skeleton.app.KeyHandler;
 
 public class Player extends GameEntity {
-    public enum CurrentSprite {
-        Idle(4),
-        Run(8),
-        Hurt(1),
-        Jump(3),
-        Fall(3);
-
-        final int frames;
-        CurrentSprite(int i) {
-            frames = i;
-        }
+    public enum PlayerState {
+        Idle,
+        Run,
+        Hurt,
+        Jump,
+        Fall,
     }
+    private final AnimationHandler<PlayerState> anim;
 
     private static final int PPM = 16; //?? what does this mean???
 
     public boolean holdKnife;   //?? Set to private, change using API (e.g. 'slashKnife')
     public int jumpCounter;     //?? Set to private, change using API (e.g. 'Jump')
-    private int spriteCounter, spriteNum;
-    private CurrentSprite currentSprite;
     private Direction facing;
 
     // Combat
@@ -51,23 +47,24 @@ public class Player extends GameEntity {
 
         this.holdKnife = false;
 
-        this.spriteCounter = 0;
-        this.spriteNum = 1;
-        this.currentSprite = CurrentSprite.Idle;
-
         this.jumpCounter = 0;
         this.facing = Direction.NONE;
-        this.sprite = new Sprite(new Texture("assets/Player/Idle/Idle1.png")); //?? Should we preload textures instead of loading them every time? (does it even matter?)
+        this.sprite = new Sprite(new Texture("assets/Player/Idle/Idle1.png"));
         this.knife = new Sprite(new Texture("assets/knife.png"));
         this.keyH = new KeyHandler(this);   //?? Should the player class hold input handling?
         this.sprite.setScale(2);
 
         playerHealth = new Health();
+        anim = new AnimationHandler<>(PlayerState.Idle, new Animation("assets/Player/Idle/Idle%d.png", 4));
+        anim.addAnimation(PlayerState.Run, new Animation("assets/Player/Run/Run%d.png", 8));
+        anim.addAnimation(PlayerState.Hurt, new Animation("assets/Player/Hurt/Hurt%d.png", 1));
+        anim.addAnimation(PlayerState.Jump, new Animation("assets/Player/Jump/Jump%d.png", 3));
+        anim.addAnimation(PlayerState.Fall, new Animation("assets/Player/Fall/Fall%d.png", 3));
+        anim.setState(PlayerState.Idle);
     }
 
     @Override
     public void update() {
-        spriteChecker();
         x = body.getPosition().x * PPM + 5;
         y = body.getPosition().y * PPM + 17;
 
@@ -91,23 +88,21 @@ public class Player extends GameEntity {
     }
 
     public void updateSprite() {
-        if (this.gotHurt == true) {
-            currentSprite = CurrentSprite.Hurt;
+        if (this.gotHurt) {
+            anim.setState(PlayerState.Hurt);
             this.gotHurt = false;
         } else if (facing == Direction.NONE && getBody().getLinearVelocity().y == 0) {
-            currentSprite = CurrentSprite.Idle;
+            anim.setState(PlayerState.Idle);
         } else if (getBody().getLinearVelocity().y > 0) {  // Checking if player is jumping
-            currentSprite = CurrentSprite.Jump;
+            anim.setState(PlayerState.Jump);
         } else if (getBody().getLinearVelocity().y < 0) {  // Checking if player is falling
-            currentSprite = CurrentSprite.Fall;
+            anim.setState(PlayerState.Fall);
         } else {
-            currentSprite = CurrentSprite.Run;
+            anim.setState(PlayerState.Run);
         }
+        anim.update();
 
-        if (spriteNum > currentSprite.frames) // Check if spriteNum is out of bounds for the given animation
-            spriteNum = 1;
-
-        sprite.setTexture(new Texture("assets/Player/%s/%s%d.png".formatted(currentSprite.toString(), currentSprite.toString(), spriteNum)));
+        sprite.setTexture(anim.getAnimTexture());
     }
 
     public void jump() {
@@ -115,14 +110,6 @@ public class Player extends GameEntity {
         body.setLinearVelocity(body.getLinearVelocity().x, 0);
         body.applyLinearImpulse(new Vector2(0, force), body.getPosition(), true);
         jumpCounter++;
-    }
-
-    private void spriteChecker() {
-        spriteCounter++;
-        if (spriteCounter > 10) {
-            spriteCounter = 0;
-            spriteNum++;
-        }
     }
 
     public void flip() { // TODO?: replace unneeded texture?
