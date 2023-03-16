@@ -45,7 +45,7 @@ public class Player extends GameEntity {
 
     public Player(float width, float height, Body body) {
         super(width, height, body);
-        this.speed = 15f;   //?? Introduce constant?
+        this.speed = 20f;   //?? Introduce constant?
         this.attackDamage = 10;
         this.attackRange = 5;
 
@@ -67,7 +67,11 @@ public class Player extends GameEntity {
 
     @Override
     public void update() {
-        spriteChecker();
+        if (currentSprite == CurrentSprite.Idle)
+            spriteChecker(8);
+        else 
+            spriteChecker(6);
+        
         x = body.getPosition().x * PPM + 5;
         y = body.getPosition().y * PPM + 17;
 
@@ -117,9 +121,12 @@ public class Player extends GameEntity {
         jumpCounter++;
     }
 
-    private void spriteChecker() {
+    /**
+     * n is speed of which sprites changes
+     */
+    private void spriteChecker(int n) {
         spriteCounter++;
-        if (spriteCounter > 10) {
+        if (spriteCounter > n) {
             spriteCounter = 0;
             spriteNum++;
         }
