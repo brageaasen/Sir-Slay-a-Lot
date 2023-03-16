@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 
 import inf112.skeleton.app.Health;
 import inf112.skeleton.app.KeyHandler;
+import inf112.skeleton.app.Knife;
 
 public class Player extends GameEntity {
     public enum CurrentSprite {
@@ -25,11 +26,11 @@ public class Player extends GameEntity {
 
     private static final int PPM = 16; //?? what does this mean???
 
-    public boolean holdKnife;   //?? Set to private, change using API (e.g. 'slashKnife')
     public int jumpCounter;     //?? Set to private, change using API (e.g. 'Jump')
     private int spriteCounter, spriteNum;
     private CurrentSprite currentSprite;
     private Direction facing;
+    public Knife knifeObj;
 
     // Combat
     private int attackDamage;
@@ -49,7 +50,7 @@ public class Player extends GameEntity {
         this.attackDamage = 10;
         this.attackRange = 5;
 
-        this.holdKnife = false;
+        knifeObj = new Knife();
 
         this.spriteCounter = 0;
         this.spriteNum = 1;
@@ -84,7 +85,7 @@ public class Player extends GameEntity {
         sprite.setPosition(dx, dy);
         sprite.draw(batch);
 
-        if (holdKnife) {
+        if (knifeObj.isHoldKnife()) {
             knife.setPosition(dx + (facing == Direction.LEFT ? -width : width), dy);
             knife.draw(batch);
         }
