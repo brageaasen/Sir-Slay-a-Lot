@@ -3,9 +3,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class HealthBar {
-    private float x, y, width, height;
+    private final float x, y, width, height;
+    private final Health health;
     private float healthPercentage;
-    private Health health;
 
     public HealthBar(Health health, float width, float height, float screenWidth, float screenHeight) {
         this.health = health;
@@ -13,7 +13,7 @@ public class HealthBar {
         this.y = screenHeight - height - 10;
         this.width = width;
         this.height = height;
-        this.healthPercentage = health.getHP() / 100;
+        this.healthPercentage = health.getHP() / 100f;
     }
 
     public void updateHealth() {
