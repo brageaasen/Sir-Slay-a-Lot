@@ -32,8 +32,8 @@ public class Enemy extends GameEntity {
     private long startTime = 0;
     private long endTime;
     private long elapsedTime;
-    private float playerPosition;
-    private float enemyPosition;
+    private float playerPositionX, playerPositionY;
+    private float enemyPositionX, enemyPositionY;
     public static float enemyPos;
     private final Player player;
     private Health enemyHealth;
@@ -79,7 +79,7 @@ public class Enemy extends GameEntity {
 
     @Override
     public void render(SpriteBatch batch) {
-        float dx = x - width / 2;
+        float dx = x - width - 15;
         float dy = y - height / 2;
 
         sprite.setPosition(dx,dy);
@@ -132,15 +132,15 @@ public class Enemy extends GameEntity {
         velX = 0;
         if (player == null)
             return;
-        playerPosition = player.getPosition().x;
-        enemyPosition = body.getPosition().x * PPM + 5;
+        playerPositionX = player.getPosition().x;
+        enemyPositionX = body.getPosition().x * PPM + 5;
 
-        if(enemyPosition < playerPosition){
+        if(enemyPositionX < playerPositionX){
             if (this.facing != Direction.RIGHT && sprite.isFlipX()) // Flip sprite if facing wrong way
                 flip();
             this.facing = Direction.RIGHT;
             velX = 1;
-        }else if(enemyPosition > playerPosition){
+        }else if(enemyPositionX > playerPositionX){
             if (this.facing != Direction.LEFT && !sprite.isFlipX()) // Flip sprite if facing wrong way
                 flip();
             this.facing = Direction.LEFT;
@@ -170,19 +170,24 @@ public class Enemy extends GameEntity {
      * Take damage from player based on player current attack damage
      */
     public void takeDamage() {
-        playerPosition = player.getPosition().x;
-        enemyPosition = body.getPosition().x * PPM + 5;
+        playerPositionX = player.getPosition().x;
+        playerPositionY = player.getPosition().y;
+        enemyPositionX = body.getPosition().x * PPM + 5;
+        enemyPositionY = body.getPosition().y * PPM + 5;
 
-        if (Math.abs(playerPosition - enemyPosition) < player.getAttackRange() && player.holdKnife) {
+        if (Math.abs(playerPositionX - enemyPositionX) < player.getAttackRange() && Math.abs(playerPositionY - enemyPositionY) < player.getAttackRange() && player.knifeObj.getHoldKnife() && player.knifeObj.isDealingDamage()) {
             enemyHealth.decreaseHP(player.getAttackDamage());
+            player.knifeObj.setDealingDamage(false);
         }
     }
 
     public void dealDamage() {
-        playerPosition = player.getPosition().x;
-        enemyPosition = body.getPosition().x * PPM + 5;
+        playerPositionX = player.getPosition().x;
+        playerPositionY = player.getPosition().y;
+        enemyPositionX = body.getPosition().x * PPM + 5;
+        enemyPositionY = body.getPosition().y * PPM + 5;
 
-        if (Math.abs(playerPosition - enemyPosition) < this.attackRange) {
+        if (Math.abs(playerPositionX - enemyPositionX) < this.attackRange && Math.abs(playerPositionY - enemyPositionY) < this.attackRange) {
             this.attack = true;
             if (currentSprite == CurrentSprite.Attack && spriteNum == 4 && this.justAttacked == false) {
                 player.getPlayerHealth().decreaseHP(this.attackDamage);

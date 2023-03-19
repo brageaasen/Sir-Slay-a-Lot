@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import inf112.skeleton.app.Gun;
 import inf112.skeleton.app.Health;
 import inf112.skeleton.app.KeyHandler;
+import inf112.skeleton.app.Knife;
 
 public class Player extends GameEntity {
     public enum CurrentSprite {
@@ -27,12 +28,11 @@ public class Player extends GameEntity {
 
     private static final int PPM = 16; //?? what does this mean???
 
-    public boolean holdKnife;   //?? Set to private, change using API (e.g. 'slashKnife')
     public int jumpCounter;     //?? Set to private, change using API (e.g. 'Jump')
-    private int spriteCounter;
-    private int spriteNum;
+    private int spriteCounter, spriteNum;
     private CurrentSprite currentSprite;
     private Direction facing;
+    public Knife knifeObj;
 
     // Combat
     private int attackDamage;
@@ -49,11 +49,11 @@ public class Player extends GameEntity {
 
     public Player(float width, float height, Body body) {
         super(width, height, body);
-        this.speed = 15f;   //?? Introduce constant?
+        this.speed = 20f;   //?? Introduce constant?
         this.attackDamage = 10;
         this.attackRange = 5;
 
-        this.holdKnife = false;
+        knifeObj = new Knife();
 
         this.spriteCounter = 0;
         this.spriteNum = 1;
@@ -72,7 +72,11 @@ public class Player extends GameEntity {
 
     @Override
     public void update() {
-        spriteChecker();
+        if (currentSprite == CurrentSprite.Idle)
+            spriteChecker(8);
+        else 
+            spriteChecker(6);
+        
         x = body.getPosition().x * PPM + 5;
         y = body.getPosition().y * PPM + 17;
 
@@ -133,9 +137,12 @@ public class Player extends GameEntity {
         jumpCounter++;
     }
 
-    private void spriteChecker() {
+    /**
+     * n is speed of which sprites changes
+     */
+    private void spriteChecker(int n) {
         spriteCounter++;
-        if (spriteCounter > 10) {
+        if (spriteCounter > n) {
             spriteCounter = 0;
             spriteNum++;
         }

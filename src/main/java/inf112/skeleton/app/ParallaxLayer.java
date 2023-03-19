@@ -6,11 +6,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class ParallaxLayer {
-    Texture texture;
-    float factor;
-    boolean wrapHorizontally;
-    boolean wrapVertically;
-    Camera camera;
+    private final Texture texture;
+    private final float factor;
+    private final boolean wrapHorizontally;
+    private final boolean wrapVertically;
+    public Camera camera;   // TODO: Should this be final? (See todo below)
 
     ParallaxLayer(Texture texture, float factor, boolean wrapHorizontally, boolean wrapVertically) {
         this.texture = texture;
@@ -23,6 +23,7 @@ public class ParallaxLayer {
         );
     }
 
+    // TODO: Should this be updatable? or moved to the constructor?
     void setCamera(Camera camera) {
         this.camera = camera;
     }
