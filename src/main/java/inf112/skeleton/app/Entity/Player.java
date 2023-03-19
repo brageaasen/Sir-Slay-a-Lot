@@ -1,11 +1,13 @@
 package inf112.skeleton.app.Entity;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
+import inf112.skeleton.app.Gun;
 import inf112.skeleton.app.Health;
 import inf112.skeleton.app.KeyHandler;
 
@@ -42,6 +44,7 @@ public class Player extends GameEntity {
     private final Sprite sprite;
 
     private final Health playerHealth;
+    private final Gun gun; 
 
 
     public Player(float width, float height, Body body) {
@@ -64,6 +67,7 @@ public class Player extends GameEntity {
         this.sprite.setScale(2);
 
         playerHealth = new Health();
+        this.gun = new Gun(100f, 20, 500, 0.5f, "assets/gunBullet.png", "assets/gun.png");
     }
 
     @Override
@@ -73,6 +77,7 @@ public class Player extends GameEntity {
         y = body.getPosition().y * PPM + 17;
 
         updateSprite();
+        gun.update(Gdx.graphics.getDeltaTime());
         keyH.checkUserInput();
         this.checkFallDamage();
     }
@@ -85,9 +90,13 @@ public class Player extends GameEntity {
         sprite.setPosition(dx, dy);
         sprite.draw(batch);
 
-        if (holdKnife) {
-            knife.setPosition(dx + (facing == Direction.LEFT ? -width : width), dy);
-            knife.draw(batch);
+        gun.render(batch);
+        gun.setPosition(new Vector2(dx + (facing == Direction.LEFT ? -width : width), dy));
+      
+        if (knifeObj.isHoldKnife()) {
+            // knife.setPosition(dx + (facing == Direction.LEFT ? -width : width), dy);
+            // knife.draw(batch);
+            gun.fire(new Vector2(dx + (facing == Direction.LEFT ? -width : width), dy), new Vector2(500,500));
         }
     }
 
@@ -220,6 +229,12 @@ public class Player extends GameEntity {
 
     public void gotHurt() {
         this.gotHurt = true;
+    }
+
+    public void fireGun() {
+        Vector2 position = new Vector2(x, y);
+        Vector2 direction = new Vector2(facing == Direction.RIGHT ? 1 : -1, 0);
+        gun.fire(position, direction);
     }
 
 }

@@ -34,9 +34,6 @@ public class GameScreen extends ScreenAdapter{
     private HealthBar healthBar;
     private ShapeRenderer shapeRenderer;
     private Timer regenTimer;
-   
-
-    Box2DDebugRenderer box2dDebugRenderer;
 
     private static final float PPM = 16.0f;
 
@@ -84,7 +81,7 @@ public class GameScreen extends ScreenAdapter{
             
         }, 3, 3);
 
-        this.box2dDebugRenderer = new Box2DDebugRenderer();       
+        // this.box2dDebugRenderer = new Box2DDebugRenderer();       
     }   
     
 
