@@ -33,6 +33,7 @@ public class Player extends GameEntity {
     private CurrentSprite currentSprite;
     private Direction facing;
     public Knife knifeObj;
+    public Gun gun; 
 
     // Combat
     private int attackDamage;
@@ -43,9 +44,7 @@ public class Player extends GameEntity {
     private final KeyHandler keyH;
     private final Sprite sprite;
 
-    private final Health playerHealth;
-    private final Gun gun; 
-
+    private final Health playerHealth; 
 
     public Player(float width, float height, Body body) {
         super(width, height, body);
@@ -67,7 +66,8 @@ public class Player extends GameEntity {
         this.sprite.setScale(2);
 
         playerHealth = new Health();
-        this.gun = new Gun(100f, 20, 500, 0.5f, "assets/gunBullet.png", "assets/gun.png");
+
+        this.gun = new Gun(300f, 20, 500, 0.5f, "assets/gunBullet.png", "assets/gun.png");
     }
 
     @Override
@@ -94,13 +94,18 @@ public class Player extends GameEntity {
         sprite.setPosition(dx, dy);
         sprite.draw(batch);
 
-        gun.render(batch);
-        gun.setPosition(new Vector2(dx + (facing == Direction.LEFT ? -width : width), dy));
-      
         if (knifeObj.isHoldKnife()) {
-            // knife.setPosition(dx + (facing == Direction.LEFT ? -width : width), dy);
-            // knife.draw(batch);
-            gun.fire(new Vector2(dx + (facing == Direction.LEFT ? -width : width), dy), new Vector2(500,500));
+            knife.setPosition(dx + (sprite.isFlipX() ? -width : width), dy);
+            knife.draw(batch);
+            // gun.fire(new Vector2(dx + (sprite.isFlipX() ? -width + 40 : width), dy + (sprite.isFlipX() ? 0 : 13)), (sprite.isFlipX() ? new Vector2(-10,0) : new Vector2(10,0)) );
+        }
+
+        if (gun.isHoldGun()){
+            gun.setPosition(new Vector2(dx + (sprite.isFlipX() ? -width : width), dy));
+            gun.render(batch);
+            if (gun.getFiring()){
+                gun.fire(new Vector2(dx + (sprite.isFlipX() ? -width + 40 : width), dy + (sprite.isFlipX() ? 0 : 13)), (sprite.isFlipX() ? new Vector2(-10,0) : new Vector2(10,0)) );
+            }
         }
     }
 
@@ -151,6 +156,7 @@ public class Player extends GameEntity {
     public void flip() { // TODO?: replace unneeded texture?
         sprite.flip(true, false);
         knife.flip(true, false);
+        gun.getSprite().flip(true, false);
     }
 
     /**
@@ -174,6 +180,7 @@ public class Player extends GameEntity {
         switch (direction) {
             case RIGHT -> {
                 velX = 1;
+                
                 if (this.facing != Direction.RIGHT && sprite.isFlipX())
                     flip();
             }

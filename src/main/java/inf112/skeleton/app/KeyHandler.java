@@ -9,6 +9,7 @@ public class KeyHandler {
     public KeyHandler(Player player){
         this.player = player;
         this.keyAlreadyPressed = false;
+        this.gunKeyAlreadyPressed = false;
     }
     
     //Time related variables
@@ -16,6 +17,7 @@ public class KeyHandler {
     long endTime;
     long elapsedTime;
     private boolean keyAlreadyPressed;
+    private boolean gunKeyAlreadyPressed;
 
     public void checkUserInput() {
         if(Gdx.input.isKeyPressed(Input.Keys.D)){
@@ -27,6 +29,8 @@ public class KeyHandler {
         }
 
         this.isHoldingKnife();
+
+        this.isHoldingGun();
 
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && player.jumpCounter < 2){
             startTime = System.currentTimeMillis();
@@ -43,16 +47,38 @@ public class KeyHandler {
         player.getBody().setLinearVelocity(player.getVelocity().x * player.getSpeed(), player.getBody().getLinearVelocity().y < 25 ? player.getBody().getLinearVelocity().y : 25);
     }
 
+
     private void isHoldingKnife() {
-        if (Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
-            if (!keyAlreadyPressed) {
-                player.knifeObj.setHoldKnife(true);
-                keyAlreadyPressed = true;
-            }
-        } else {
-            keyAlreadyPressed = false;
-            player.knifeObj.setHoldKnife(false);
+        if (Gdx.input.isKeyPressed(Input.Keys.NUM_2)) {
+            player.gun.setHoldGun(false);
+            keyAlreadyPressed = true;
+        } 
+        
+        if (keyAlreadyPressed && Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
+            player.knifeObj.setHoldKnife(true);
             player.knifeObj.setDealingDamage(true);
+        } else {
+            player.knifeObj.setHoldKnife(false);
+        }
+    }
+
+    private void isHoldingGun() {
+        if (Gdx.input.isKeyPressed(Input.Keys.NUM_1)) {
+            player.knifeObj.setHoldKnife(false);
+            keyAlreadyPressed = false;
+            if (!gunKeyAlreadyPressed) {
+                player.gun.setHoldGun(true);
+                gunKeyAlreadyPressed = true;   
+            }
+        } 
+        else {
+            gunKeyAlreadyPressed = false;
+            if (Gdx.input.isKeyPressed(Input.Keys.ENTER)){
+                player.gun.setFiring(true);;
+            }
+            else {
+                player.gun.setFiring(false);;
+            }
         }
     }
 }

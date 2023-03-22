@@ -22,6 +22,10 @@ public class Gun {
     private final Sprite gunSprite;
     private final List<Bullet> bullets;
 
+    private boolean holdKnife;
+    private boolean dealingDamage;
+    private boolean isFiring;
+
     public Gun(float bulletSpeed, int damage, int range, float fireRate, String bulletTexturePath, String gunTexturePath) {
         this.bulletSpeed = bulletSpeed;
         this.damage = damage;
@@ -35,6 +39,10 @@ public class Gun {
         this.gunSprite = new Sprite(new Texture(gunTexturePath));
         this.bulletSprite.setOrigin(gunSprite.getOriginX() - 20, gunSprite.getOriginY() - 5);
         this.bullets = new ArrayList<>();
+
+        this.holdKnife = false;
+        this.dealingDamage = false;
+        this.isFiring = false;
     }
 
     public void update(float delta) {
@@ -79,4 +87,41 @@ public class Gun {
     public void setPosition(Vector2 vector){
         gunSprite.setPosition(vector.x, vector.y);
     }
+
+    public Sprite getSprite(){
+        return gunSprite;
+    }
+
+    public void setFiring(boolean isFiring){
+        this.isFiring = isFiring;
+    }
+
+    public boolean getFiring(){
+        return this.isFiring;
+    }
+
+    public boolean isHoldGun() {
+        return this.holdKnife;
+    }
+
+    public boolean getHoldGun() {
+        return this.holdKnife;
+    }
+
+    public void setHoldGun(boolean holdKnife) {
+        this.holdKnife = holdKnife;
+    }
+
+    public boolean isDealingDamage() {
+        return this.dealingDamage;
+    }
+
+    public boolean getDealingDamage() {
+        return this.dealingDamage;
+    }
+
+    public void setDealingDamage(boolean dealingDamage) {
+        this.dealingDamage = dealingDamage;
+    }
+
 }
