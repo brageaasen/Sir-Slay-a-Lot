@@ -39,9 +39,6 @@ public class GameScreen extends ScreenAdapter{
     private ShapeRenderer shapeRenderer;
     private Timer regenTimer;
    
-
-    Box2DDebugRenderer box2dDebugRenderer;
-
     private static final float PPM = 16.0f;
 
     public GameScreen(OrthographicCamera camera){

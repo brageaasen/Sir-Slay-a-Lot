@@ -22,7 +22,7 @@ public class Knife {
         this.holdKnife = holdKnife;
     }
 
-    public boolean isDealingDamage() {
+    public boolean canDealDamage() {
         return this.dealingDamage;
     }
 
