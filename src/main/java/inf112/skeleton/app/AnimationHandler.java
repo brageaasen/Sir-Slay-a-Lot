@@ -50,9 +50,10 @@ public class AnimationHandler<S> {
         return currFrame;
     }
 
-    public void update() {
+    // TODO: make `n` a parameter of the animation itself.
+    public void update(int n) {
         animTimer++;
-        if (animTimer > 10) {
+        if (animTimer > n) {
             animTimer = 0;
             currFrame++;
         }

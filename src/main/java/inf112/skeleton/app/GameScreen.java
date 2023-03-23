@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -83,8 +84,7 @@ public class GameScreen extends ScreenAdapter{
             
         }, 3, 3);
 
-
-        
+        this.box2dDebugRenderer = new Box2DDebugRenderer();       
     }   
     
 
@@ -130,7 +130,9 @@ public class GameScreen extends ScreenAdapter{
 
         camera.update();
 		batch.setProjectionMatrix(camera.combined);
-        
+
+        tileMapHelper.movePlatform(delta);
+
         batch.begin(); // Render Parallax background
 		for (ParallaxLayer layer : layers)
         {
@@ -145,13 +147,15 @@ public class GameScreen extends ScreenAdapter{
         healthBar.render(shapeRenderer);
 
         batch.begin();
+        tileMapHelper.render(batch);
+        
         orthogonalTiledMapRenderer.render();
         player.render(batch);
 
         if (!enemy.enemyIsDead())
             enemy.render(batch);
         batch.end();
-        //box2dDebugRenderer.render(world,camera.combined.scl(PPM));
+        // box2dDebugRenderer.render(world,camera.combined.scl(PPM));
     }
 
     public World getWorld(){

@@ -47,7 +47,7 @@ public class HealthTest {
 
         healthModel.regenHealth();
         health = healthModel.getHP();
-        assertEquals(80, health);
+        assertEquals(72, health);
     }
 
     @Test

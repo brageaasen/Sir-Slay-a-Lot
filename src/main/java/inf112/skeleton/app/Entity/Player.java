@@ -6,10 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
-import inf112.skeleton.app.Animation;
-import inf112.skeleton.app.AnimationHandler;
-import inf112.skeleton.app.Health;
-import inf112.skeleton.app.KeyHandler;
+import inf112.skeleton.app.*;
 
 public class Player extends GameEntity {
     public enum PlayerState {
@@ -23,9 +20,9 @@ public class Player extends GameEntity {
 
     private static final int PPM = 16; //?? what does this mean???
 
-    public boolean holdKnife;   //?? Set to private, change using API (e.g. 'slashKnife')
     public int jumpCounter;     //?? Set to private, change using API (e.g. 'Jump')
     private Direction facing;
+    public Knife knifeObj;
 
     // Combat
     private int attackDamage;
@@ -41,11 +38,11 @@ public class Player extends GameEntity {
 
     public Player(float width, float height, Body body) {
         super(width, height, body);
-        this.speed = 15f;   //?? Introduce constant?
+        this.speed = 20f;   //?? Introduce constant?
         this.attackDamage = 10;
         this.attackRange = 5;
 
-        this.holdKnife = false;
+        knifeObj = new Knife();
 
         this.jumpCounter = 0;
         this.facing = Direction.NONE;
@@ -82,7 +79,7 @@ public class Player extends GameEntity {
         sprite.setPosition(dx, dy);
         sprite.draw(batch);
 
-        if (holdKnife) {    // TODO: proper implementation of a knife.
+        if (knifeObj.isHoldKnife()) {
             knife.setPosition(dx + (facing == Direction.LEFT ? -width : width), dy);
             knife.draw(batch);
         }
@@ -96,13 +93,13 @@ public class Player extends GameEntity {
             anim.setState(PlayerState.Idle);
         } else if (getBody().getLinearVelocity().y > 0) {  // Checking if player is jumping
             anim.setState(PlayerState.Jump);
-        } else if (getBody().getLinearVelocity().y < 0) {  // Checking if player is falling
+        } else if (getBody().getLinearVelocity().y < -3) {  // Checking if player is falling
             anim.setState(PlayerState.Fall);
         } else {
             anim.setState(PlayerState.Run);
         }
 
-        anim.update();
+        anim.update(anim.getState() == PlayerState.Idle ? 8 : 6);
         anim.updateSprite(sprite, flipped);
     }
 
@@ -112,7 +109,6 @@ public class Player extends GameEntity {
         body.applyLinearImpulse(new Vector2(0, force), body.getPosition(), true);
         jumpCounter++;
     }
-
     /**
      * Flip the player
      */
