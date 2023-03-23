@@ -49,18 +49,19 @@ public class Player extends GameEntity {
 
         this.jumpCounter = 0;
         this.facing = Direction.NONE;
-        this.sprite = new Sprite(new Texture("assets/Player/Idle/Idle1.png"));
         this.knife = new Sprite(new Texture("assets/knife.png"));
         this.keyH = new KeyHandler(this);   //?? Should the player class hold input handling?
-        this.sprite.setScale(2);
 
         playerHealth = new Health();
-        anim = new AnimationHandler<>(PlayerState.Idle, new Animation("assets/Player/Idle/Idle%d.png", 4));
-        anim.addAnimation(PlayerState.Run, new Animation("assets/Player/Run/Run%d.png", 8));
-        anim.addAnimation(PlayerState.Hurt, new Animation("assets/Player/Hurt/Hurt%d.png", 1));
-        anim.addAnimation(PlayerState.Jump, new Animation("assets/Player/Jump/Jump%d.png", 3));
-        anim.addAnimation(PlayerState.Fall, new Animation("assets/Player/Fall/Fall%d.png", 3));
+        anim = new AnimationHandler<>(PlayerState.Idle, new Animation("assets/Player/Idle.png", 4));
+        anim.addAnimation(PlayerState.Run, new Animation("assets/Player/Run.png", 8));
+        anim.addAnimation(PlayerState.Hurt, new Animation("assets/Player/Hurt.png", 1));
+        anim.addAnimation(PlayerState.Jump, new Animation("assets/Player/Jump.png", 3));
+        anim.addAnimation(PlayerState.Fall, new Animation("assets/Player/Fall.png", 3));
         anim.setState(PlayerState.Idle);
+
+        this.sprite = new Sprite(anim.getAnimTexture());
+        this.sprite.setScale(2);
     }
 
     @Override
@@ -68,9 +69,9 @@ public class Player extends GameEntity {
         x = body.getPosition().x * PPM + 5;
         y = body.getPosition().y * PPM + 17;
 
-        updateSprite();
         keyH.checkUserInput();
         this.checkFallDamage();
+        updateSprite();
     }
 
     @Override
@@ -81,7 +82,7 @@ public class Player extends GameEntity {
         sprite.setPosition(dx, dy);
         sprite.draw(batch);
 
-        if (holdKnife) {
+        if (holdKnife) {    // TODO: proper implementation of a knife.
             knife.setPosition(dx + (facing == Direction.LEFT ? -width : width), dy);
             knife.draw(batch);
         }
@@ -100,9 +101,9 @@ public class Player extends GameEntity {
         } else {
             anim.setState(PlayerState.Run);
         }
-        anim.update();
 
-        sprite.setTexture(anim.getAnimTexture());
+        anim.update();
+        anim.updateSprite(sprite, flipped);
     }
 
     public void jump() {
@@ -112,9 +113,13 @@ public class Player extends GameEntity {
         jumpCounter++;
     }
 
-    public void flip() { // TODO?: replace unneeded texture?
-        sprite.flip(true, false);
-        knife.flip(true, false);
+    /**
+     * Flip the player
+     */
+    @Override
+    public void flip() {
+        super.flip();
+        knife.flip(true, false);    // TODO: proper implementation of a knife.
     }
 
     /**
@@ -138,12 +143,12 @@ public class Player extends GameEntity {
         switch (direction) {
             case RIGHT -> {
                 velX = 1;
-                if (this.facing != Direction.RIGHT && sprite.isFlipX())
+                if (this.facing != Direction.RIGHT && !flipped)
                     flip();
             }
             case LEFT -> {
                 velX = -1;
-                if (this.facing != Direction.LEFT && !sprite.isFlipX())
+                if (this.facing != Direction.LEFT && flipped)
                     flip();
             }
             default -> velX = 0;

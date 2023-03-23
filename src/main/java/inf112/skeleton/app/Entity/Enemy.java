@@ -51,13 +51,13 @@ public class Enemy extends GameEntity {
         this.attackRange = 40;
         this.attackDamage = 1;
 
-        anim = new AnimationHandler<>(EnemyState.Run, "assets/Enemy/Run/Run%d.png", 6);
-//        anim.addAnimation(CurrentSprite.Hurt, "assets/Enemy/Hurt/Hurt%d.png", 1);
-        anim.addAnimation(EnemyState.Jump, "assets/Enemy/Jump/Jump%d.png", 1);
-        anim.addAnimation(EnemyState.Fall, "assets/Enemy/Fall/Fall%d.png", 1);
-        anim.addAnimation(EnemyState.Attack, "assets/Enemy/Attack/Attack%d.png", 6);
-        anim.addAnimation(EnemyState.Dead, "assets/Enemy/Dead/Dead%d.png", 6);
-        anim.addAnimation(EnemyState.Hit, "assets/Enemy/Hit/Hit%d.png", 3);
+        anim = new AnimationHandler<>(EnemyState.Run, "assets/Enemy/Run.png", 6);
+//        anim.addAnimation(CurrentSprite.Hurt, "assets/Enemy/Hurt.png", 1);
+        anim.addAnimation(EnemyState.Jump, "assets/Enemy/Jump.png", 1);
+        anim.addAnimation(EnemyState.Fall, "assets/Enemy/Fall.png", 1);
+        anim.addAnimation(EnemyState.Attack, "assets/Enemy/Attack.png", 6);
+        anim.addAnimation(EnemyState.Dead, "assets/Enemy/Dead.png", 6);
+        anim.addAnimation(EnemyState.Hit, "assets/Enemy/Hit.png", 3);
         this.sprite = new Sprite(anim.getAnimTexture());
         this.sprite.setScale(2);
         enemyHealth = new Health();
@@ -117,7 +117,7 @@ public class Enemy extends GameEntity {
         }
 
         anim.update();
-        sprite.setTexture(anim.getAnimTexture());
+        anim.updateSprite(sprite, flipped);
     }
 
 
@@ -200,10 +200,6 @@ public class Enemy extends GameEntity {
      */
     public boolean isGrounded() {
         return body.getLinearVelocity().y == 0;
-    }
-
-    public void flip() {
-        sprite.flip(true, false);
     }
 
     // Get direction enemy is facing

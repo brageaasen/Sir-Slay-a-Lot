@@ -13,6 +13,7 @@ public abstract class GameEntity{
     
     protected float x,y,velX,velY,speed;
     protected float width,height;
+    protected boolean flipped;
 
     protected Body body;
 
@@ -25,7 +26,7 @@ public abstract class GameEntity{
         this.velX=0;
         this.velY=0;
         this.speed=0;
-        
+        this.flipped = false;
     }
 
     public abstract void update();
@@ -65,4 +66,11 @@ public abstract class GameEntity{
      * @param direction The direction to move in.
      */
     public abstract void move(Direction direction);
+
+    /**
+     * Flip the entity.
+     */
+    public void flip() {
+        flipped = !flipped;
+    }
 }
