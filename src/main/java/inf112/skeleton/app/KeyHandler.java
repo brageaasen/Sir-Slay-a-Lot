@@ -49,11 +49,11 @@ public class KeyHandler {
 
 
     private void isHoldingKnife() {
-        if (Gdx.input.isKeyPressed(Input.Keys.NUM_2)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.NUM_1)) {
             player.gun.setHoldGun(false);
             keyAlreadyPressed = true;
         } 
-        
+
         if (keyAlreadyPressed && Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
             player.knifeObj.setHoldKnife(true);
             player.knifeObj.setDealingDamage(true);
@@ -63,7 +63,7 @@ public class KeyHandler {
     }
 
     private void isHoldingGun() {
-        if (Gdx.input.isKeyPressed(Input.Keys.NUM_1)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.NUM_2)) {
             player.knifeObj.setHoldKnife(false);
             keyAlreadyPressed = false;
             if (!gunKeyAlreadyPressed) {

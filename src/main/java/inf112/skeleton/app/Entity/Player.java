@@ -97,7 +97,6 @@ public class Player extends GameEntity {
         if (knifeObj.isHoldKnife()) {
             knife.setPosition(dx + (sprite.isFlipX() ? -width : width), dy);
             knife.draw(batch);
-            // gun.fire(new Vector2(dx + (sprite.isFlipX() ? -width + 40 : width), dy + (sprite.isFlipX() ? 0 : 13)), (sprite.isFlipX() ? new Vector2(-10,0) : new Vector2(10,0)) );
         }
 
         if (gun.isHoldGun()){
