@@ -37,6 +37,7 @@ public class GameScreen extends ScreenAdapter{
     private HealthBar healthBar;
     private ShapeRenderer shapeRenderer;
     private Timer regenTimer;
+    private EnemyFactory enemyFactory;
 
     private static final float PPM = 16.0f;
 
@@ -84,7 +85,7 @@ public class GameScreen extends ScreenAdapter{
         }, 3, 3);
 
 
-        
+        enemyFactory = new EnemyFactory(4, 10, enemy, batch);
     }   
     
 

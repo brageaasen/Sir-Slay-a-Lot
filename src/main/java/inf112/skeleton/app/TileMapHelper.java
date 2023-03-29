@@ -1,5 +1,8 @@
 package inf112.skeleton.app;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
@@ -22,6 +25,8 @@ public class TileMapHelper {
     private TiledMap tiledMap;
     private GameScreen gameScreen;
     private static final int PPM = 16;
+
+    private List<Rectangle> surfaces = new ArrayList<>();
 
     public TileMapHelper(GameScreen gameScreen){
         this.gameScreen = gameScreen;
@@ -81,6 +86,9 @@ public class TileMapHelper {
         Shape shape = createPolygonShape(polygonMapObject);
         body.createFixture(shape,1000);
         shape.dispose();
+
+        Rectangle rect = polygonMapObject.getPolygon().getBoundingRectangle();
+        surfaces.add(rect);
 
     }
 
