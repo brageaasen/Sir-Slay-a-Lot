@@ -46,8 +46,8 @@ public class Player extends GameEntity {
 
     public Player(float width, float height, Body body) {
         super(width, height, body);
-        this.speed = 15f;   //?? Introduce constant?
-        this.attackDamage = 10;
+        this.speed = 20f;   //?? Introduce constant?
+        this.attackDamage = 15;
         this.attackRange = 5;
 
         knifeObj = new Knife();
@@ -68,7 +68,11 @@ public class Player extends GameEntity {
 
     @Override
     public void update() {
-        spriteChecker();
+        if (currentSprite == CurrentSprite.Idle)
+            spriteChecker(8);
+        else 
+            spriteChecker(6);
+        
         x = body.getPosition().x * PPM + 5;
         y = body.getPosition().y * PPM + 17;
 
@@ -97,9 +101,14 @@ public class Player extends GameEntity {
             this.gotHurt = false;
         } else if (facing == Direction.NONE && getBody().getLinearVelocity().y == 0) {
             currentSprite = CurrentSprite.Idle;
-        } else if (getBody().getLinearVelocity().y > 0) {  // Checking if player is jumping
+        } 
+        else if (getBody().getLinearVelocity().y < 0) {
+            currentSprite = CurrentSprite.Idle;
+        }
+        else if (getBody().getLinearVelocity().y > 0) {  // Checking if player is jumping
             currentSprite = CurrentSprite.Jump;
-        } else if (getBody().getLinearVelocity().y < 0) {  // Checking if player is falling
+        } else if (getBody().getLinearVelocity().y < -3) {  // Checking if player is falling
+            System.out.println(getBody().getLinearVelocity().y);
             currentSprite = CurrentSprite.Fall;
         } else {
             currentSprite = CurrentSprite.Run;
@@ -111,6 +120,7 @@ public class Player extends GameEntity {
         sprite.setTexture(new Texture("assets/Player/%s/%s%d.png".formatted(currentSprite.toString(), currentSprite.toString(), spriteNum)));
     }
 
+
     public void jump() {
         float force = body.getMass() * 10 * 2;
         body.setLinearVelocity(body.getLinearVelocity().x, 0);
@@ -118,9 +128,12 @@ public class Player extends GameEntity {
         jumpCounter++;
     }
 
-    private void spriteChecker() {
+    /**
+     * n is speed of which sprites changes
+     */
+    private void spriteChecker(int n) {
         spriteCounter++;
-        if (spriteCounter > 10) {
+        if (spriteCounter > n) {
             spriteCounter = 0;
             spriteNum++;
         }

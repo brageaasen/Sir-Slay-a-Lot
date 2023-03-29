@@ -1,8 +1,9 @@
 package inf112.skeleton.app;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
@@ -16,6 +17,8 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
+
+
 import inf112.skeleton.app.Entity.Player;
 import inf112.skeleton.app.Entity.Enemy;
 
@@ -26,10 +29,18 @@ public class TileMapHelper {
     private GameScreen gameScreen;
     private static final int PPM = 16;
 
-    private List<Rectangle> surfaces = new ArrayList<>();
+    private Body body2;
+    private Timer timer;
+    private Sprite movingPlatform;
+    private Vector2 position;
+
 
     public TileMapHelper(GameScreen gameScreen){
         this.gameScreen = gameScreen;
+        timer = new Timer();
+        this.movingPlatform= new Sprite(new Texture("assets/Background/movingPlatform.png"));
+       
+        
     }
 
     public OrthogonalTiledMapRenderer setupMap(){
@@ -45,7 +56,13 @@ public class TileMapHelper {
         for(MapObject mapObject : mapObjects){
 
             if (mapObject instanceof PolygonMapObject){
+                String polygonName = mapObject.getName();
+                if (polygonName != null && polygonName.equals("moving")){
+                    createMovingPlatform((PolygonMapObject) mapObject);
+                }
+                else {
                 createStaticBody((PolygonMapObject) mapObject);
+                }
             }   
 
             if(mapObject instanceof RectangleMapObject){
@@ -88,7 +105,7 @@ public class TileMapHelper {
         shape.dispose();
 
         Rectangle rect = polygonMapObject.getPolygon().getBoundingRectangle();
-        surfaces.add(rect);
+        //surfaces.add(rect);
 
     }
 
@@ -103,12 +120,66 @@ public class TileMapHelper {
         }
 
         PolygonShape shape = new PolygonShape();
+
         shape.set(worldVertices);
-    
+
         return shape;
 
     }
 
-   
 
+    
+    public void createMovingPlatform(PolygonMapObject polygonMapObject) {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.KinematicBody;
+        body2 = gameScreen.getWorld().createBody(bodyDef);
+        body2.setTransform(new Vector2(0,-10), 0);
+        Shape shape = createPolygonShape(polygonMapObject);
+        body2.createFixture(shape,1000);
+        shape.dispose();
+        
+        
+    }
+
+
+    public void movePlatform(float delta){
+        String direction = "up";
+        position = body2.getPosition();
+
+        if (position.y <= -10 ){
+            direction = "up";
+        }
+        if (position.y >= 5){
+            direction = "down";
+        }
+        if (direction.equals("down")){
+            timer.scheduleTask(new Timer.Task() {
+            @Override
+            public void run() {
+                    float newY = position.y - 3f * delta; // adjust the speed as needed
+                    body2.setTransform(position.x, newY, 0);
+                    
+                }
+            }, 4);
+        }
+
+        if (direction.equals("up")){  
+            timer.scheduleTask(new Timer.Task() {
+                @Override
+                public void run() {
+                    float newY = position.y + 3f * delta; // adjust the speed as needed
+                    body2.setTransform(position.x, newY, 0);
+                }               
+             }, 4);
+        }
+    }
+    
+    public void render(SpriteBatch batch) {
+        float x = body2.getPosition().x * PPM;
+        float y = body2.getPosition().y * PPM;
+
+        movingPlatform.setPosition(x + 1472, y + 353); // litt hardkodet
+        movingPlatform.draw(batch);
+    }
 }
+
