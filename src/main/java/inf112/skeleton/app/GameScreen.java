@@ -87,7 +87,7 @@ public class GameScreen extends ScreenAdapter{
         }, 3, 3);
 
 
-        enemyFactory = new EnemyFactory(4, 10, enemy, batch);
+        enemyFactory = new EnemyFactory(4, 5, enemy, batch);
         this.box2dDebugRenderer = new Box2DDebugRenderer();       
     }   
     
@@ -164,7 +164,11 @@ public class GameScreen extends ScreenAdapter{
        
         if (!enemy.enemyIsDead())
             enemy.render(batch);
+
+        enemyFactory.render();
+
         batch.end();
+        //tileMapHelper.setupMap();
         // box2dDebugRenderer.render(world,camera.combined.scl(PPM));
     }
 

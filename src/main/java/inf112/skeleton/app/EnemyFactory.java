@@ -1,5 +1,7 @@
 package inf112.skeleton.app;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -13,12 +15,18 @@ public class EnemyFactory {
     private int numEnemies;
     private Enemy enemyTemplate;
     private SpriteBatch batch;
+    private List<Enemy> enemies = new ArrayList<>();
 
     public EnemyFactory(int spawnInterval, int numEnemies, Enemy enemyTemplate, SpriteBatch batch) {
         this.spawnInterval = spawnInterval;
         this.numEnemies = numEnemies;
         this.enemyTemplate = enemyTemplate;
         this.batch = batch;
+
+        for (int i = 0; i < numEnemies; i++) {
+            Enemy enemyClone = enemyTemplate.clone();
+            enemies.add(enemyClone);
+        }
     }
 
     public void startSpawning() {
@@ -37,6 +45,14 @@ public class EnemyFactory {
                 Enemy enemyClone = enemyTemplate.clone();
                 enemyClone.render(batch);
             }
+        }
+    }
+
+    public void render() {
+        for (Enemy e : enemies) {
+            //batch.begin();
+            e.render(batch);
+            //batch.end();
         }
     }
 }

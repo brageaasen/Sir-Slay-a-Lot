@@ -44,8 +44,6 @@ public class TileMapHelper {
     }
 
     public OrthogonalTiledMapRenderer setupMap(){
-
-
         tiledMap = new TmxMapLoader().load("assets/map.tmx");
         parseMapObjects(tiledMap.getLayers().get("objects").getObjects());
 
@@ -61,7 +59,7 @@ public class TileMapHelper {
                     createMovingPlatform((PolygonMapObject) mapObject);
                 }
                 else {
-                createStaticBody((PolygonMapObject) mapObject);
+                    createStaticBody((PolygonMapObject) mapObject);
                 }
             }   
 
@@ -85,9 +83,7 @@ public class TileMapHelper {
                                 rectangle.getY() + rectangle.getHeight()/2, 
                                 rectangle.getWidth(), rectangle.getHeight(), false, gameScreen.getWorld());
 
-                    
                     gameScreen.setEnemy(new Enemy(rectangle.getWidth(),rectangle.getHeight(), body, gameScreen.getPlayer()));
-
                 }
                 
             }
@@ -103,9 +99,6 @@ public class TileMapHelper {
         Shape shape = createPolygonShape(polygonMapObject);
         body.createFixture(shape,1000);
         shape.dispose();
-
-        Rectangle rect = polygonMapObject.getPolygon().getBoundingRectangle();
-        //surfaces.add(rect);
 
     }
 
