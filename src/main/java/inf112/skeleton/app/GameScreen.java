@@ -154,8 +154,6 @@ public class GameScreen extends ScreenAdapter{
 		}
         batch.end();
 
-        healthBar.render(shapeRenderer);
-
         batch.begin();
         tileMapHelper.render(batch);
         
@@ -168,7 +166,7 @@ public class GameScreen extends ScreenAdapter{
         enemyFactory.render();
 
         batch.end();
-        //tileMapHelper.setupMap();
+        healthBar.render(shapeRenderer);
         // box2dDebugRenderer.render(world,camera.combined.scl(PPM));
     }
 
