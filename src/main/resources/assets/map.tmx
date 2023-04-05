@@ -73,6 +73,7 @@
   </object>
   <object id="28" name="player" x="1441.95" y="617.685" width="25.4954" height="52.1497"/>
   <object id="29" name="monster" x="1000.95" y="617.685" width="25.4954" height="52.1497"/>
+  <object id="33" name="monster2" x="1600.95" y="617.685" width="25.4954" height="52.1497"/>
   <object id="30" name="moving" x="1472" y="320">
    <polygon points="0,0 96,0 96,62.9278 0,62.9278"/>
   </object>

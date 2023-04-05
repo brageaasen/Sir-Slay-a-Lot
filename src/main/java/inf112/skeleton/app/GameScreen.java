@@ -35,6 +35,7 @@ public class GameScreen extends ScreenAdapter{
     
     private Player player;
     private Enemy enemy;
+    private Enemy enemy2;
     private HealthBar healthBar;
     private ShapeRenderer shapeRenderer;
     private Timer regenTimer;
@@ -87,7 +88,7 @@ public class GameScreen extends ScreenAdapter{
         }, 3, 3);
 
 
-        enemyFactory = new EnemyFactory(4, 5, enemy, batch);
+        //enemyFactory = new EnemyFactory(4, 5, enemy, batch);
         this.box2dDebugRenderer = new Box2DDebugRenderer();       
     }   
     
@@ -104,6 +105,9 @@ public class GameScreen extends ScreenAdapter{
         if (!enemy.enemyIsDead())
             enemy.update();
 
+        if (!enemy2.enemyIsDead())
+            enemy2.update();
+        
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
             Gdx.app.exit();
         }
@@ -163,7 +167,9 @@ public class GameScreen extends ScreenAdapter{
         if (!enemy.enemyIsDead())
             enemy.render(batch);
 
-        enemyFactory.render();
+        //enemyFactory.render();
+        if (!enemy2.enemyIsDead())
+            enemy2.render(batch);
 
         batch.end();
         healthBar.render(shapeRenderer);
@@ -187,6 +193,9 @@ public class GameScreen extends ScreenAdapter{
     public void setEnemy(Enemy enemy){
         this.enemy = enemy;
         
+    }
+    public void setEnemy2(Enemy enemy2) {
+        this.enemy2 = enemy2;
     }
 
     @Override 
