@@ -37,8 +37,6 @@ public class GameScreen extends ScreenAdapter{
     private final TileMapHelper tileMapHelper;
     
     private Player player;
-    private Enemy enemy;
-    private Enemy enemy2;
     private HealthBar healthBar;
     private ShapeRenderer shapeRenderer;
     private Timer regenTimer;
@@ -106,13 +104,6 @@ public class GameScreen extends ScreenAdapter{
         orthogonalTiledMapRenderer.setView(camera);
         player.update();
         
-
-        if (!enemy.enemyIsDead())
-            enemy.update();
-
-        if (!enemy2.enemyIsDead())
-            enemy2.update();
-        
         for (Enemy e : enemies) {
             if (!e.enemyIsDead())
                 e.update();
@@ -173,13 +164,6 @@ public class GameScreen extends ScreenAdapter{
         
         orthogonalTiledMapRenderer.render();
         player.render(batch);
-       
-        if (!enemy.enemyIsDead())
-            enemy.render(batch);
-
-        //enemyFactory.render();
-        if (!enemy2.enemyIsDead())
-            enemy2.render(batch);
 
         for (Enemy e : enemies) {
             if (!e.enemyIsDead())
@@ -201,15 +185,6 @@ public class GameScreen extends ScreenAdapter{
 
     public Player getPlayer(){
         return player;
-    }
-
-
-    public void setEnemy(Enemy enemy){
-        this.enemy = enemy;
-        
-    }
-    public void setEnemy2(Enemy enemy2) {
-        this.enemy2 = enemy2;
     }
 
     public void setEnemies(Enemy enemy) {

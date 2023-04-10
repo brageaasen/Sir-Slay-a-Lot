@@ -74,24 +74,6 @@ public class TileMapHelper {
 
                     
                     gameScreen.setPlayer(new Player(rectangle.getWidth(),rectangle.getHeight(), body));
-
-                }
-                if(rectangleName.equals("monster")){
-                    Body body = BodyHelper.createBody(
-                                rectangle.getX() + rectangle.getWidth()/2, 
-                                rectangle.getY() + rectangle.getHeight()/2, 
-                                rectangle.getWidth(), rectangle.getHeight(), false, gameScreen.getWorld());
-
-                    gameScreen.setEnemy(new Enemy(rectangle.getWidth(),rectangle.getHeight(), body, gameScreen.getPlayer()));
-                }
-
-                if(rectangleName.equals("monster2")){
-                    Body body = BodyHelper.createBody(
-                                rectangle.getX() + rectangle.getWidth()/2, 
-                                rectangle.getY() + rectangle.getHeight()/2, 
-                                rectangle.getWidth(), rectangle.getHeight(), false, gameScreen.getWorld());
-
-                    gameScreen.setEnemy2(new Enemy(rectangle.getWidth(),rectangle.getHeight(), body, gameScreen.getPlayer()));
                 }
             }
 
