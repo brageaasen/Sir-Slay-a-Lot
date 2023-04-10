@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
@@ -39,8 +40,6 @@ public class TileMapHelper {
         this.gameScreen = gameScreen;
         timer = new Timer();
         this.movingPlatform= new Sprite(new Texture("assets/Background/movingPlatform.png"));
-       
-        
     }
 
     public OrthogonalTiledMapRenderer setupMap(){
@@ -100,9 +99,17 @@ public class TileMapHelper {
 
     }
 
-    public void updateMap() {
+    public void updateMapObjects() {
         MapObjects objects = tiledMap.getLayers().get("objects").getObjects();
+        RectangleMapObject newObject = new RectangleMapObject((float) 1000.95, (float) 100, (float) 25.4954, (float) 52.1497);
+        Rectangle newRect = newObject.getRectangle();
+        Body newBody = BodyHelper.createBody(
+                    newRect.getX() + newRect.getWidth()/2, 
+                    newRect.getY() + newRect.getHeight()/2, 
+                    newRect.getWidth(), newRect.getHeight(), false, gameScreen.getWorld());
 
+        objects.add(newObject);
+        gameScreen.setEnemies(new Enemy(newRect.getWidth(),newRect.getHeight(), newBody, gameScreen.getPlayer()));
     }
 
     private void createStaticBody(PolygonMapObject polygonMapObject){

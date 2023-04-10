@@ -1,5 +1,8 @@
 package inf112.skeleton.app;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
@@ -39,7 +42,7 @@ public class GameScreen extends ScreenAdapter{
     private HealthBar healthBar;
     private ShapeRenderer shapeRenderer;
     private Timer regenTimer;
-    private EnemyFactory enemyFactory;
+    private Set<Enemy> enemies;
 
     private static final float PPM = 16.0f;
 
@@ -60,6 +63,7 @@ public class GameScreen extends ScreenAdapter{
 		layers[4] = new ParallaxLayer(new Texture("assets/Background/2.png"), 0.8f, true, false);
 		layers[5] = new ParallaxLayer(new Texture("assets/Background/1.png"), 1.0f, true, false);
 
+        enemies = new HashSet<>();
 
         this.tileMapHelper = new TileMapHelper(this);
         
@@ -83,6 +87,7 @@ public class GameScreen extends ScreenAdapter{
             @Override
             public void run() {
                 healthBar.renderRegen(shapeRenderer);
+                tileMapHelper.updateMapObjects();
             }
             
         }, 3, 3);
@@ -108,6 +113,11 @@ public class GameScreen extends ScreenAdapter{
         if (!enemy2.enemyIsDead())
             enemy2.update();
         
+        for (Enemy e : enemies) {
+            if (!e.enemyIsDead())
+                e.update();
+        }
+
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
             Gdx.app.exit();
         }
@@ -171,6 +181,10 @@ public class GameScreen extends ScreenAdapter{
         if (!enemy2.enemyIsDead())
             enemy2.render(batch);
 
+        for (Enemy e : enemies) {
+            if (!e.enemyIsDead())
+                e.render(batch);
+        }
         batch.end();
         healthBar.render(shapeRenderer);
         // box2dDebugRenderer.render(world,camera.combined.scl(PPM));
@@ -196,6 +210,10 @@ public class GameScreen extends ScreenAdapter{
     }
     public void setEnemy2(Enemy enemy2) {
         this.enemy2 = enemy2;
+    }
+
+    public void setEnemies(Enemy enemy) {
+        enemies.add(enemy);
     }
 
     @Override 
