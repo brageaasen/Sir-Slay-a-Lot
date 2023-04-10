@@ -15,7 +15,7 @@ public class EnemyTest {
     @Test
     void testTakeDamage() {
         TileMapHelper tileMapHelper;
-        Player player = new Player(32, 32, null );
+        Player player = new Player(32, 32, null, null);
         Enemy enemy = new Enemy(32, 32, null, player);
 
         Health maxHp = enemy.getMaxHealth();

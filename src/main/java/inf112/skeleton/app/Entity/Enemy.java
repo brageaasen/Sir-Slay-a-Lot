@@ -43,6 +43,7 @@ public class Enemy extends GameEntity {
     private int attackRange, attackDamage;
     private boolean attack = false;
     private boolean justAttacked = false;
+    private boolean dead = false;
 
     // Sprite field variables
     private int spriteCounter;
@@ -98,7 +99,7 @@ public class Enemy extends GameEntity {
             currentSprite = CurrentSprite.Jump;
         } else if (this.getBody().getLinearVelocity().y < 0) {  // Checking if enemy is falling
             currentSprite = CurrentSprite.Fall;
-        } else if (enemyIsDead()) {
+        } else if (enemyHealthIsZero()) {
             currentSprite = CurrentSprite.Dead;
         } else if (this.attack) {
             if (currentSprite != CurrentSprite.Attack)
@@ -116,6 +117,11 @@ public class Enemy extends GameEntity {
         if (currentSprite == CurrentSprite.Attack && spriteCounter > 6) {
             this.attack = false;
         }
+
+        if (currentSprite == CurrentSprite.Dead && spriteNum > 4) {
+            this.dead = true;
+        }
+
         sprite.setTexture(new Texture("assets/Enemy/%s/%s%d.png".formatted(currentSprite.toString(), currentSprite.toString(), spriteNum)));
     }
 
@@ -175,7 +181,7 @@ public class Enemy extends GameEntity {
         enemyPositionX = body.getPosition().x * PPM + 5;
         enemyPositionY = body.getPosition().y * PPM + 5;
 
-        if (Math.abs(playerPositionX - enemyPositionX) < player.getAttackRange() && Math.abs(playerPositionY - enemyPositionY) < player.getAttackRange() && player.knifeObj.getHoldKnife() && player.knifeObj.isDealingDamage()) {
+        if (Math.abs(playerPositionX - enemyPositionX) < this.attackRange && Math.abs(playerPositionY - enemyPositionY) < this.attackRange && player.knifeObj.getHoldKnife() && player.knifeObj.isDealingDamage()) {
             enemyHealth.decreaseHP(player.getAttackDamage());
             player.knifeObj.setDealingDamage(false);
         }
@@ -198,8 +204,12 @@ public class Enemy extends GameEntity {
     }
 
 
-    public boolean enemyIsDead() {
+    public boolean enemyHealthIsZero() {
         return enemyHealth.getHP() <= 0;
+    }
+
+    public boolean enemyIsDead(){
+        return this.dead;
     }
 
     /**

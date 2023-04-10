@@ -18,7 +18,8 @@ public class Player extends GameEntity {
         Run(8),
         Hurt(1),
         Jump(3),
-        Fall(3);
+        Fall(3),
+        Attack(4);
 
         final int frames;
         CurrentSprite(int i) {
@@ -46,10 +47,17 @@ public class Player extends GameEntity {
 
     private final Health playerHealth; 
 
-    public Player(float width, float height, Body body) {
+    private boolean attack = false;
+    private boolean justAttacked = false;
+
+    private float playerPositionX, playerPositionY;
+    private float enemyPositionX, enemyPositionY;
+    private final Enemy enemy;
+
+    public Player(float width, float height, Body body, Enemy enemy) {
         super(width, height, body);
         this.speed = 20f;   //?? Introduce constant?
-        this.attackDamage = 10;
+        this.attackDamage = 5;
         this.attackRange = 5;
 
         knifeObj = new Knife();
@@ -67,7 +75,8 @@ public class Player extends GameEntity {
 
         playerHealth = new Health();
 
-        this.gun = new Gun(300f, 20, 500, 0.5f, "assets/gunBullet.png", "assets/gun.png");
+        this.gun = new Gun(700f, 20, 500, 0.5f, "assets/gunBullet.png", "assets/gun.png");
+        this.enemy = enemy;
     }
 
     @Override
@@ -80,10 +89,14 @@ public class Player extends GameEntity {
         x = body.getPosition().x * PPM + 5;
         y = body.getPosition().y * PPM + 17;
 
+        playerPositionX = body.getPosition().x;
+        enemyPositionX = body.getPosition().x * PPM + 5;
+
         updateSprite();
         gun.update(Gdx.graphics.getDeltaTime());
         keyH.checkUserInput();
         this.checkFallDamage();
+        // dealDamage();
     }
 
     @Override
@@ -95,21 +108,32 @@ public class Player extends GameEntity {
         sprite.draw(batch);
 
         if (knifeObj.isHoldKnife()) {
+            this.attack = true;
             knife.setPosition(dx + (sprite.isFlipX() ? -width : width), dy);
             knife.draw(batch);
+
         }
 
         if (gun.isHoldGun()){
-            gun.setPosition(new Vector2(dx + (sprite.isFlipX() ? -width : width), dy));
+            gun.setPosition(new Vector2(dx + (sprite.isFlipX() ? -width-5 : width+5), dy + 5));
             gun.render(batch);
             if (gun.getFiring()){
+                this.attack = true;
                 gun.fire(new Vector2(dx + (sprite.isFlipX() ? -width + 40 : width), dy + (sprite.isFlipX() ? 0 : 13)), (sprite.isFlipX() ? new Vector2(-10,0) : new Vector2(10,0)) );
             }
         }
     }
 
     public void updateSprite() {
-        if (this.gotHurt == true) {
+        if (this.attack) {
+            if (currentSprite != CurrentSprite.Attack)
+                spriteNum = 1;
+                this.justAttacked = false;
+            currentSprite = CurrentSprite.Attack;
+            
+        } 
+
+        else if (this.gotHurt == true) {
             currentSprite = CurrentSprite.Hurt;
             this.gotHurt = false;
         } else if (facing == Direction.NONE && getBody().getLinearVelocity().y == 0) {
@@ -123,12 +147,18 @@ public class Player extends GameEntity {
         } else if (getBody().getLinearVelocity().y < -3) {  // Checking if player is falling
             System.out.println(getBody().getLinearVelocity().y);
             currentSprite = CurrentSprite.Fall;
-        } else {
+        } 
+    
+        else {
             currentSprite = CurrentSprite.Run;
         }
 
         if (spriteNum > currentSprite.frames) // Check if spriteNum is out of bounds for the given animation
             spriteNum = 1;
+
+        if (currentSprite == CurrentSprite.Attack && spriteCounter > 4) {
+            this.attack = false;
+        }
 
         sprite.setTexture(new Texture("assets/Player/%s/%s%d.png".formatted(currentSprite.toString(), currentSprite.toString(), spriteNum)));
     }
@@ -140,6 +170,9 @@ public class Player extends GameEntity {
         body.applyLinearImpulse(new Vector2(0, force), body.getPosition(), true);
         jumpCounter++;
     }
+
+
+   
 
     /**
      * n is speed of which sprites changes
@@ -157,6 +190,7 @@ public class Player extends GameEntity {
         knife.flip(true, false);
         gun.getSprite().flip(true, false);
     }
+    
 
     /**
      * Get direction player is facing

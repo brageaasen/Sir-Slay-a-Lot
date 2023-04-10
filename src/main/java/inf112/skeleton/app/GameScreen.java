@@ -100,9 +100,10 @@ public class GameScreen extends ScreenAdapter{
         player.update();
         
 
-        if (!enemy.enemyIsDead())
+        if (!enemy.enemyIsDead()){
             enemy.update();
-
+        }
+        
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
             Gdx.app.exit();
         }
@@ -164,8 +165,10 @@ public class GameScreen extends ScreenAdapter{
         
         player.render(batch);
        
-        if (!enemy.enemyIsDead())
+        if (!enemy.enemyIsDead()){
             enemy.render(batch);
+        }
+
         batch.end();
         // box2dDebugRenderer.render(world,camera.combined.scl(PPM));
     }
@@ -183,10 +186,12 @@ public class GameScreen extends ScreenAdapter{
         return player;
     }
 
-
     public void setEnemy(Enemy enemy){
         this.enemy = enemy;
-        
+    }
+
+    public Enemy getEnemy(){
+        return enemy;
     }
 
     @Override 

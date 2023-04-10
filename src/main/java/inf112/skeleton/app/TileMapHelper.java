@@ -76,7 +76,7 @@ public class TileMapHelper {
                                 rectangle.getWidth(), rectangle.getHeight(), false, gameScreen.getWorld());
 
                     
-                    gameScreen.setPlayer(new Player(rectangle.getWidth(),rectangle.getHeight(), body));
+                    gameScreen.setPlayer(new Player(rectangle.getWidth(),rectangle.getHeight(), body, gameScreen.getEnemy()));
 
                 }
                 if(rectangleName.equals("monster")){
