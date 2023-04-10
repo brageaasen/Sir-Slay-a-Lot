@@ -40,6 +40,7 @@ public class GameScreen extends ScreenAdapter{
     private HealthBar healthBar;
     private ShapeRenderer shapeRenderer;
     private Timer regenTimer;
+    private Timer spawnTimer;
     private Set<Enemy> enemies;
 
     private static final float PPM = 16.0f;
@@ -85,10 +86,17 @@ public class GameScreen extends ScreenAdapter{
             @Override
             public void run() {
                 healthBar.renderRegen(shapeRenderer);
-                tileMapHelper.updateMapObjects();
             }
             
         }, 3, 3);
+
+        spawnTimer = new Timer();
+        spawnTimer.scheduleTask(new Timer.Task() {
+            @Override
+            public void run() {
+                tileMapHelper.updateMapObjects();
+            }
+        }, 5, 5);
 
 
         //enemyFactory = new EnemyFactory(4, 5, enemy, batch);
