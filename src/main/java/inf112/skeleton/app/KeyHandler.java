@@ -10,6 +10,7 @@ public class KeyHandler {
         this.player = player;
         this.keyAlreadyPressed = false;
         this.gunKeyAlreadyPressed = false;
+        this.startWithKnife = true;
     }
     
     //Time related variables
@@ -18,6 +19,7 @@ public class KeyHandler {
     long elapsedTime;
     private boolean keyAlreadyPressed;
     private boolean gunKeyAlreadyPressed;
+    private boolean startWithKnife;
 
     public void checkUserInput() {
         if(Gdx.input.isKeyPressed(Input.Keys.D)){
@@ -27,6 +29,7 @@ public class KeyHandler {
         } else{
             player.move(GameEntity.Direction.NONE);
         }
+
 
         this.isHoldingKnife();
 
@@ -54,16 +57,25 @@ public class KeyHandler {
             keyAlreadyPressed = true;
         } 
 
-        if (keyAlreadyPressed && Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
+        if (startWithKnife && Gdx.input.isKeyPressed(Input.Keys.ENTER)){
             player.knifeObj.setHoldKnife(true);
             player.knifeObj.setDealingDamage(true);
-        } else {
+            
+        }
+
+        else if (keyAlreadyPressed && Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
+            player.knifeObj.setHoldKnife(true);
+            player.knifeObj.setDealingDamage(true);
+        } 
+        else {
             player.knifeObj.setHoldKnife(false);
         }
     }
 
     private void isHoldingGun() {
+        
         if (Gdx.input.isKeyPressed(Input.Keys.NUM_2)) {
+            startWithKnife = false;
             player.knifeObj.setHoldKnife(false);
             keyAlreadyPressed = false;
             if (!gunKeyAlreadyPressed) {

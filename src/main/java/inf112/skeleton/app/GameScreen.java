@@ -99,7 +99,6 @@ public class GameScreen extends ScreenAdapter{
         orthogonalTiledMapRenderer.setView(camera);
         player.update();
         
-
         if (!enemy.enemyIsDead()){
             enemy.update();
         }
@@ -107,8 +106,6 @@ public class GameScreen extends ScreenAdapter{
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
             Gdx.app.exit();
         }
-
-
     }
 
     private void cameraUpdate()
