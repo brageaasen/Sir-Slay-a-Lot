@@ -98,8 +98,6 @@ public class GameScreen extends ScreenAdapter{
             }
         }, 5, 5);
 
-
-        //enemyFactory = new EnemyFactory(4, 5, enemy, batch);
         this.box2dDebugRenderer = new Box2DDebugRenderer();       
     }   
     
