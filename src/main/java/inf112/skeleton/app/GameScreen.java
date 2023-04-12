@@ -79,6 +79,7 @@ public class GameScreen extends ScreenAdapter{
         float barWidth = (float) (screenWidth * 0.5);
         float barHeight = (float) (screenHeight * 0.025);
         healthBar = new HealthBar(player.getPlayerHealth(), barWidth, barHeight, screenWidth, screenHeight);
+        this.inventory = new Inventory(player);
 
         regenTimer = new Timer();
         regenTimer.scheduleTask(new Timer.Task() {
@@ -106,7 +107,7 @@ public class GameScreen extends ScreenAdapter{
         world.step(1/60f, 6, 2);
         cameraUpdate();
 
-        batch.setProjectionMatrix(camera.combined);
+        
         orthogonalTiledMapRenderer.setView(camera);
         player.update();
         
@@ -118,8 +119,6 @@ public class GameScreen extends ScreenAdapter{
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
             Gdx.app.exit();
         }
-
-
     }
 
     private void cameraUpdate()
@@ -165,10 +164,15 @@ public class GameScreen extends ScreenAdapter{
 		}
         batch.end();
 
+        healthBar.render(shapeRenderer);
+        inventory.render(shapeRenderer, batch);
+        
+
         batch.begin();
         tileMapHelper.render(batch);
         
         orthogonalTiledMapRenderer.render();
+        
         player.render(batch);
 
         for (Enemy e : enemies) {
