@@ -194,7 +194,7 @@ public class Enemy extends GameEntity {
         }
 
 
-        if (Math.abs(playerPositionX - enemyPositionX) < this.attackRange && Math.abs(playerPositionY - enemyPositionY) < this.attackRange && player.knifeObj.getHoldKnife() && player.knifeObj.isDealingDamage()) {
+        if (Math.abs(playerPositionX - enemyPositionX) < this.attackRange && Math.abs(playerPositionY - enemyPositionY) < this.attackRange && player.knifeObj.getHoldKnife() && player.knifeObj.getDealingDamage()) {
             enemyHealth.decreaseHP(player.getAttackDamage());
             player.knifeObj.setDealingDamage(false);
         }

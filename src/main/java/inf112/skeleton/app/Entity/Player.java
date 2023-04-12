@@ -50,11 +50,8 @@ public class Player extends GameEntity {
     private boolean attack = false;
     private boolean justAttacked = false;
 
-    private float playerPositionX, playerPositionY;
-    private float enemyPositionX, enemyPositionY;
-    private final Enemy enemy;
 
-    public Player(float width, float height, Body body, Enemy enemy) {
+    public Player(float width, float height, Body body) {
         super(width, height, body);
         this.speed = 20f;   //?? Introduce constant?
         this.attackDamage = 5;
@@ -76,7 +73,7 @@ public class Player extends GameEntity {
         playerHealth = new Health();
 
         this.gun = new Gun(700f, 20, 500, 0.5f, "assets/gunBullet.png", "assets/gun.png");
-        this.enemy = enemy;
+        
     }
 
     @Override
@@ -89,8 +86,6 @@ public class Player extends GameEntity {
         x = body.getPosition().x * PPM + 5;
         y = body.getPosition().y * PPM + 17;
 
-        playerPositionX = body.getPosition().x;
-        enemyPositionX = body.getPosition().x * PPM + 5;
 
         updateSprite();
         gun.update(Gdx.graphics.getDeltaTime());

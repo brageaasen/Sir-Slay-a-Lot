@@ -73,7 +73,7 @@ public class TileMapHelper {
                                 rectangle.getWidth(), rectangle.getHeight(), false, gameScreen.getWorld());
 
                     
-                    gameScreen.setPlayer(new Player(rectangle.getWidth(),rectangle.getHeight(), body, gameScreen.getEnemy()));
+                    gameScreen.setPlayer(new Player(rectangle.getWidth(),rectangle.getHeight(), body));
 
                 }
                 if(rectangleName.equals("monster")){
@@ -83,8 +83,8 @@ public class TileMapHelper {
                                 rectangle.getWidth(), rectangle.getHeight(), false, gameScreen.getWorld());
 
                     
-                    gameScreen.setEnemy(new Enemy(rectangle.getWidth(),rectangle.getHeight(), body, gameScreen.getPlayer()));
 
+                    gameScreen.setEnemies(new Enemy(rectangle.getWidth(),rectangle.getHeight(), body, gameScreen.getPlayer()));
                 }
             }
 

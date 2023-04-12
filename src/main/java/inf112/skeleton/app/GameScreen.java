@@ -31,8 +31,6 @@ public class GameScreen extends ScreenAdapter{
     private final World world;
     private final Viewport viewport;
 
-    private Box2DDebugRenderer box2dDebugRenderer;
-
     private final OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
     private final TileMapHelper tileMapHelper;
     
@@ -42,6 +40,7 @@ public class GameScreen extends ScreenAdapter{
     private Timer regenTimer;
     private Timer spawnTimer;
     private Set<Enemy> enemies;
+    private Inventory inventory;
 
     private static final float PPM = 16.0f;
 
@@ -50,7 +49,7 @@ public class GameScreen extends ScreenAdapter{
         this.batch = new SpriteBatch();
         this.world = new World(new Vector2(0,-25f),false);
 
-        this.box2dDebugRenderer = new Box2DDebugRenderer();
+    
 
         this.viewport = new FitViewport(camera.viewportWidth, camera.viewportHeight, camera);
         
@@ -99,7 +98,7 @@ public class GameScreen extends ScreenAdapter{
             }
         }, 5, 5);
 
-        this.box2dDebugRenderer = new Box2DDebugRenderer();       
+            
     }   
     
 
@@ -200,6 +199,12 @@ public class GameScreen extends ScreenAdapter{
     public void setEnemies(Enemy enemy) {
         enemies.add(enemy);
     }
+
+
+    public Set<Enemy> getEnemies(){
+        return enemies;
+    }
+    
 
     @Override 
     public void resize(int width, int height){
