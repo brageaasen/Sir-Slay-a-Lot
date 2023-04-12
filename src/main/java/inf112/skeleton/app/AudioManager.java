@@ -3,17 +3,19 @@ package inf112.skeleton.app;
 import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 
 public class AudioManager {
     
     private float volume = 1f;
     private HashMap<String, Sound> sounds = new HashMap<String, Sound>();
+    private HashMap<String, Music> music = new HashMap<String, Music>();
 
     public AudioManager()
     {
         // music
-        sounds.put("MainSong", Gdx.audio.newSound(Gdx.files.internal("assets/Sound/music/main.mp3")));
+        music.put("MainSong", Gdx.audio.newMusic(Gdx.files.internal("assets/Sound/music/main.mp3")));
 
         // sfx
         sounds.put("Hit", Gdx.audio.newSound(Gdx.files.internal("assets/Sound/sfx/hit.wav")));
@@ -30,6 +32,7 @@ public class AudioManager {
     public void Play(String sound)
     {
         sounds.get(sound).play(this.volume);
+        System.out.println("Played sound!");
     }
     
     /**
@@ -58,5 +61,18 @@ public class AudioManager {
     public void SetVolume(float volume)
     {
         this.volume = volume;
+    }
+
+    public void dispose()
+    {
+        for (Sound sound : sounds.values())
+        {
+            sound.dispose();
+        }
+
+        for (Music music : this.music.values())
+        {
+            music.dispose();
+        }
     }
 }

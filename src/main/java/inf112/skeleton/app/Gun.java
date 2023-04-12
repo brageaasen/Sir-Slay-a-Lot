@@ -26,6 +26,9 @@ public class Gun {
     private boolean dealingDamage;
     private boolean isFiring;
 
+    // Auido
+    private AudioManager audioManager = new AudioManager();
+
     public Gun(float bulletSpeed, int damage, int range, float fireRate, String bulletTexturePath, String gunTexturePath) {
         this.bulletSpeed = bulletSpeed;
         this.damage = damage;
@@ -68,6 +71,7 @@ public class Gun {
             // Create a new bullet entity and add it to the list
             Bullet bullet = new Bullet(position, direction, bulletSpeed, damage, range, bulletSprite);
             bullets.add(bullet);
+            this.audioManager.Play("Shoot");
 
             // Reset the fire timer
             fireTimer = fireRate;

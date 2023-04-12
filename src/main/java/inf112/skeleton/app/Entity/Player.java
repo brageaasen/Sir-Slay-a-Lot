@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.utils.Timer;
 
+import inf112.skeleton.app.AudioManager;
 import inf112.skeleton.app.Gun;
 import inf112.skeleton.app.Health;
 import inf112.skeleton.app.KeyHandler;
@@ -34,12 +36,18 @@ public class Player extends GameEntity {
     private CurrentSprite currentSprite;
     private Direction facing;
     public Knife knifeObj;
-    public Gun gun; 
+    public Gun gun;
+
+    // Audio
+    private AudioManager audioManager = new AudioManager();
 
     // Combat
     private int attackDamage;
     private int attackRange;
     private boolean gotHurt;
+
+    private Timer timer;
+    private boolean canMove = true;
 
     private final Sprite knife;
     private final KeyHandler keyH;
@@ -73,6 +81,8 @@ public class Player extends GameEntity {
         playerHealth = new Health();
 
         this.gun = new Gun(700f, 20, 500, 0.5f, "assets/gunBullet.png", "assets/gun.png");
+
+        this.timer = new Timer();
         
     }
 
@@ -139,9 +149,9 @@ public class Player extends GameEntity {
         else if (getBody().getLinearVelocity().y < 0) {
             currentSprite = CurrentSprite.Idle;
         }
-        else if (getBody().getLinearVelocity().y > 0) {  // Checking if player is jumping
+        else if (getBody().getLinearVelocity().y > 0) { // Checking if player is jumping
             currentSprite = CurrentSprite.Jump;
-        } else if (getBody().getLinearVelocity().y < -3) {  // Checking if player is falling
+        } else if (getBody().getLinearVelocity().y < -3) { // Checking if player is falling
             System.out.println(getBody().getLinearVelocity().y);
             currentSprite = CurrentSprite.Fall;
         } 
@@ -272,13 +282,16 @@ public class Player extends GameEntity {
     }
 
     public void gotHurt() {
+        this.audioManager.Play("Hurt");
         this.gotHurt = true;
-    }
-
-    public void fireGun() {
-        Vector2 position = new Vector2(x, y);
-        Vector2 direction = new Vector2(facing == Direction.RIGHT ? 1 : -1, 0);
-        gun.fire(position, direction);
+        this.canMove = false;
+        timer.scheduleTask(new Timer.Task() {
+            @Override
+            public void run()
+            {
+                canMove = true;
+            }               
+         }, 1);
     }
 
     public Gun getGun(){
