@@ -116,10 +116,12 @@ public class Player extends GameEntity {
 
         if (gun.isHoldGun()){
             gun.setPosition(new Vector2(dx + (sprite.isFlipX() ? -width-5 : width+5), dy + 5));
-            gun.render(batch);
+            gun.renderBullets(batch);
+            
             if (gun.getFiring()){
                 this.attack = true;
                 gun.fire(new Vector2(dx + (sprite.isFlipX() ? -width + 40 : width), dy + (sprite.isFlipX() ? 0 : 13)), (sprite.isFlipX() ? new Vector2(-10,0) : new Vector2(10,0)) );
+                gun.renderGun(batch);
             }
         }
     }
@@ -282,6 +284,10 @@ public class Player extends GameEntity {
         Vector2 position = new Vector2(x, y);
         Vector2 direction = new Vector2(facing == Direction.RIGHT ? 1 : -1, 0);
         gun.fire(position, direction);
+    }
+
+    public Gun getGun(){
+        return gun;
     }
 
 }

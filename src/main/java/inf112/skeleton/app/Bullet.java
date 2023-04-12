@@ -10,6 +10,7 @@ public class Bullet {
     private final int damage;
     private int range;
     private final Sprite sprite;
+    private boolean bulletHit;
 
     public Bullet(Vector2 position, Vector2 direction, float speed, int damage, int range, Sprite sprite) {
         this.position = new Vector2(position);
@@ -17,6 +18,7 @@ public class Bullet {
         this.damage = damage;
         this.range = range;
         this.sprite = sprite;
+        this.bulletHit = false;
         
         this.sprite.setRotation(direction.angleDeg());
         this.sprite.setScale(2);
@@ -33,8 +35,10 @@ public class Bullet {
 
     public void render(SpriteBatch batch) {
         // Render the bullet sprite at its current position
-        sprite.setPosition(position.x, position.y);
-        sprite.draw(batch);
+        if (!bulletHit){
+            sprite.setPosition(position.x, position.y);
+            sprite.draw(batch);
+        }
     }
 
     public Vector2 getPosition() {
@@ -47,5 +51,13 @@ public class Bullet {
 
     public int getRange() {
         return range;
+    }
+
+    public boolean getBulletHit(){
+        return bulletHit;
+    }
+
+    public void setBulletHit(boolean hit){
+        this.bulletHit = hit;
     }
 }

@@ -74,14 +74,22 @@ public class Gun {
         }
     }
 
-    public void render(SpriteBatch batch) {
+    public void renderGun(SpriteBatch batch) {
        
         gunSprite.draw(batch);
         
+    }
+
+    public void renderBullets(SpriteBatch batch) {
+       
         // Render each bullet in the list
         for (Bullet bullet : bullets) {
             bullet.render(batch);
         }
+    }
+
+    public List<Bullet> getBullets(){
+        return bullets;
     }
 
     public void setPosition(Vector2 vector){
@@ -110,18 +118,6 @@ public class Gun {
 
     public void setHoldGun(boolean holdKnife) {
         this.holdKnife = holdKnife;
-    }
-
-    public boolean isDealingDamage() {
-        return this.dealingDamage;
-    }
-
-    public boolean getDealingDamage() {
-        return this.dealingDamage;
-    }
-
-    public void setDealingDamage(boolean dealingDamage) {
-        this.dealingDamage = dealingDamage;
     }
 
 }

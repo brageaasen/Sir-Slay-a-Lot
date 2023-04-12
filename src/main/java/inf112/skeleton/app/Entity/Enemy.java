@@ -1,11 +1,14 @@
 package inf112.skeleton.app.Entity;
 
+import java.util.List;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
+import inf112.skeleton.app.Bullet;
 import inf112.skeleton.app.Health;
 
 public class Enemy extends GameEntity {
@@ -180,6 +183,16 @@ public class Enemy extends GameEntity {
         playerPositionY = player.getPosition().y;
         enemyPositionX = body.getPosition().x * PPM + 5;
         enemyPositionY = body.getPosition().y * PPM + 5;
+
+        List<Bullet> bullets = player.getGun().getBullets();
+
+        for (Bullet bullet : bullets){
+            if (Math.abs(bullet.getPosition().x - enemyPositionX) < this.attackRange && Math.abs(bullet.getPosition().y - enemyPositionY) < this.attackRange  && player.gun.getHoldGun()){
+                enemyHealth.decreaseHP(player.getAttackDamage());
+                bullet.setBulletHit(true);
+            }
+        }
+
 
         if (Math.abs(playerPositionX - enemyPositionX) < this.attackRange && Math.abs(playerPositionY - enemyPositionY) < this.attackRange && player.knifeObj.getHoldKnife() && player.knifeObj.isDealingDamage()) {
             enemyHealth.decreaseHP(player.getAttackDamage());
