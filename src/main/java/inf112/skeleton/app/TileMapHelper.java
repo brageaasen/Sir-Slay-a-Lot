@@ -15,6 +15,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Filter;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 
@@ -33,6 +35,7 @@ public class TileMapHelper {
     private Timer timer;
     private Sprite movingPlatform;
     private Vector2 position;
+
 
 
     public TileMapHelper(GameScreen gameScreen){
@@ -66,17 +69,16 @@ public class TileMapHelper {
                 String rectangleName = mapObject.getName();
 
                 if(rectangleName.equals("player")){
-                    Body body = BodyHelper.createBody(
+                    Body body = BodyHelper.createEntityBody(
                                 rectangle.getX() + rectangle.getWidth()/2, 
                                 rectangle.getY() + rectangle.getHeight()/2, 
                                 rectangle.getWidth(), rectangle.getHeight(), false, gameScreen.getWorld());
 
-                    
                     gameScreen.setPlayer(new Player(rectangle.getWidth(),rectangle.getHeight(), body));
 
                 }
                 if(rectangleName.equals("monster")){
-                    Body body = BodyHelper.createBody(
+                    Body body = BodyHelper.createEntityBody(
                                 rectangle.getX() + rectangle.getWidth()/2, 
                                 rectangle.getY() + rectangle.getHeight()/2, 
                                 rectangle.getWidth(), rectangle.getHeight(), false, gameScreen.getWorld());
@@ -95,7 +97,7 @@ public class TileMapHelper {
         MapObjects objects = tiledMap.getLayers().get("objects").getObjects();
         RectangleMapObject newObject = new RectangleMapObject((float) 1000.95, (float) 100, (float) 25.4954, (float) 52.1497);
         Rectangle newRect = newObject.getRectangle();
-        Body newBody = BodyHelper.createBody(
+        Body newBody = BodyHelper.createEntityBody(
                     newRect.getX() + newRect.getWidth()/2, 
                     newRect.getY() + newRect.getHeight()/2, 
                     newRect.getWidth(), newRect.getHeight(), false, gameScreen.getWorld());
