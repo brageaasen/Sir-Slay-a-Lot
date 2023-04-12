@@ -144,23 +144,27 @@ public class Enemy extends GameEntity {
         playerPositionX = player.getPosition().x;
         enemyPositionX = body.getPosition().x * PPM + 5;
 
-        if(enemyPositionX < playerPositionX){
+        if(enemyPositionX < playerPositionX-PPM){
             if (this.facing != Direction.RIGHT && sprite.isFlipX()) // Flip sprite if facing wrong way
                 flip();
             this.facing = Direction.RIGHT;
             velX = 1;
-        }else if(enemyPositionX > playerPositionX){
+        }else if(enemyPositionX > playerPositionX+PPM){
             if (this.facing != Direction.LEFT && !sprite.isFlipX()) // Flip sprite if facing wrong way
                 flip();
             this.facing = Direction.LEFT;
             velX = -1;
+        }else{
+            velX = 0;
         }
         
         body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 25 ? body.getLinearVelocity().y : 25);
         enemyPos = body.getPosition().x;
 
-        double random = Math.random(); //for random jumping
-        if(random <= 0.01 && jumpCounter < 2 && isGrounded()){
+        //double random = Math.random(); //for random jumping
+        float lastPos = enemyPositionX;
+        System.out.println("last: "+lastPos+" current: "+enemyPositionX);
+        if(body.getLinearVelocity().x == 0 && jumpCounter < 2 && isGrounded()){
             startTime = System.currentTimeMillis();
             float force = body.getMass() * 10 * 2;
             body.setLinearVelocity(body.getLinearVelocity().x, 0);
