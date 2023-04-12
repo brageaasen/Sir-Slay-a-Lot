@@ -1,6 +1,8 @@
 package inf112.skeleton.app;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.badlogic.gdx.Gdx;
@@ -21,7 +23,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.skeleton.app.Entity.Player;
 import inf112.skeleton.app.Entity.Enemy;
 
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
 public class GameScreen extends ScreenAdapter{
 
@@ -41,15 +42,14 @@ public class GameScreen extends ScreenAdapter{
     private Timer spawnTimer;
     private Set<Enemy> enemies;
     private Inventory inventory;
-
-    private static final float PPM = 16.0f;
+    // private Box2DDebugRenderer box2dDebugRenderer;
 
     public GameScreen(OrthographicCamera camera){
         this.camera = camera;
         this.batch = new SpriteBatch();
         this.world = new World(new Vector2(0,-25f),false);
 
-    
+        // this.box2dDebugRenderer = new Box2DDebugRenderer();        
 
         this.viewport = new FitViewport(camera.viewportWidth, camera.viewportHeight, camera);
         
@@ -110,14 +110,25 @@ public class GameScreen extends ScreenAdapter{
         orthogonalTiledMapRenderer.setView(camera);
         player.update();
         
+        List<Enemy> enemiesToRemove = new ArrayList<>();
         for (Enemy e : enemies) {
             if (!e.enemyIsDead())
                 e.update();
+            else{
+                enemiesToRemove.add(e);
+            }
+        }
+        enemies.removeAll(enemiesToRemove);
+        
+        for (Enemy e : enemiesToRemove) {
+            world.destroyBody(e.getBody());
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
             Gdx.app.exit();
         }
+
+       
     }
 
     private void cameraUpdate()

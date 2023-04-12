@@ -23,7 +23,6 @@ public class Gun {
     private final List<Bullet> bullets;
 
     private boolean holdKnife;
-    private boolean dealingDamage;
     private boolean isFiring;
 
     public Gun(float bulletSpeed, int damage, int range, float fireRate, String bulletTexturePath, String gunTexturePath) {
@@ -41,7 +40,6 @@ public class Gun {
         this.bullets = new ArrayList<>();
 
         this.holdKnife = false;
-        this.dealingDamage = false;
         this.isFiring = false;
     }
 

@@ -222,6 +222,7 @@ public class Enemy extends GameEntity {
     }
 
     public boolean enemyIsDead(){
+        
         return this.dead;
     }
 
