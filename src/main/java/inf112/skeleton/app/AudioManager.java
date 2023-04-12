@@ -14,7 +14,7 @@ public class AudioManager {
     {
         // music
         sounds.put("MainSong", Gdx.audio.newSound(Gdx.files.internal("assets/Sound/music/main.mp3")));
-        
+
         // sfx
         sounds.put("Hit", Gdx.audio.newSound(Gdx.files.internal("assets/Sound/sfx/hit.wav")));
         sounds.put("Hurt", Gdx.audio.newSound(Gdx.files.internal("assets/Sound/sfx/hurt.wav")));
@@ -40,6 +40,7 @@ public class AudioManager {
         sounds.get(sound).stop();
     }
 
+    //
     // public void Loop()
 
     /**
