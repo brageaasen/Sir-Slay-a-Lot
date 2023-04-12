@@ -250,4 +250,8 @@ public class Enemy extends GameEntity {
         return this.maxHealth;
     }
 
+    public Enemy clone() {
+        return new Enemy(width, height, this.getBody(), player);
+    }
+
 }

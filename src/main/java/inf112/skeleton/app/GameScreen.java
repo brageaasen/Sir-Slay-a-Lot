@@ -1,5 +1,8 @@
 package inf112.skeleton.app;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
@@ -34,11 +37,11 @@ public class GameScreen extends ScreenAdapter{
     private final TileMapHelper tileMapHelper;
     
     private Player player;
-    private Enemy enemy;
     private HealthBar healthBar;
     private ShapeRenderer shapeRenderer;
     private Timer regenTimer;
-    private Inventory inventory;
+    private Timer spawnTimer;
+    private Set<Enemy> enemies;
 
     private static final float PPM = 16.0f;
 
@@ -59,6 +62,7 @@ public class GameScreen extends ScreenAdapter{
 		layers[4] = new ParallaxLayer(new Texture("assets/Background/2.png"), 0.8f, true, false);
 		layers[5] = new ParallaxLayer(new Texture("assets/Background/1.png"), 1.0f, true, false);
 
+        enemies = new HashSet<>();
 
         this.tileMapHelper = new TileMapHelper(this);
         
@@ -87,7 +91,15 @@ public class GameScreen extends ScreenAdapter{
             
         }, 3, 3);
 
-        // this.box2dDebugRenderer = new Box2DDebugRenderer();       
+        spawnTimer = new Timer();
+        spawnTimer.scheduleTask(new Timer.Task() {
+            @Override
+            public void run() {
+                tileMapHelper.updateMapObjects();
+            }
+        }, 5, 5);
+
+        this.box2dDebugRenderer = new Box2DDebugRenderer();       
     }   
     
 
@@ -99,10 +111,11 @@ public class GameScreen extends ScreenAdapter{
         orthogonalTiledMapRenderer.setView(camera);
         player.update();
         
-        if (!enemy.enemyIsDead()){
-            enemy.update();
+        for (Enemy e : enemies) {
+            if (!e.enemyIsDead())
+                e.update();
         }
-        
+
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
             Gdx.app.exit();
         }
@@ -161,12 +174,13 @@ public class GameScreen extends ScreenAdapter{
         orthogonalTiledMapRenderer.render();
         
         player.render(batch);
-       
-        if (!enemy.enemyIsDead()){
-            enemy.render(batch);
-        }
 
+        for (Enemy e : enemies) {
+            if (!e.enemyIsDead())
+                e.render(batch);
+        }
         batch.end();
+        healthBar.render(shapeRenderer);
         // box2dDebugRenderer.render(world,camera.combined.scl(PPM));
     }
 
@@ -183,12 +197,8 @@ public class GameScreen extends ScreenAdapter{
         return player;
     }
 
-    public void setEnemy(Enemy enemy){
-        this.enemy = enemy;
-    }
-
-    public Enemy getEnemy(){
-        return enemy;
+    public void setEnemies(Enemy enemy) {
+        enemies.add(enemy);
     }
 
     @Override 
