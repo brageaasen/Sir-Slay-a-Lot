@@ -22,7 +22,6 @@ public class Bullet {
         
         this.sprite.setRotation(direction.angleDeg());
         this.sprite.setScale(2);
-    
     }
 
     public void update(float delta) {
