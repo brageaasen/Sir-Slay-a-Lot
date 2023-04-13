@@ -49,6 +49,8 @@ public class Player extends GameEntity {
 
     private boolean attack = false;
 
+    public int killCount = 0;
+
 
     public Player(float width, float height, Body body) {
         super(width, height, body);

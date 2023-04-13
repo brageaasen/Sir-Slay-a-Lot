@@ -76,24 +76,28 @@ public class KeyHandler {
     }
 
     private void isHoldingGun() {
+        int price = 1;
         
         if (Gdx.input.isKeyPressed(Input.Keys.NUM_2)) {
-            startWithKnife = false;
-            player.knifeObj.setHoldKnife(false);
-            keyAlreadyPressed = false;
-            if (!gunKeyAlreadyPressed) {
-                player.gun.setHoldGun(true);
-                gunKeyAlreadyPressed = true;   
-            }
-        } 
-        else {
-            gunKeyAlreadyPressed = false;
-            if (Gdx.input.isKeyPressed(Input.Keys.ENTER)){
-                player.gun.setFiring(true);;
-            }
-            else {
-                player.gun.setFiring(false);;
-            }
+            if(player.killCount >= price){
+                startWithKnife = false;
+                player.knifeObj.setHoldKnife(false);
+                keyAlreadyPressed = false;
+                if (!gunKeyAlreadyPressed) {
+                    player.gun.setHoldGun(true);
+                    gunKeyAlreadyPressed = true;   
+                }
+            }else if(player.killCount < price && !keyAlreadyPressed){
+                System.out.println("You need "+(price-player.killCount)+" more kills to unlock this");
+            } 
+        }else {
+                gunKeyAlreadyPressed = false;
+                if (Gdx.input.isKeyPressed(Input.Keys.ENTER)){
+                    player.gun.setFiring(true);;
+                }
+                else {
+                    player.gun.setFiring(false);;
+                }
         }
     }
 }

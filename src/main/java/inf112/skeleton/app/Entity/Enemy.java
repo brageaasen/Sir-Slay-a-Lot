@@ -104,7 +104,12 @@ public class Enemy extends GameEntity {
         } else if (this.getBody().getLinearVelocity().y < 0) {  // Checking if enemy is falling
             currentSprite = CurrentSprite.Fall;
         } else if (enemyHealthIsZero()) {
-            currentSprite = CurrentSprite.Dead;
+            if(!this.dead){
+                currentSprite = CurrentSprite.Dead;
+                player.killCount++;
+                System.out.println("Kill Count: "+player.killCount);
+                this.dead = true;
+            }
         } else if (this.attack) {
             if (currentSprite != CurrentSprite.Attack)
                 spriteNum = 1;
