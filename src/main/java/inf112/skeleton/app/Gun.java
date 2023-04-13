@@ -26,7 +26,7 @@ public class Gun {
 
     private boolean holdGun;
     private boolean isFiring;
-
+    private AudioManager audioManager;
     /**
      * @param bulletSpeed the speed of the bullets fired from the gun
      * @param damage the amount of damage each bullet causes
@@ -44,14 +44,14 @@ public class Gun {
         this.fireRate = fireRate;
         this.fireTimer = 0;
         this.bulletChamber = 20;
-
+        this.audioManager = new AudioManager();
         this.bulletTexture = new Texture(bulletTexturePath);
         this.bulletSprite = new Sprite(bulletTexture);
 
         this.gunSprite = new Sprite(new Texture(gunTexturePath));
         this.bulletSprite.setOrigin(gunSprite.getOriginX() - 20, gunSprite.getOriginY() - 5);
         this.bullets = new ArrayList<>();
-
+        
         this.holdGun = false;
         this.isFiring = false;
     }

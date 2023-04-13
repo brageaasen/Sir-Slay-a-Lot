@@ -301,4 +301,7 @@ public class Player extends GameEntity {
         return gun;
     }
 
+    public boolean isHurt(){
+        return gotHurt;
+    }
 }

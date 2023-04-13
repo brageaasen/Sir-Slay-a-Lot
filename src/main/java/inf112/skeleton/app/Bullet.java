@@ -72,14 +72,11 @@ public class Bullet {
         return damage;
     }
 
-<<<<<<< src/main/java/inf112/skeleton/app/Bullet.java
     
-=======
     public void setDamage(int damage) {
         this.damage = damage;
     }
 
->>>>>>> src/main/java/inf112/skeleton/app/Bullet.java
     /**     
      * This method returns the remaining range of the bullet, which is the maximum distance it can travel before disappearing.
      * @return An integer representing the remaining range of the bullet.
@@ -88,13 +85,10 @@ public class Bullet {
         return range;
     }
 
-<<<<<<< src/main/java/inf112/skeleton/app/Bullet.java
-=======
     public void setRange(int range) {
         this.range = range;
     }
 
->>>>>>> src/main/java/inf112/skeleton/app/Bullet.java
     /**
      * This method returns a boolean value indicating whether or not the bullet has hit its target.
      * @return true if the bullet has hit its target, false otherwise.
