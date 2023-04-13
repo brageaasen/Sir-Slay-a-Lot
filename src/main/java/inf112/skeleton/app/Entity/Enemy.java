@@ -51,13 +51,13 @@ public class Enemy extends GameEntity {
         this.attackRange = 40;
         this.attackDamage = 1;
 
-        anim = new AnimationHandler<>(EnemyState.Run, "assets/Enemy/Run.png", 6);
+        anim = new AnimationHandler<>(EnemyState.Run, "assets/Enemy/Run/Run1.png", 6);
 //        anim.addAnimation(CurrentSprite.Hurt, "assets/Enemy/Hurt.png", 1);
-        anim.addAnimation(EnemyState.Jump, "assets/Enemy/Jump.png", 1);
-        anim.addAnimation(EnemyState.Fall, "assets/Enemy/Fall.png", 1);
-        anim.addAnimation(EnemyState.Attack, "assets/Enemy/Attack.png", 6);
-        anim.addAnimation(EnemyState.Dead, "assets/Enemy/Dead.png", 6);
-        anim.addAnimation(EnemyState.Hit, "assets/Enemy/Hit.png", 3);
+        anim.addAnimation(EnemyState.Jump, "assets/Enemy/Jump/Jump%d.png", 1);
+        anim.addAnimation(EnemyState.Fall, "assets/Enemy/Fall/Fall%d.png", 1);
+        anim.addAnimation(EnemyState.Attack, "assets/Enemy/Attack/Attack%d.png", 6);
+        anim.addAnimation(EnemyState.Dead, "assets/Enemy/Dead/Dead%d.png", 6);
+        anim.addAnimation(EnemyState.Hit, "assets/Enemy/Hit/Hit%d.png", 3);
         this.sprite = new Sprite(anim.getAnimTexture());
         this.sprite.setScale(2);
         enemyHealth = new Health();

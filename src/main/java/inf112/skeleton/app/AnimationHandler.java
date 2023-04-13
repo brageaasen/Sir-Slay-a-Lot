@@ -1,7 +1,7 @@
 package inf112.skeleton.app;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.util.HashMap;
 
@@ -34,7 +34,7 @@ public class AnimationHandler<S> {
         return animations.get(currState);
     }
 
-    public TextureRegion getAnimTexture() {
+    public Texture getAnimTexture() {
         return getCurrAnim().getFrame(currFrame);
     }
 
@@ -66,12 +66,10 @@ public class AnimationHandler<S> {
         currFrame = 1;
     }
 
-    public void updateSprite(Sprite sprite, boolean flip) {
+    public void updateSprite(Sprite sprite, boolean flipped) {
         var t = getAnimTexture();
-        sprite.setTexture(t.getTexture());  // Should hopefully be optimized away if it's the same object (since we do sprite.texture = sprite.texture)
-
-        float u1 = flip ? t.getU() : t.getU2();
-        float u2 = flip ? t.getU2() : t.getU();
-        sprite.setRegion(u1, t.getV(), u2, t.getV2());
+        sprite.setTexture(t);  // Should hopefully be optimized away if it's the same object (since we do sprite.texture = sprite.texture)
+        if ((!flipped && !sprite.isFlipX()) || (flipped && sprite.isFlipX()))
+            sprite.flip(true, false);
     }
 }

@@ -50,11 +50,11 @@ public class Player extends GameEntity {
         this.keyH = new KeyHandler(this);   //?? Should the player class hold input handling?
 
         playerHealth = new Health();
-        anim = new AnimationHandler<>(PlayerState.Idle, new Animation("assets/Player/Idle.png", 4));
-        anim.addAnimation(PlayerState.Run, new Animation("assets/Player/Run.png", 8));
-        anim.addAnimation(PlayerState.Hurt, new Animation("assets/Player/Hurt.png", 1));
-        anim.addAnimation(PlayerState.Jump, new Animation("assets/Player/Jump.png", 3));
-        anim.addAnimation(PlayerState.Fall, new Animation("assets/Player/Fall.png", 3));
+        anim = new AnimationHandler<>(PlayerState.Idle, new Animation("assets/Player/Idle/Idle1.png", 4));
+        anim.addAnimation(PlayerState.Run, new Animation("assets/Player/Run/Run%d.png", 8));
+        anim.addAnimation(PlayerState.Hurt, new Animation("assets/Player/Hurt/Hurt%d.png", 1));
+        anim.addAnimation(PlayerState.Jump, new Animation("assets/Player/Jump/Jump%d.png", 3));
+        anim.addAnimation(PlayerState.Fall, new Animation("assets/Player/Fall/Fall%d.png", 3));
         anim.setState(PlayerState.Idle);
 
         this.sprite = new Sprite(anim.getAnimTexture());
