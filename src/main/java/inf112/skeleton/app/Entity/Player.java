@@ -108,7 +108,7 @@ public class Player extends GameEntity {
 
         }
 
-        if (gun.isHoldGun()){
+        if (gun.getHoldGun()){
             gun.setPosition(new Vector2(dx + (sprite.isFlipX() ? -width-5 : width+5), dy + 5));
             gun.renderBullets(batch);
             
