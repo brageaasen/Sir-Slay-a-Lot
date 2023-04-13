@@ -84,12 +84,12 @@ public class Enemy extends GameEntity {
         x = body.getPosition().x * PPM + 5;
         y = body.getPosition().y * PPM + 17;
         
-        System.out.println(this.canMove);
+        //System.out.println(this.canMove);
         if (!this.attack && this.canMove)
         {
-            System.out.println(this.canMove);
             updatePosition();
         }
+        //System.out.println(this.canMove);
         
         updateSprite();
         takeDamage();
@@ -213,7 +213,6 @@ public class Enemy extends GameEntity {
                 bullet.setBulletHit(true);
                 this.gotHit();
                 System.out.println("Got hit!");
-                //audioManager.Play("Hit");
             }
         }
 
@@ -222,7 +221,6 @@ public class Enemy extends GameEntity {
             enemyHealth.decreaseHP(player.getAttackDamage());
             player.knifeObj.setDealingDamage(false);
             this.gotHit();
-            //audioManager.Play("Hit");
         }
     }
 
@@ -279,6 +277,7 @@ public class Enemy extends GameEntity {
     public void gotHit() {
         this.audioManager.Play("Hit");
         this.gotHit = true;
+        System.out.println("Set canMove to False");
         this.canMove = false;
         timer.scheduleTask(new Timer.Task() {
             @Override
@@ -286,7 +285,7 @@ public class Enemy extends GameEntity {
             {
                 canMove = true;
             }               
-         }, 1);
+         }, 3);
     }
 
     public Enemy clone() {

@@ -8,7 +8,7 @@ import com.badlogic.gdx.audio.Sound;
 
 public class AudioManager {
     
-    private float volume = 1f;
+    private float volume = 0.5f;
     private HashMap<String, Sound> sounds = new HashMap<String, Sound>();
     private HashMap<String, Music> music = new HashMap<String, Music>();
 
@@ -31,8 +31,21 @@ public class AudioManager {
      */
     public void Play(String sound)
     {
-        sounds.get(sound).play(this.volume);
-        System.out.println("Played sound!");
+        try {
+            sounds.get(sound).play(this.volume);
+            System.out.println("Played sound!");
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        try {
+            Music song = music.get(sound);
+            song.setVolume(this.volume);
+            song.play();
+            System.out.println("Played music!");
+            
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
     }
     
     /**
@@ -42,6 +55,7 @@ public class AudioManager {
     {
         sounds.get(sound).stop();
     }
+
 
     //
     // public void Loop()

@@ -16,14 +16,16 @@ public class GameScreenLauncher extends Game{
     SpriteBatch batch;
     ShapeRenderer shapeRenderer;
     BitmapFont font;
-
+    
     @Override
     public void create() {
+        AudioManager audioManager = new AudioManager();
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
         font = new BitmapFont();
         setScreen(new TitleScreen(instance));
-        
+        //System.out.println(this.audioManager);
+        audioManager.Play("MainSong");
     }
     
     @Override

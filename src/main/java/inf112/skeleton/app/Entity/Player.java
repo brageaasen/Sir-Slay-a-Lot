@@ -290,7 +290,7 @@ public class Player extends GameEntity {
             public void run()
             {
                 canMove = true;
-            }               
+            }        
          }, 1);
     }
 
