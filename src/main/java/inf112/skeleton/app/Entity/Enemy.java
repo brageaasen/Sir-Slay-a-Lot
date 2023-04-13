@@ -13,6 +13,9 @@ import inf112.skeleton.app.AudioManager;
 import inf112.skeleton.app.Bullet;
 import inf112.skeleton.app.Health;
 
+/*
+ * This class is where the Enemy entity is created. It extends the GameEntity class. 
+ */
 public class Enemy extends GameEntity {
 
     public enum CurrentSprite {
@@ -63,6 +66,13 @@ public class Enemy extends GameEntity {
     private int spriteNum;
     private CurrentSprite currentSprite;
 
+    /**
+     * The constructor of the Enemy class 
+     * @param width the width of the enemy.
+     * @param height the height of the enemy.
+     * @param body a Body object representing the Box2D body of the enemy.
+     * @param player a Player object representing the player.
+     */
     public Enemy(float width, float height, Body body, Player player) {
         super(width, height, body);
         this.speed = 5f;
@@ -79,6 +89,9 @@ public class Enemy extends GameEntity {
         this.timer = new Timer();
     }
 
+    /**
+     * This method updates the state of the Enemy object.
+     */
     @Override
     public void update() {
         spriteChecker();
@@ -98,6 +111,10 @@ public class Enemy extends GameEntity {
         dealDamage();
     }
 
+    /**
+     * This method renders the Enemy object on the screen.
+     * @param batch a SpriteBatch object representing the batch used to draw the enemy.
+     */
     @Override
     public void render(SpriteBatch batch) {
         float dx = x - width - 15;
@@ -118,6 +135,9 @@ public class Enemy extends GameEntity {
 
     }
 
+    /**
+     * This method updates the sprite of the enemy based on its current state
+     */
     public void updateSprite() {
         if (this.getBody().getLinearVelocity().y != 0 && this.isGrounded()) {
             currentSprite = CurrentSprite.Run;
@@ -156,6 +176,9 @@ public class Enemy extends GameEntity {
         sprite.setTexture(new Texture("assets/Enemy/%s/%s%d.png".formatted(currentSprite.toString(), currentSprite.toString(), spriteNum)));
     }
 
+    /**
+     * This method updates the sprite of the enemy by incrementing the spriteCounter field and spriteNum if necessary.
+     */
     private void spriteChecker() {
         spriteCounter++;
         if (spriteCounter > 10) {
@@ -164,7 +187,10 @@ public class Enemy extends GameEntity {
         }
     }
 
-
+    /**
+     * This method updates the position of the enemy based on the position of the player. 
+     * It sets the velX field to 1 if the enemy is to the left of the player, -1 if the enemy is to the right of the player, and 0 otherwise.
+     */
     private void updatePosition() {
         velX = 0;
         if (player == null)
@@ -238,6 +264,9 @@ public class Enemy extends GameEntity {
         }
     }
 
+    /**
+     * This method checks if the enemy is in range of the player and, if so, deals damage to the player
+     */
     public void dealDamage() {
         playerPositionX = player.getPosition().x;
         playerPositionY = player.getPosition().y;
@@ -254,13 +283,19 @@ public class Enemy extends GameEntity {
         }
     }
 
-
+    /**
+     * Method to check if enemy health is below or equal to zero. 
+     * @return
+     */
     public boolean enemyHealthIsZero() {
         return enemyHealth.getHP() <= 0;
     }
 
+    /**
+     * Method to check if enemy is dead. 
+     * @return a bool that tells us if the enemy is dead or not
+     */
     public boolean enemyIsDead(){
-        
         return this.dead;
     }
 
@@ -272,23 +307,40 @@ public class Enemy extends GameEntity {
         return body.getLinearVelocity().y == 0;
     }
 
+    /*
+     * This method flips the sprite of the enemy horizontally.
+     */
     public void flip() {
         sprite.flip(true, false);
     }
 
-    // Get direction enemy is facing
+    /**
+     * Method that returns the direction of the enemy. 
+     * @return the direction of the enemy.
+     */
     public Direction getDirection() {
         return this.facing;
     }
 
+    /**
+     * Method that returns the Health of the enemy. 
+     * @return the Health of the enemy.
+     */
     public Health getHealth() {
         return this.enemyHealth;
     }
 
+    /**
+     * Method that returns the max health of the enemy. 
+     * @return the max health of the enemy.
+     */
     public Health getMaxHealth() {
         return this.maxHealth;
     }
 
+    /**
+     * Method that check whether or not the enemy got hit. If so, it plays  sound and stops it's movement. 
+     */
     public void gotHit() {
         this.audioManager.Play("Hit");
         this.gotHit = true;
@@ -303,6 +355,10 @@ public class Enemy extends GameEntity {
          }, 3);
     }
 
+    /**
+     * A method to clone an enemy. 
+     * @return a clone of the enemy.
+     */
     public Enemy clone() {
         return new Enemy(width, height, this.getBody(), player);
     }

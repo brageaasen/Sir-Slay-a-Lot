@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-
+/*
+ * Class for the gun used by the player. Has a fire method and rendering methods. 
+ */
 public class Gun {
     private final float bulletSpeed;
     private final int damage;
