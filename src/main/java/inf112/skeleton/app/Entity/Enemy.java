@@ -230,7 +230,6 @@ public class Enemy extends GameEntity {
             }
         }
 
-
         if (Math.abs(playerPositionX - enemyPositionX) < player.getKnifeAttackRange() && Math.abs(playerPositionY - enemyPositionY) < player.getKnifeAttackRange() && player.knifeObj.getHoldKnife() && player.knifeObj.getDealingDamage())
         {
             enemyHealth.decreaseHP(player.getAttackDamage());

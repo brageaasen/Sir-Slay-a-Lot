@@ -43,7 +43,7 @@ public class TileMapHelper {
     }
 
     public OrthogonalTiledMapRenderer setupMap(){
-        tiledMap = new TmxMapLoader().load("assets/map.tmx");
+        tiledMap = new TmxMapLoader().load("assets/Map/map.tmx");
         parseMapObjects(tiledMap.getLayers().get("objects").getObjects());
 
         return new OrthogonalTiledMapRenderer(tiledMap);

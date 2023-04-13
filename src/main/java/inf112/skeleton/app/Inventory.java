@@ -31,8 +31,8 @@ public class Inventory {
      * @param gun the gun that the player carries
      */
     public Inventory(Player player, Gun gun) {
-        this.gunSprite = new Sprite(new Texture("assets/gun.png"));
-        this.knife = new Sprite(new Texture("assets/knife.png"));
+        this.gunSprite = new Sprite(new Texture("assets/Player/Weapons/gun.png"));
+        this.knife = new Sprite(new Texture("assets/Player/Weapons/knife.png"));
         this.gun = gun;
         this.player = player;
         this.font = new BitmapFont();

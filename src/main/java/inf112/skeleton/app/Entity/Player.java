@@ -74,13 +74,13 @@ public class Player extends GameEntity {
         this.jumpCounter = 0;
         this.facing = Direction.NONE;
         this.sprite = new Sprite(new Texture("assets/Player/Idle/Idle1.png")); //?? Should we preload textures instead of loading them every time? (does it even matter?)
-        this.knife = new Sprite(new Texture("assets/knife.png"));
+        this.knife = new Sprite(new Texture("assets/Player/Weapons/knife.png"));
         this.keyH = new KeyHandler(this);   //?? Should the player class hold input handling?
         this.sprite.setScale(2);
 
         playerHealth = new Health();
 
-        this.gun = new Gun(700f, 20, 500, 0.5f, "assets/gunBullet.png", "assets/gun.png");
+        this.gun = new Gun(700f, 20, 500, 0.5f, "assets/Player/Weapons/gunBullet.png", "assets/Player/Weapons/gun.png");
 
         this.timer = new Timer();
         
