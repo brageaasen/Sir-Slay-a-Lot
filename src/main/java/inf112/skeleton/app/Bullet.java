@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 public class Bullet {
     private final Vector2 position;
     private final Vector2 velocity;
-    private final int damage;
+    private int damage;
     private int range;
     private final Sprite sprite;
     private boolean bulletHit;
@@ -72,7 +72,15 @@ public class Bullet {
         return damage;
     }
 
-    /**
+<<<<<<< src/main/java/inf112/skeleton/app/Bullet.java
+    
+=======
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
+>>>>>>> src/main/java/inf112/skeleton/app/Bullet.java
+    /**     
      * This method returns the remaining range of the bullet, which is the maximum distance it can travel before disappearing.
      * @return An integer representing the remaining range of the bullet.
      */
@@ -80,6 +88,13 @@ public class Bullet {
         return range;
     }
 
+<<<<<<< src/main/java/inf112/skeleton/app/Bullet.java
+=======
+    public void setRange(int range) {
+        this.range = range;
+    }
+
+>>>>>>> src/main/java/inf112/skeleton/app/Bullet.java
     /**
      * This method returns a boolean value indicating whether or not the bullet has hit its target.
      * @return true if the bullet has hit its target, false otherwise.
@@ -95,5 +110,9 @@ public class Bullet {
      */
     public void setBulletHit(boolean hit){
         this.bulletHit = hit;
+    }
+
+    public Vector2 getVelocity(){
+        return this.velocity;
     }
 }

@@ -209,7 +209,7 @@ public class GameScreen extends ScreenAdapter{
         batch.end();
         inventory.render(shapeRenderer, batch);
         healthBar.render(shapeRenderer);
-        // box2dDebugRenderer.render(world,camera.combined.scl(PPM));
+        // box2dDebugRenderer.render(world,camera.combined.scl(16));
     }
 
     /**

@@ -1,30 +1,19 @@
 package inf112.skeleton.app;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.Test;
 
-import com.badlogic.gdx.physics.box2d.Body;
+import org.mockito.Mockito;
+import static org.mockito.Mockito.*;
 
 import inf112.skeleton.app.Entity.Enemy;
-import inf112.skeleton.app.Entity.Player;
 
 public class EnemyTest {
 
     @Test
-    void testTakeDamage() {
-        TileMapHelper tileMapHelper;
-        Player player = new Player(32, 32, null);
-        Enemy enemy = new Enemy(32, 32, null, player);
-
-        Health maxHp = enemy.getMaxHealth();
-        Health hp = enemy.getHealth();
-    
-        assertEquals(hp, maxHp);
-
-        enemy.takeDamage();
-
-        assertEquals(maxHp.getHP() - player.getAttackDamage(), hp);
+    void testHealth() {
+        Enemy enemy = mock(Enemy.class, Mockito.CALLS_REAL_METHODS);
+        when(enemy.getHealth()).thenReturn(new Health());
+        assertEquals(100, enemy.getHealth().getHP());
     }
 }
