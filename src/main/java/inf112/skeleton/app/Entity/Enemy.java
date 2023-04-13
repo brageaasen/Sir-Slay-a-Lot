@@ -100,9 +100,9 @@ public class Enemy extends GameEntity {
         
         //System.out.println(this.canMove);
         if (!this.attack && this.canMove)
-        {
             updatePosition();
-        }
+        else
+            body.setLinearVelocity(0,0);    // Attacking or can't move, so we don't move it
         //System.out.println(this.canMove);
         
         updateSprite();
@@ -139,39 +139,45 @@ public class Enemy extends GameEntity {
      * This method updates the sprite of the enemy based on its current state
      */
     public void updateSprite() {
-        if (this.getBody().getLinearVelocity().y != 0 && this.isGrounded()) {
+        var lastState = currentSprite;
+
+        if (enemyHealthIsZero()) {
+            currentSprite = CurrentSprite.Dead;
+        } else if (this.getBody().getLinearVelocity().y != 0 && this.isGrounded()) {
             currentSprite = CurrentSprite.Run;
-        } else if (this.gotHit == true) {
+        } else if (this.gotHit) {
             currentSprite = CurrentSprite.Hit;
             this.gotHit = false;
         } else if (this.getBody().getLinearVelocity().y > 0) {  // Checking if enemy is jumping
             currentSprite = CurrentSprite.Jump;
         } else if (this.getBody().getLinearVelocity().y < 0) {  // Checking if enemy is falling
             currentSprite = CurrentSprite.Fall;
-        } else if (enemyHealthIsZero()) {
-            currentSprite = CurrentSprite.Dead;
         } else if (this.attack) {
             if (currentSprite != CurrentSprite.Attack)
-            {
-                spriteNum = 1;
                 this.justAttacked = false;
-            }
             currentSprite = CurrentSprite.Attack;
         } 
         else if (canMove){
             currentSprite = CurrentSprite.Run;
         }
 
-        if (spriteNum > currentSprite.frames) // Check if spriteNum is out of bounds for the given animation
+        if (currentSprite == CurrentSprite.Hit && spriteNum > 3) {  // Hit animation is done
+            canMove = true;
+        } else if (currentSprite == CurrentSprite.Dead && spriteNum > 6) {  // Death animation is done
+            this.dead = true;
+        }
+
+        // Reset the animation timers if we change animation state or the spriteNum is out of bounds for the given animation
+        if (lastState != currentSprite || spriteNum > currentSprite.frames) {
             spriteNum = 1;
+            spriteCounter = 0;
+        }
+
 
         if (currentSprite == CurrentSprite.Attack && spriteCounter > 6) {
             this.attack = false;
         }
 
-        if (currentSprite == CurrentSprite.Dead && spriteNum > 4) {
-            this.dead = true;
-        }
 
         sprite.setTexture(new Texture("assets/Enemy/%s/%s%d.png".formatted(currentSprite.toString(), currentSprite.toString(), spriteNum)));
     }
@@ -192,24 +198,25 @@ public class Enemy extends GameEntity {
      * It sets the velX field to 1 if the enemy is to the left of the player, -1 if the enemy is to the right of the player, and 0 otherwise.
      */
     private void updatePosition() {
-        velX = 0;
-        if (player == null)
+        if (enemyHealthIsZero() || player == null) {
+            body.setLinearVelocity(0,0);
             return;
+        }
+
+        velX = 0;
         playerPositionX = player.getPosition().x;
         enemyPositionX = body.getPosition().x * PPM + 5;
 
-        if(enemyPositionX < playerPositionX-PPM){
+        if (enemyPositionX < playerPositionX - PPM){
             if (this.facing != Direction.RIGHT && sprite.isFlipX()) // Flip sprite if facing wrong way
                 flip();
             this.facing = Direction.RIGHT;
             velX = 1;
-        }else if(enemyPositionX > playerPositionX+PPM){
+        } else if (enemyPositionX > playerPositionX + PPM){
             if (this.facing != Direction.LEFT && !sprite.isFlipX()) // Flip sprite if facing wrong way
                 flip();
             this.facing = Direction.LEFT;
             velX = -1;
-        }else{
-            velX = 0;
         }
         
         body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 25 ? body.getLinearVelocity().y : 25);
@@ -245,14 +252,14 @@ public class Enemy extends GameEntity {
         List<Bullet> bullets = player.getGun().getBullets();
 
         for (Bullet bullet : bullets){
+            if (bullet.getBulletHit())  // Skip bullets that have already hit something
+                continue;
+
             if (Math.abs(bullet.getPosition().x - enemyPositionX) < player.getGunAttackRange() && Math.abs(bullet.getPosition().y - enemyPositionY) < player.getGunAttackRange())
             {
-
                 enemyHealth.decreaseHP(player.getAttackDamage());
-                System.out.println("hit!");
                 bullet.setBulletHit(true);
                 this.gotHit();
-                System.out.println("Got hit!");
             }
         }
 
@@ -284,7 +291,7 @@ public class Enemy extends GameEntity {
     }
 
     /**
-     * Method to check if enemy health is below or equal to zero. 
+     * Method to check if enemy health is below or equal to zero.
      * @return
      */
     public boolean enemyHealthIsZero() {
@@ -344,15 +351,7 @@ public class Enemy extends GameEntity {
     public void gotHit() {
         this.audioManager.Play("Hit");
         this.gotHit = true;
-        System.out.println("Set canMove to False");
         this.canMove = false;
-        timer.scheduleTask(new Timer.Task() {
-            @Override
-            public void run()
-            {
-                canMove = true;
-            }               
-         }, 3);
     }
 
     /**
