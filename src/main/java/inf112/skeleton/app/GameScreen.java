@@ -42,14 +42,14 @@ public class GameScreen extends ScreenAdapter{
     private Timer spawnTimer;
     private Set<Enemy> enemies;
     private Inventory inventory;
-    private Box2DDebugRenderer box2dDebugRenderer;
+    // private Box2DDebugRenderer box2dDebugRenderer;
 
     public GameScreen(OrthographicCamera camera){
         this.camera = camera;
         this.batch = new SpriteBatch();
         this.world = new World(new Vector2(0,-25f),false);
 
-        this.box2dDebugRenderer = new Box2DDebugRenderer();        
+        // this.box2dDebugRenderer = new Box2DDebugRenderer();        
 
         this.viewport = new FitViewport(camera.viewportWidth, camera.viewportHeight, camera);
         
@@ -190,7 +190,7 @@ public class GameScreen extends ScreenAdapter{
         batch.end();
         inventory.render(shapeRenderer, batch);
         healthBar.render(shapeRenderer);
-        box2dDebugRenderer.render(world,camera.combined.scl(16));
+        // box2dDebugRenderer.render(world,camera.combined.scl(16));
     }
 
     public World getWorld(){
