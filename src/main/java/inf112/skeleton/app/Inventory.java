@@ -12,6 +12,9 @@ import com.badlogic.gdx.math.Matrix4;
 
 import inf112.skeleton.app.Entity.Player;
 
+/*
+ * The Inventory class represents the player's inventory in the game 
+ */
 public class Inventory {
 
     private Sprite gunSprite;
@@ -21,6 +24,12 @@ public class Inventory {
 
     private final Player player;
 
+    /**
+     * The constructor for the Inventory class. 
+     * It initializes the gunSprite, knife, gun, player, and font instance variables.
+     * @param player the player that the inventory belongs to
+     * @param gun the gun that the player carries
+     */
     public Inventory(Player player, Gun gun) {
         this.gunSprite = new Sprite(new Texture("assets/gun.png"));
         this.knife = new Sprite(new Texture("assets/knife.png"));
@@ -29,6 +38,10 @@ public class Inventory {
         this.font = new BitmapFont();
     }
 
+    /**
+     * Draws the gun and knife sprites onto the given batch at their specified positions.
+     * @param batch the batch used to draw the inventory.
+     */
     public void render(SpriteBatch batch) {
         gunSprite.setPosition(1000, 600);
         gunSprite.draw(batch);
@@ -36,6 +49,12 @@ public class Inventory {
         knife.draw(batch);
     }
 
+    /**
+     * Renders the rectangles used to represent the gun and knife in the inventory. 
+     * Also, draws the gun and knife sprites along with the number of bullets in the gun onto the batch.
+     * @param shapeRenderer the renderer used to draw shapes
+     * @param batch the batch used to draw the inventory.
+     */
     public void render(ShapeRenderer shapeRenderer, SpriteBatch batch) {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         if (!player.gun.getHoldGun()){

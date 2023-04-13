@@ -44,6 +44,10 @@ public class GameScreen extends ScreenAdapter{
     private Inventory inventory;
     // private Box2DDebugRenderer box2dDebugRenderer;
 
+    /**
+     * This is the constructor of the GameScreen class.
+     * @param camera an instance of OrthographicCamera class used to define the game camera.
+     */
     public GameScreen(OrthographicCamera camera){
         this.camera = camera;
         this.batch = new SpriteBatch();
@@ -102,6 +106,10 @@ public class GameScreen extends ScreenAdapter{
     }   
     
 
+    /**
+     * This method is used to update the game objects, such as the physics world, camera, player, enemies, and the tile map. 
+     * It also checks for user input to quit the game.
+     */
     private void update() {
         world.step(1/60f, 6, 2);
         cameraUpdate();
@@ -131,6 +139,12 @@ public class GameScreen extends ScreenAdapter{
        
     }
 
+
+    /**
+     * This method updates the position of the camera to follow the player. 
+     * The camera follows the player on both x and y axis if the player is above a certain y coordinate.
+     * Otherwise, the camera follows only the player on the x-axis.
+     */
     private void cameraUpdate()
     {
         // Camera follow player on y axis based on current y, e.g: Camera doesn't follow current y axis when player at bottom of map
@@ -147,6 +161,11 @@ public class GameScreen extends ScreenAdapter{
         camera.update();
     }
 
+    /**
+     * This method is the main rendering method that gets called repeatedly by the game loop. 
+     * It updates the game objects and renders them on the screen.
+     * @param delta the time in seconds between the current and previous frame.
+     */
     @Override 
     public void render(float delta){
         
@@ -193,24 +212,44 @@ public class GameScreen extends ScreenAdapter{
         // box2dDebugRenderer.render(world,camera.combined.scl(16));
     }
 
+    /**
+     * This method returns the World object associated with the current instance of the game.
+     * @return A World object
+     */
     public World getWorld(){
         return world;
     }
  
+    /**
+     * This method sets the Player object for the current instance of the game.
+     * @param player A Player object
+     */
     public void setPlayer(Player player){
         this.player = player;
         
     }
 
+    /**
+     *  This method returns the Player object associated with the current instance of the game.
+     * @return A Player object
+     */
     public Player getPlayer(){
         return player;
     }
 
+    /**
+     * This method adds an Enemy object to the Set of enemies for the current instance of the game.
+     * @param enemy An Enemy object
+     */
     public void setEnemies(Enemy enemy) {
         enemies.add(enemy);
     }
 
-
+    /**
+     * This method returns a copy of the Set of Enemy objects associated with the current instance of the game. 
+     * The copy is made to prevent direct modification of the original Set.
+     * @return A Set of Enemy objects
+     */
     public Set<Enemy> getEnemies(){
         Set<Enemy> enemiesCopy = new HashSet<Enemy>();
         enemiesCopy.addAll(enemies);
@@ -218,11 +257,21 @@ public class GameScreen extends ScreenAdapter{
     }
     
 
+    /**
+     * This method is called when the screen size is changed,
+     * and it updates the viewport to ensure that the game looks good regardless of the screen size.
+     * @param width the new screen width
+     * @param height the new screen height
+     */
     @Override 
     public void resize(int width, int height){
         viewport.update(width, height);
     }
 
+    /**
+     * This method is part of the LibGDX application  and is called when the application is about to be closed or destroyed.
+     * The method is responsible for freeing up any resources used by the application, such as textures, sounds, and batch.
+     */
     @Override
 	public void dispose () {
 		batch.dispose();
