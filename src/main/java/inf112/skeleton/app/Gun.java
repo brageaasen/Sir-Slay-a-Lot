@@ -26,6 +26,9 @@ public class Gun {
     private boolean holdGun;
     private boolean isFiring;
 
+    // Auido
+    private AudioManager audioManager = new AudioManager();
+
     public Gun(float bulletSpeed, int damage, int range, float fireRate, String bulletTexturePath, String gunTexturePath) {
         this.bulletSpeed = bulletSpeed;
         this.damage = damage;
@@ -65,14 +68,17 @@ public class Gun {
     public void fire(Vector2 position, Vector2 direction) {
         // Only fire the gun if the fire timer has expired
         if (fireTimer <= 0) {
-            if(bulletChamber != 0){
-            // Create a new bullet entity and add it to the list
-            Bullet bullet = new Bullet(position, direction, bulletSpeed, damage, range, bulletSprite);
-            bullets.add(bullet);
-            bulletChamber--;
+            if(bulletChamber != 0)
+            {
+                // Create a new bullet entity and add it to the list
+                Bullet bullet = new Bullet(position, direction, bulletSpeed, damage, range, bulletSprite);
+                bullets.add(bullet);
+                this.audioManager.Play("Shoot");
 
-            // Reset the fire timer
-            fireTimer = fireRate;
+                bulletChamber--;
+
+                // Reset the fire timer
+                fireTimer = fireRate;
             }
         }
     }

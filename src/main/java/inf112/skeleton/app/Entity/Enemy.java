@@ -7,7 +7,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.utils.Timer;
 
+import inf112.skeleton.app.AudioManager;
 import inf112.skeleton.app.Bullet;
 import inf112.skeleton.app.Health;
 
@@ -15,7 +17,6 @@ public class Enemy extends GameEntity {
 
     public enum CurrentSprite {
         Run(6),
-        Hurt(1),
         Jump(1),
         Fall(1),
         Attack(6),
@@ -44,10 +45,18 @@ public class Enemy extends GameEntity {
     private Health maxHealth;
     private Direction facing;
 
-    private int knifeAttackRange, gunAttackRange,attackDamage;
+    private boolean gotHit;
+    private boolean canMove = true;
+
+    private Timer timer;
+
+    private int attackRange, attackDamage;
     private boolean attack = false;
     private boolean justAttacked = false;
     private boolean dead = false;
+
+    // Audio
+    private AudioManager audioManager = new AudioManager();
 
     // Sprite field variables
     private int spriteCounter;
@@ -60,13 +69,14 @@ public class Enemy extends GameEntity {
         this.jumpCounter = 0;
         this.player = player;
         this.spriteNum = 1;
-        this.knifeAttackRange = 40;
-        this.gunAttackRange = 20;
-        this.attackDamage = 1;
+        this.attackRange = 40;
+        this.attackDamage = 5;
 
         this.sprite = new Sprite(new Texture("assets/Enemy/Run/Run1.png"));
         this.sprite.setScale(2);
         enemyHealth = new Health();
+
+        this.timer = new Timer();
     }
 
     @Override
@@ -75,8 +85,12 @@ public class Enemy extends GameEntity {
         x = body.getPosition().x * PPM + 5;
         y = body.getPosition().y * PPM + 17;
         
-        if (!this.attack)
+        //System.out.println(this.canMove);
+        if (!this.attack && this.canMove)
+        {
             updatePosition();
+        }
+        //System.out.println(this.canMove);
         
         updateSprite();
         takeDamage();
@@ -107,6 +121,9 @@ public class Enemy extends GameEntity {
     public void updateSprite() {
         if (this.getBody().getLinearVelocity().y != 0 && this.isGrounded()) {
             currentSprite = CurrentSprite.Run;
+        } else if (this.gotHit == true) {
+            currentSprite = CurrentSprite.Hit;
+            this.gotHit = false;
         } else if (this.getBody().getLinearVelocity().y > 0) {  // Checking if enemy is jumping
             currentSprite = CurrentSprite.Jump;
         } else if (this.getBody().getLinearVelocity().y < 0) {  // Checking if enemy is falling
@@ -115,11 +132,13 @@ public class Enemy extends GameEntity {
             currentSprite = CurrentSprite.Dead;
         } else if (this.attack) {
             if (currentSprite != CurrentSprite.Attack)
+            {
                 spriteNum = 1;
                 this.justAttacked = false;
+            }
             currentSprite = CurrentSprite.Attack;
         } 
-        else {
+        else if (canMove){
             currentSprite = CurrentSprite.Run;
         }
 
@@ -200,18 +219,24 @@ public class Enemy extends GameEntity {
         List<Bullet> bullets = player.getGun().getBullets();
 
         for (Bullet bullet : bullets){
-            if (Math.abs(bullet.getPosition().x - enemyPositionX) < this.gunAttackRange && Math.abs(bullet.getPosition().y - enemyPositionY) < this.gunAttackRange  && player.gun.getHoldGun()){
+            if (Math.abs(bullet.getPosition().x - enemyPositionX) < player.getGunAttackRange() && Math.abs(bullet.getPosition().y - enemyPositionY) < player.getGunAttackRange())
+            {
+
                 enemyHealth.decreaseHP(player.getAttackDamage());
                 System.out.println("hit!");
                 bullet.setBulletHit(true);
+                this.gotHit();
+                System.out.println("Got hit!");
             }
         }
 
-        if (Math.abs(playerPositionX - enemyPositionX) < this.knifeAttackRange && Math.abs(playerPositionY - enemyPositionY) < this.knifeAttackRange && player.knifeObj.getHoldKnife() && player.knifeObj.getDealingDamage()) {
+
+        if (Math.abs(playerPositionX - enemyPositionX) < player.getKnifeAttackRange() && Math.abs(playerPositionY - enemyPositionY) < player.getKnifeAttackRange() && player.knifeObj.getHoldKnife() && player.knifeObj.getDealingDamage())
+        {
             enemyHealth.decreaseHP(player.getAttackDamage());
             player.knifeObj.setDealingDamage(false);
-            
-        }  
+            this.gotHit();
+        }
     }
 
     public void dealDamage() {
@@ -222,10 +247,10 @@ public class Enemy extends GameEntity {
 
         if (Math.abs(playerPositionX - enemyPositionX) < this.knifeAttackRange && Math.abs(playerPositionY - enemyPositionY) < this.knifeAttackRange) {
             this.attack = true;
-            if (currentSprite == CurrentSprite.Attack && spriteNum == 4 && this.justAttacked == false) {
+            if (currentSprite == CurrentSprite.Attack && spriteNum == 4 && !this.justAttacked) {
                 player.getPlayerHealth().decreaseHP(this.attackDamage);
-                player.gotHurt();
                 this.justAttacked = true;
+                player.gotHurt();
             }
         }
     }
@@ -265,12 +290,22 @@ public class Enemy extends GameEntity {
         return this.maxHealth;
     }
 
-    public boolean hasBeenHit(){
-        return justAttacked;
+    public void gotHit() {
+        this.audioManager.Play("Hit");
+        this.gotHit = true;
+        System.out.println("Set canMove to False");
+        this.canMove = false;
+        timer.scheduleTask(new Timer.Task() {
+            @Override
+            public void run()
+            {
+                canMove = true;
+            }               
+         }, 3);
     }
 
-    public void setHasBeenHit(boolean bool){
-        this.justAttacked = bool;
+    public Enemy clone() {
+        return new Enemy(width, height, this.getBody(), player);
     }
 
 }

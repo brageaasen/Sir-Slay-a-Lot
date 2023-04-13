@@ -6,6 +6,9 @@ public class Health {
     private int hitPoints;
     private final int regenPerSecond;
 
+    // Audio
+    private AudioManager audioManager = new AudioManager();
+
     public Health() {
         hitPoints = 100;
         regenPerSecond = 2;
