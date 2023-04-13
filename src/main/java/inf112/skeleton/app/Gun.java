@@ -23,8 +23,7 @@ public class Gun {
     private final List<Bullet> bullets;
     private Integer bulletChamber;
 
-    private boolean holdKnife;
-    private boolean dealingDamage;
+    private boolean holdGun;
     private boolean isFiring;
 
     // Auido
@@ -45,8 +44,7 @@ public class Gun {
         this.bulletSprite.setOrigin(gunSprite.getOriginX() - 20, gunSprite.getOriginY() - 5);
         this.bullets = new ArrayList<>();
 
-        this.holdKnife = false;
-        this.dealingDamage = false;
+        this.holdGun = false;
         this.isFiring = false;
     }
 
@@ -100,7 +98,7 @@ public class Gun {
     }
 
     public List<Bullet> getBullets(){
-        return bullets;
+        return new ArrayList<>(bullets);
     }
 
     public void setPosition(Vector2 vector){
@@ -120,15 +118,22 @@ public class Gun {
     }
 
     public boolean isHoldGun() {
-        return this.holdKnife;
+        return this.holdGun;
     }
 
     public boolean getHoldGun() {
-        return this.holdKnife;
+        return this.holdGun;
     }
 
-    public void setHoldGun(boolean holdKnife) {
-        this.holdKnife = holdKnife;
+    public void setHoldGun(boolean holdGun) {
+        this.holdGun = holdGun;
     }
 
+    public Integer bulletsInChamber(){
+        return bulletChamber;
+    }
+
+    public void setBulletsInChamber(Integer numBullets){
+        this.bulletChamber = numBullets;
+    }
 }

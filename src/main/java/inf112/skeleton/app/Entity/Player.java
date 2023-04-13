@@ -56,7 +56,6 @@ public class Player extends GameEntity {
     private final Health playerHealth; 
 
     private boolean attack = false;
-    private boolean justAttacked = false;
 
 
     public Player(float width, float height, Body body) {
@@ -136,7 +135,6 @@ public class Player extends GameEntity {
         if (this.attack) {
             if (currentSprite != CurrentSprite.Attack)
                 spriteNum = 1;
-                this.justAttacked = false;
             currentSprite = CurrentSprite.Attack;
             
         } 

@@ -1,9 +1,6 @@
 package inf112.skeleton.app;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.scenes.scene2d.ui.Table.Debug;
-
 import inf112.skeleton.app.Entity.GameEntity;
 import inf112.skeleton.app.Entity.Player;
 

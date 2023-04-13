@@ -39,6 +39,7 @@ public class Enemy extends GameEntity {
     private float playerPositionX, playerPositionY;
     private float enemyPositionX, enemyPositionY;
     public static float enemyPos;
+    private float lastPos;
     private final Player player;
     private Health enemyHealth;
     private Health maxHealth;
@@ -93,6 +94,7 @@ public class Enemy extends GameEntity {
         
         updateSprite();
         takeDamage();
+        
         dealDamage();
     }
 
@@ -103,6 +105,12 @@ public class Enemy extends GameEntity {
 
         sprite.setPosition(dx,dy);
         sprite.draw(batch);
+
+        
+    }
+
+    public void resetHitFlags() {
+        
     }
 
     @Override
@@ -164,30 +172,33 @@ public class Enemy extends GameEntity {
         playerPositionX = player.getPosition().x;
         enemyPositionX = body.getPosition().x * PPM + 5;
 
-        if(enemyPositionX < playerPositionX){
+        if(enemyPositionX < playerPositionX-PPM){
             if (this.facing != Direction.RIGHT && sprite.isFlipX()) // Flip sprite if facing wrong way
                 flip();
             this.facing = Direction.RIGHT;
             velX = 1;
-        }else if(enemyPositionX > playerPositionX){
+        }else if(enemyPositionX > playerPositionX+PPM){
             if (this.facing != Direction.LEFT && !sprite.isFlipX()) // Flip sprite if facing wrong way
                 flip();
             this.facing = Direction.LEFT;
             velX = -1;
+        }else{
+            velX = 0;
         }
         
         body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 25 ? body.getLinearVelocity().y : 25);
         enemyPos = body.getPosition().x;
 
-        double random = Math.random(); // for random jumping
-        if(random <= 0.01 && jumpCounter < 2 && isGrounded()){
+        //double random = Math.random(); //for random jumping
+        if((lastPos == enemyPositionX || body.getLinearVelocity().x == 0) && jumpCounter < 2 && isGrounded()){
             startTime = System.currentTimeMillis();
             float force = body.getMass() * 10 * 2;
             body.setLinearVelocity(body.getLinearVelocity().x, 0);
             body.applyLinearImpulse(new Vector2(0, force), body.getPosition(), true);
             jumpCounter++;
         }
-    
+        lastPos = enemyPositionX;
+
         endTime = System.currentTimeMillis();
         elapsedTime = endTime - startTime;
         if(body.getLinearVelocity().y == 0 && elapsedTime >= 250){
@@ -199,6 +210,7 @@ public class Enemy extends GameEntity {
      * Take damage from player based on player current attack damage
      */
     public void takeDamage() {
+        
         playerPositionX = player.getPosition().x;
         playerPositionY = player.getPosition().y;
         enemyPositionX = body.getPosition().x * PPM + 5;
@@ -211,6 +223,7 @@ public class Enemy extends GameEntity {
             {
 
                 enemyHealth.decreaseHP(player.getAttackDamage());
+                System.out.println("hit!");
                 bullet.setBulletHit(true);
                 this.gotHit();
                 System.out.println("Got hit!");
@@ -232,7 +245,7 @@ public class Enemy extends GameEntity {
         enemyPositionX = body.getPosition().x * PPM + 5;
         enemyPositionY = body.getPosition().y * PPM + 5;
 
-        if (Math.abs(playerPositionX - enemyPositionX) < this.attackRange && Math.abs(playerPositionY - enemyPositionY) < this.attackRange) {
+        if (Math.abs(playerPositionX - enemyPositionX) < this.knifeAttackRange && Math.abs(playerPositionY - enemyPositionY) < this.knifeAttackRange) {
             this.attack = true;
             if (currentSprite == CurrentSprite.Attack && spriteNum == 4 && !this.justAttacked) {
                 player.getPlayerHealth().decreaseHP(this.attackDamage);
@@ -248,6 +261,7 @@ public class Enemy extends GameEntity {
     }
 
     public boolean enemyIsDead(){
+        
         return this.dead;
     }
 
