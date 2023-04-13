@@ -92,7 +92,7 @@ public class Gun {
     }
 
     public List<Bullet> getBullets(){
-        return bullets;
+        return new ArrayList<>(bullets);
     }
 
     public void setPosition(Vector2 vector){

@@ -147,11 +147,10 @@ public class GameScreen extends ScreenAdapter{
         camera.update();
     }
 
-   
-
-
     @Override 
     public void render(float delta){
+        
+
         this.update();
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -195,7 +194,7 @@ public class GameScreen extends ScreenAdapter{
     }
 
     public World getWorld(){
-        return this.world;
+        return world;
     }
  
     public void setPlayer(Player player){
@@ -213,7 +212,9 @@ public class GameScreen extends ScreenAdapter{
 
 
     public Set<Enemy> getEnemies(){
-        return enemies;
+        Set<Enemy> enemiesCopy = new HashSet<Enemy>();
+        enemiesCopy.addAll(enemies);
+        return enemiesCopy;
     }
     
 
