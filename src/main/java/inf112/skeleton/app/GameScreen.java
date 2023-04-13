@@ -78,7 +78,7 @@ public class GameScreen extends ScreenAdapter{
         float barWidth = (float) (screenWidth * 0.5);
         float barHeight = (float) (screenHeight * 0.025);
         healthBar = new HealthBar(player.getPlayerHealth(), barWidth, barHeight, screenWidth, screenHeight);
-        this.inventory = new Inventory(player);
+        this.inventory = new Inventory(player, player.getGun());
 
         regenTimer = new Timer();
         regenTimer.scheduleTask(new Timer.Task() {

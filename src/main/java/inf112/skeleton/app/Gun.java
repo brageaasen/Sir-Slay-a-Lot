@@ -21,6 +21,7 @@ public class Gun {
 
     private final Sprite gunSprite;
     private final List<Bullet> bullets;
+    private Integer bulletChamber;
 
     private boolean holdKnife;
     private boolean isFiring;
@@ -31,6 +32,7 @@ public class Gun {
         this.range = range;
         this.fireRate = fireRate;
         this.fireTimer = 0;
+        this.bulletChamber = 20;
 
         this.bulletTexture = new Texture(bulletTexturePath);
         this.bulletSprite = new Sprite(bulletTexture);
@@ -63,12 +65,15 @@ public class Gun {
     public void fire(Vector2 position, Vector2 direction) {
         // Only fire the gun if the fire timer has expired
         if (fireTimer <= 0) {
+            if(bulletChamber != 0){
             // Create a new bullet entity and add it to the list
             Bullet bullet = new Bullet(position, direction, bulletSpeed, damage, range, bulletSprite);
             bullets.add(bullet);
+            bulletChamber--;
 
             // Reset the fire timer
             fireTimer = fireRate;
+            }
         }
     }
 
@@ -118,4 +123,7 @@ public class Gun {
         this.holdKnife = holdKnife;
     }
 
+    public Integer bulletsInChamber(){
+        return bulletChamber;
+    }
 }
