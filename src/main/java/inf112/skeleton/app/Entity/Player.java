@@ -273,6 +273,10 @@ public class Player extends GameEntity {
         this.gotHurt = true;
     }
 
+    public boolean isHurt() {
+        return this.gotHurt;
+    }
+
     public void fireGun() {
         Vector2 position = new Vector2(x, y);
         Vector2 direction = new Vector2(facing == Direction.RIGHT ? 1 : -1, 0);

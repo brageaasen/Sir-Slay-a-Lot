@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 public class Bullet {
     private final Vector2 position;
     private final Vector2 velocity;
-    private final int damage;
+    private int damage;
     private int range;
     private final Sprite sprite;
     private boolean bulletHit;
@@ -48,8 +48,16 @@ public class Bullet {
         return damage;
     }
 
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
     public int getRange() {
         return range;
+    }
+
+    public void setRange(int range) {
+        this.range = range;
     }
 
     public boolean getBulletHit(){
@@ -58,5 +66,9 @@ public class Bullet {
 
     public void setBulletHit(boolean hit){
         this.bulletHit = hit;
+    }
+
+    public Vector2 getVelocity(){
+        return this.velocity;
     }
 }
