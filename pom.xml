@@ -131,6 +131,12 @@
 			<version>${slf4j.version}</version>
 		</dependency>
 		<dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>3.12.4</version>
+            <scope>test</scope>
+        </dependency>
+		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
 			<version>${slf4j.version}</version>
@@ -262,6 +268,22 @@
 					<artifactId>exec-maven-plugin</artifactId>
 					<version>3.0.0</version>
 				</plugin>
+				 <plugin>
+					<groupId>com.github.spotbugs</groupId>
+					<artifactId>spotbugs-maven-plugin</artifactId>
+					<version>4.7.2.1</version>
+					<dependencies>
+						<!-- overwrite dependency on spotbugs if you want to specify the version of spotbugs -->
+						<dependency>
+						<groupId>com.github.spotbugs</groupId>
+						<artifactId>spotbugs</artifactId>
+						<version>4.7.3</version>
+						</dependency>
+					</dependencies>
+					<configuration>
+					<xmlOutput>true</xmlOutput>
+					</configuration>
+					</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>

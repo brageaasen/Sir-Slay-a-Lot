@@ -80,6 +80,7 @@ public class Enemy extends GameEntity {
         
         updateSprite();
         takeDamage();
+        
         dealDamage();
     }
 
@@ -90,6 +91,12 @@ public class Enemy extends GameEntity {
 
         sprite.setPosition(dx,dy);
         sprite.draw(batch);
+
+        
+    }
+
+    public void resetHitFlags() {
+        
     }
 
     @Override
@@ -184,6 +191,7 @@ public class Enemy extends GameEntity {
      * Take damage from player based on player current attack damage
      */
     public void takeDamage() {
+        
         playerPositionX = player.getPosition().x;
         playerPositionY = player.getPosition().y;
         enemyPositionX = body.getPosition().x * PPM + 5;
@@ -194,6 +202,7 @@ public class Enemy extends GameEntity {
         for (Bullet bullet : bullets){
             if (Math.abs(bullet.getPosition().x - enemyPositionX) < this.gunAttackRange && Math.abs(bullet.getPosition().y - enemyPositionY) < this.gunAttackRange  && player.gun.getHoldGun()){
                 enemyHealth.decreaseHP(player.getAttackDamage());
+                System.out.println("hit!");
                 bullet.setBulletHit(true);
             }
         }
@@ -201,7 +210,8 @@ public class Enemy extends GameEntity {
         if (Math.abs(playerPositionX - enemyPositionX) < this.knifeAttackRange && Math.abs(playerPositionY - enemyPositionY) < this.knifeAttackRange && player.knifeObj.getHoldKnife() && player.knifeObj.getDealingDamage()) {
             enemyHealth.decreaseHP(player.getAttackDamage());
             player.knifeObj.setDealingDamage(false);
-        }
+            
+        }  
     }
 
     public void dealDamage() {
@@ -255,8 +265,12 @@ public class Enemy extends GameEntity {
         return this.maxHealth;
     }
 
-    public Enemy clone() {
-        return new Enemy(width, height, this.getBody(), player);
+    public boolean hasBeenHit(){
+        return justAttacked;
+    }
+
+    public void setHasBeenHit(boolean bool){
+        this.justAttacked = bool;
     }
 
 }
