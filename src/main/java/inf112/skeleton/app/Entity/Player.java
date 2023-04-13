@@ -43,7 +43,7 @@ public class Player extends GameEntity {
 
     // Combat
     private int attackDamage;
-    private int attackRange;
+    private int knifeAttackRange, gunAttackRange;
     private boolean gotHurt;
 
     private Timer timer;
@@ -62,8 +62,9 @@ public class Player extends GameEntity {
     public Player(float width, float height, Body body) {
         super(width, height, body);
         this.speed = 20f;   //?? Introduce constant?
-        this.attackDamage = 5;
-        this.attackRange = 5;
+        this.attackDamage = 10;
+        this.knifeAttackRange = 40;
+        this.gunAttackRange = 40;
 
         knifeObj = new Knife();
 
@@ -277,8 +278,12 @@ public class Player extends GameEntity {
         return this.attackDamage;
     }
 
-    public int getAttackRange() {
-        return this.attackRange;
+    public int getKnifeAttackRange() {
+        return this.knifeAttackRange;
+    }
+
+    public int getGunAttackRange() {
+        return this.gunAttackRange;
     }
 
     public void gotHurt() {

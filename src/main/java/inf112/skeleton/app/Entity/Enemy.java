@@ -69,7 +69,7 @@ public class Enemy extends GameEntity {
         this.player = player;
         this.spriteNum = 1;
         this.attackRange = 40;
-        this.attackDamage = 1;
+        this.attackDamage = 5;
 
         this.sprite = new Sprite(new Texture("assets/Enemy/Run/Run1.png"));
         this.sprite.setScale(2);
@@ -179,7 +179,7 @@ public class Enemy extends GameEntity {
         body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 25 ? body.getLinearVelocity().y : 25);
         enemyPos = body.getPosition().x;
 
-        double random = Math.random(); //for random jumping
+        double random = Math.random(); // for random jumping
         if(random <= 0.01 && jumpCounter < 2 && isGrounded()){
             startTime = System.currentTimeMillis();
             float force = body.getMass() * 10 * 2;
@@ -207,8 +207,9 @@ public class Enemy extends GameEntity {
         List<Bullet> bullets = player.getGun().getBullets();
 
         for (Bullet bullet : bullets){
-            if (Math.abs(bullet.getPosition().x - enemyPositionX) < this.attackRange && Math.abs(bullet.getPosition().y - enemyPositionY) < this.attackRange && this.currentSprite != CurrentSprite.Hit)
+            if (Math.abs(bullet.getPosition().x - enemyPositionX) < player.getGunAttackRange() && Math.abs(bullet.getPosition().y - enemyPositionY) < player.getGunAttackRange())
             {
+
                 enemyHealth.decreaseHP(player.getAttackDamage());
                 bullet.setBulletHit(true);
                 this.gotHit();
@@ -217,7 +218,8 @@ public class Enemy extends GameEntity {
         }
 
 
-        if (Math.abs(playerPositionX - enemyPositionX) < this.attackRange && Math.abs(playerPositionY - enemyPositionY) < this.attackRange && player.knifeObj.getHoldKnife() && player.knifeObj.getDealingDamage()) {
+        if (Math.abs(playerPositionX - enemyPositionX) < player.getKnifeAttackRange() && Math.abs(playerPositionY - enemyPositionY) < player.getKnifeAttackRange() && player.knifeObj.getHoldKnife() && player.knifeObj.getDealingDamage())
+        {
             enemyHealth.decreaseHP(player.getAttackDamage());
             player.knifeObj.setDealingDamage(false);
             this.gotHit();
