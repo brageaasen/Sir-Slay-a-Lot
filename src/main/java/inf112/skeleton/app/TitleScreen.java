@@ -1,8 +1,6 @@
 package inf112.skeleton.app;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -27,6 +25,7 @@ public class TitleScreen extends ScreenAdapter {
     private static final int VIEWPORT_HEIGHT = 640;
 
     private OrthographicCamera ortographicCamera;
+    private AudioManager audioManager = new AudioManager();
 
     GameScreenLauncher game;
 
@@ -67,6 +66,7 @@ public class TitleScreen extends ScreenAdapter {
             game.batch.draw(playButtonActive, x, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
             if (Gdx.input.isTouched())
             {
+                this.audioManager.Play("Select");
                 this.dispose();
                 this.ortographicCamera = new OrthographicCamera();
                 this.ortographicCamera.setToOrtho(false, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
@@ -85,6 +85,7 @@ public class TitleScreen extends ScreenAdapter {
             game.batch.draw(exitButtonActive, x, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
             if (Gdx.input.isTouched())
             {
+                this.audioManager.Play("Select");
                 Gdx.app.exit();
             }
         }
