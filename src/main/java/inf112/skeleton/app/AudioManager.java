@@ -8,7 +8,7 @@ import com.badlogic.gdx.audio.Sound;
 
 public class AudioManager {
     
-    private float volume = 0.5f;
+    private float volume = 1f;
     private HashMap<String, Sound> sounds = new HashMap<String, Sound>();
     private HashMap<String, Music> music = new HashMap<String, Music>();
 
@@ -39,7 +39,7 @@ public class AudioManager {
         }
         try {
             Music song = music.get(sound);
-            song.setVolume(this.volume);
+            song.setVolume(this.volume - 0.75f);
             song.play();
             System.out.println("Played music!");
             

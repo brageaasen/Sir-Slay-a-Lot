@@ -245,7 +245,7 @@ public class Enemy extends GameEntity {
         enemyPositionX = body.getPosition().x * PPM + 5;
         enemyPositionY = body.getPosition().y * PPM + 5;
 
-        if (Math.abs(playerPositionX - enemyPositionX) < this.knifeAttackRange && Math.abs(playerPositionY - enemyPositionY) < this.knifeAttackRange) {
+        if (Math.abs(playerPositionX - enemyPositionX) < this.attackRange && Math.abs(playerPositionY - enemyPositionY) < this.attackRange) {
             this.attack = true;
             if (currentSprite == CurrentSprite.Attack && spriteNum == 4 && !this.justAttacked) {
                 player.getPlayerHealth().decreaseHP(this.attackDamage);
