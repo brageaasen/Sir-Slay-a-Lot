@@ -4,8 +4,16 @@ import com.badlogic.gdx.Input;
 import inf112.skeleton.app.Entity.GameEntity;
 import inf112.skeleton.app.Entity.Player;
 
+/*
+ * The KeyHandler class is responsible for handling key inputs for the Player object and updating the game state accordingly.
+ */
 public class KeyHandler {
     private final Player player;
+
+    /**
+     * Constructor method that initializes a new KeyHandler object with a Player object as input parameter.
+     * @param player The player object to which the key inputs will be applied.
+     */
     public KeyHandler(Player player){
         this.player = player;
         this.keyAlreadyPressed = false;
@@ -24,6 +32,9 @@ public class KeyHandler {
     private boolean gunKeyAlreadyPressed;
     private boolean startWithKnife;
 
+    /**
+     * Method that checks the user inputs and updates the player object's state accordingly.
+     */
     public void checkUserInput() {
         if(Gdx.input.isKeyPressed(Input.Keys.D)){
             player.move(GameEntity.Direction.RIGHT);
@@ -53,7 +64,9 @@ public class KeyHandler {
         player.getBody().setLinearVelocity(player.getVelocity().x * player.getSpeed(), player.getBody().getLinearVelocity().y < 25 ? player.getBody().getLinearVelocity().y : 25);
     }
 
-
+    /**
+     * Method that checks if the player is holding the knife and updates the knifeObj object's state accordingly.
+     */
     private void isHoldingKnife() {
         if (Gdx.input.isKeyPressed(Input.Keys.NUM_1)) {
             player.gun.setHoldGun(false);
@@ -75,6 +88,9 @@ public class KeyHandler {
         }
     }
 
+    /**
+     * Method that checks if the player is holding the gun and updates the gun object's state accordingly.
+     */
     private void isHoldingGun() {
         
         if (Gdx.input.isKeyPressed(Input.Keys.NUM_2)) {

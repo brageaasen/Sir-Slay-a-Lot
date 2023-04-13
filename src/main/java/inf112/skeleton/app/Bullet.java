@@ -4,6 +4,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
+/*
+ * Class for the bullet used/shot by the gun. 
+ */
 public class Bullet {
     private final Vector2 position;
     private final Vector2 velocity;
