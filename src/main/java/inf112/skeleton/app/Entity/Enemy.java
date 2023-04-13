@@ -44,7 +44,7 @@ public class Enemy extends GameEntity {
     private Health maxHealth;
     private Direction facing;
 
-    private int attackRange, attackDamage;
+    private int knifeAttackRange, gunAttackRange,attackDamage;
     private boolean attack = false;
     private boolean justAttacked = false;
     private boolean dead = false;
@@ -60,7 +60,8 @@ public class Enemy extends GameEntity {
         this.jumpCounter = 0;
         this.player = player;
         this.spriteNum = 1;
-        this.attackRange = 40;
+        this.knifeAttackRange = 40;
+        this.gunAttackRange = 20;
         this.attackDamage = 1;
 
         this.sprite = new Sprite(new Texture("assets/Enemy/Run/Run1.png"));
@@ -191,14 +192,13 @@ public class Enemy extends GameEntity {
         List<Bullet> bullets = player.getGun().getBullets();
 
         for (Bullet bullet : bullets){
-            if (Math.abs(bullet.getPosition().x - enemyPositionX) < this.attackRange && Math.abs(bullet.getPosition().y - enemyPositionY) < this.attackRange  && player.gun.getHoldGun()){
+            if (Math.abs(bullet.getPosition().x - enemyPositionX) < this.gunAttackRange && Math.abs(bullet.getPosition().y - enemyPositionY) < this.gunAttackRange  && player.gun.getHoldGun()){
                 enemyHealth.decreaseHP(player.getAttackDamage());
                 bullet.setBulletHit(true);
             }
         }
 
-
-        if (Math.abs(playerPositionX - enemyPositionX) < this.attackRange && Math.abs(playerPositionY - enemyPositionY) < this.attackRange && player.knifeObj.getHoldKnife() && player.knifeObj.getDealingDamage()) {
+        if (Math.abs(playerPositionX - enemyPositionX) < this.knifeAttackRange && Math.abs(playerPositionY - enemyPositionY) < this.knifeAttackRange && player.knifeObj.getHoldKnife() && player.knifeObj.getDealingDamage()) {
             enemyHealth.decreaseHP(player.getAttackDamage());
             player.knifeObj.setDealingDamage(false);
         }
@@ -210,7 +210,7 @@ public class Enemy extends GameEntity {
         enemyPositionX = body.getPosition().x * PPM + 5;
         enemyPositionY = body.getPosition().y * PPM + 5;
 
-        if (Math.abs(playerPositionX - enemyPositionX) < this.attackRange && Math.abs(playerPositionY - enemyPositionY) < this.attackRange) {
+        if (Math.abs(playerPositionX - enemyPositionX) < this.knifeAttackRange && Math.abs(playerPositionY - enemyPositionY) < this.knifeAttackRange) {
             this.attack = true;
             if (currentSprite == CurrentSprite.Attack && spriteNum == 4 && this.justAttacked == false) {
                 player.getPlayerHealth().decreaseHP(this.attackDamage);

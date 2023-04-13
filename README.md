@@ -12,7 +12,7 @@
 * Krever Java 17 eller Java 19
 
 ## Kjente feil
-* ???
+* 
 
 ## Credits
 * LibGDX for rammeverk
@@ -22,5 +22,5 @@
 * Fiender også kan bevege seg og er skadelig
 * Spilleren kan få poeng ved å skade og drepe fiendene
 * Spilleren kan bli skadet/drept av fiendene
-* Poengene kan brukes til å kjøpe nye veier og nye våpner
+* Poengene kan brukes til å få nye våpen
 * Power-ups kan gi midlertidig fordeler (f.eks insta-kill, alle fiender har 1 health-point, eller double points, der du får dobbel så mange poeng for å skade/drepe fiender enn vanlig)
