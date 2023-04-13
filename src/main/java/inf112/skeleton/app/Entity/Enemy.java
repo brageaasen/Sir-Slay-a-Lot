@@ -38,6 +38,7 @@ public class Enemy extends GameEntity {
     private float playerPositionX, playerPositionY;
     private float enemyPositionX, enemyPositionY;
     public static float enemyPos;
+    private float lastPos;
     private final Player player;
     private Health enemyHealth;
     private Health maxHealth;
@@ -162,16 +163,15 @@ public class Enemy extends GameEntity {
         enemyPos = body.getPosition().x;
 
         //double random = Math.random(); //for random jumping
-        float lastPos = enemyPositionX;
-        System.out.println("last: "+lastPos+" current: "+enemyPositionX);
-        if(body.getLinearVelocity().x == 0 && jumpCounter < 2 && isGrounded()){
+        if((lastPos == enemyPositionX || body.getLinearVelocity().x == 0) && jumpCounter < 2 && isGrounded()){
             startTime = System.currentTimeMillis();
             float force = body.getMass() * 10 * 2;
             body.setLinearVelocity(body.getLinearVelocity().x, 0);
             body.applyLinearImpulse(new Vector2(0, force), body.getPosition(), true);
             jumpCounter++;
         }
-    
+        lastPos = enemyPositionX;
+
         endTime = System.currentTimeMillis();
         elapsedTime = endTime - startTime;
         if(body.getLinearVelocity().y == 0 && elapsedTime >= 250){
