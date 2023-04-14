@@ -1,5 +1,6 @@
 package inf112.skeleton.app;
 
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -26,13 +27,14 @@ import inf112.skeleton.app.Entity.Enemy;
 /*
  * The code defines a GameScreen class that extends ScreenAdapter and contains the main logic for the game.
  */
-public class GameScreen extends ScreenAdapter{
+public class GameScreen extends ScreenAdapter {
 
     private final OrthographicCamera camera;
     private final SpriteBatch batch;
     private final ParallaxLayer[] layers;
     private final World world;
     private final Viewport viewport;
+    private final GameScreenLauncher game;
 
     private final OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
     private final TileMapHelper tileMapHelper;
@@ -50,7 +52,8 @@ public class GameScreen extends ScreenAdapter{
      * This is the constructor of the GameScreen class.
      * @param camera an instance of OrthographicCamera class used to define the game camera.
      */
-    public GameScreen(OrthographicCamera camera){
+    public GameScreen(OrthographicCamera camera, GameScreenLauncher game){
+        this.game = game;
         this.camera = camera;
         this.batch = new SpriteBatch();
         this.world = new World(new Vector2(0,-25f),false);
@@ -134,8 +137,8 @@ public class GameScreen extends ScreenAdapter{
             world.destroyBody(e.getBody());
         }
 
-        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
-            Gdx.app.exit();
+        if(player.isDead() == true){
+            game.setScreen(new EndScreen(game));
         }
 
        
