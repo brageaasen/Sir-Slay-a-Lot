@@ -7,10 +7,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 
 /*
- * This is a class called TitleScreen that extends ScreenAdapter from the LibGDX library. 
- * It is used to create the title screen of a game.
+ * This is a class called EndScreen that extends ScreenAdapter from the LibGDX library. 
+ * It is used to create the end screen of a game.
  */
-public class TitleScreen extends ScreenAdapter {
+public class EndScreen extends ScreenAdapter {
 
     // Logo UI
     private static final int LOGO_WIDTH = 200;
@@ -18,9 +18,9 @@ public class TitleScreen extends ScreenAdapter {
     private static final int LOGO_Y = 400;
 
     // Button UI
-    private static final int PLAY_BUTTON_WIDTH = 200;
-    private static final int PLAY_BUTTON_HEIGHT = 100;
-    private static final int PLAY_BUTTON_Y = 200;
+    private static final int RESTART_BUTTON_WIDTH = 200;
+    private static final int RESTART_BUTTON_HEIGHT = 100;
+    private static final int RESTART_BUTTON_Y = 200;
     private static final int EXIT_BUTTON_WIDTH = 200;
     private static final int EXIT_BUTTON_HEIGHT = 100;
     private static final int EXIT_BUTTON_Y = 50;
@@ -39,12 +39,14 @@ public class TitleScreen extends ScreenAdapter {
     Texture playButtonInactive;
     Texture exitButtonActive;
     Texture exitButtonInactive;
+    Texture restartButtonActive;
+    Texture restartButtonInactive;
 
     /**
-     * Constructor that creates a new instance of TitleScreen class
+     * Constructor that creates a new instance of EndScreen class
      * @param game an instance of the GameScreenLauncher class
      */
-    public TitleScreen(GameScreenLauncher game) {
+    public EndScreen(GameScreenLauncher game) {
         this.game = game;
         background = new Texture("assets/UI/background.png");
         logo = new Texture("assets/UI/logo.png");
@@ -52,6 +54,8 @@ public class TitleScreen extends ScreenAdapter {
         playButtonInactive = new Texture("assets/UI/playButtonInactive.png");
         exitButtonActive = new Texture("assets/UI/exitButtonActive.png");
         exitButtonInactive = new Texture("assets/UI/exitButtonInactive.png");
+        restartButtonActive = new Texture("assets/UI/restartButtonActive.png");
+        restartButtonInactive = new Texture("assets/UI/restartButtonInactive.png");
     }
 
     /**
@@ -72,11 +76,11 @@ public class TitleScreen extends ScreenAdapter {
         game.batch.draw(logo, x, LOGO_Y, LOGO_WIDTH, LOGO_HEIGHT);
 
 
-        // Draw play button
-        x = VIEWPORT_WIDTH / 2 - PLAY_BUTTON_WIDTH / 2;
-        if (Gdx.input.getX() < x + PLAY_BUTTON_WIDTH && Gdx.input.getX() > x && VIEWPORT_HEIGHT - Gdx.input.getY() < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && VIEWPORT_HEIGHT - Gdx.input.getY() > PLAY_BUTTON_Y)
+        // Draw restart button
+        x = VIEWPORT_WIDTH / 2 - RESTART_BUTTON_WIDTH / 2;
+        if (Gdx.input.getX() < x + RESTART_BUTTON_WIDTH && Gdx.input.getX() > x && VIEWPORT_HEIGHT - Gdx.input.getY() < RESTART_BUTTON_Y + RESTART_BUTTON_HEIGHT && VIEWPORT_HEIGHT - Gdx.input.getY() > RESTART_BUTTON_Y)
         {
-            game.batch.draw(playButtonActive, x, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
+            game.batch.draw(restartButtonActive, x, RESTART_BUTTON_Y, RESTART_BUTTON_WIDTH, RESTART_BUTTON_HEIGHT);
             if (Gdx.input.isTouched())
             {
                 this.audioManager.Play("Select");
@@ -88,7 +92,7 @@ public class TitleScreen extends ScreenAdapter {
         }
         else
         {
-            game.batch.draw(playButtonInactive, x, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
+            game.batch.draw(restartButtonInactive, x, RESTART_BUTTON_Y, RESTART_BUTTON_WIDTH, RESTART_BUTTON_HEIGHT);
         }
 
         // Draw exit button
