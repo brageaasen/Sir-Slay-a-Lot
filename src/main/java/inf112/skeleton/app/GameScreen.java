@@ -23,7 +23,9 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.skeleton.app.Entity.Player;
 import inf112.skeleton.app.Entity.Enemy;
 
-
+/*
+ * The code defines a GameScreen class that extends ScreenAdapter and contains the main logic for the game.
+ */
 public class GameScreen extends ScreenAdapter{
 
     private final OrthographicCamera camera;

@@ -1,6 +1,8 @@
 package inf112.skeleton.app;
 
-
+/*
+ * Simple implementation of a player's health.
+ */
 public class Health {
     
     private int hitPoints;

@@ -6,6 +6,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 
+/*
+ * This is a class called TitleScreen that extends ScreenAdapter from the LibGDX library. 
+ * It is used to create the title screen of a game.
+ */
 public class TitleScreen extends ScreenAdapter {
 
     // Logo UI
@@ -36,6 +40,10 @@ public class TitleScreen extends ScreenAdapter {
     Texture exitButtonActive;
     Texture exitButtonInactive;
 
+    /**
+     * Constructor that creates a new instance of TitleScreen class
+     * @param game an instance of the GameScreenLauncher class
+     */
     public TitleScreen(GameScreenLauncher game) {
         this.game = game;
         background = new Texture("assets/UI/background.png");
@@ -46,6 +54,11 @@ public class TitleScreen extends ScreenAdapter {
         exitButtonInactive = new Texture("assets/UI/exitButtonInactive.png");
     }
 
+    /**
+     * Overrides the render method from the ScreenAdapter class.
+     * Draws the UI elements of the title screen
+     * @param delta the time in seconds since the last render call
+     */
     public void render(float delta) {
         Gdx.gl.glClearColor(0, .0f, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -97,6 +110,10 @@ public class TitleScreen extends ScreenAdapter {
         game.batch.end();
     }
 
+    /**
+     * Overrides the hide method from the ScreenAdapter class.
+     * Hides the input processor when the screen is no longer displayed.
+     */
     @Override
     public void hide(){
         Gdx.input.setInputProcessor(null);

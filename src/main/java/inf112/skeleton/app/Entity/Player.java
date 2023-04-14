@@ -14,6 +14,10 @@ import inf112.skeleton.app.Health;
 import inf112.skeleton.app.KeyHandler;
 import inf112.skeleton.app.Knife;
 
+
+/*
+ * This class is where the Player entity is created. It extends the GameEntity class. 
+ */
 public class Player extends GameEntity {
     public enum CurrentSprite {
         Idle(4),
@@ -57,7 +61,12 @@ public class Player extends GameEntity {
 
     private boolean attack = false;
 
-
+    /**
+     * Constructor method that creates a new Player object.
+     * @param width the width of the player sprite
+     * @param height the height of the player sprite
+     * @param body a Body object that represents the physical body of the player in the Box2D world
+     */
     public Player(float width, float height, Body body) {
         super(width, height, body);
         this.speed = 20f;   //?? Introduce constant?
@@ -86,6 +95,12 @@ public class Player extends GameEntity {
         
     }
 
+    /**
+     * This method updates the player object every game loop. 
+     * It updates the sprite based on the player's current state, 
+     * updates the player's position and velocity, updates the gun object, 
+     * checks user input using the KeyHandler object, and checks for fall damage.
+     */
     @Override
     public void update() {
         if (currentSprite == CurrentSprite.Idle)
@@ -104,6 +119,10 @@ public class Player extends GameEntity {
         // dealDamage();
     }
 
+    /**
+     * This method renders the player object to the screen using a SpriteBatch. 
+     * It positions and draws the player's sprite, and also draws the knife or gun if the player is attacking.
+     */
     @Override
     public void render(SpriteBatch batch) {
         float dx = x - width / 2;
@@ -131,6 +150,9 @@ public class Player extends GameEntity {
         }
     }
 
+    /**
+     *  This method updates the player's sprite based on the player's current state.
+     */
     public void updateSprite() {
         if (this.attack) {
             if (currentSprite != CurrentSprite.Attack)
@@ -169,7 +191,12 @@ public class Player extends GameEntity {
         sprite.setTexture(new Texture("assets/Player/%s/%s%d.png".formatted(currentSprite.toString(), currentSprite.toString(), spriteNum)));
     }
 
-
+    /**
+     * This method makes the player entity jump. 
+     * It first calculates the force required to make the player jump by multiplying the player's mass by 10 (gravity) and 2 (jump strength). 
+     * Then it sets the player's y-velocity to 0 and applies the calculated force as a linear impulse to the player's body. 
+     * Finally, it increments the jump counter.
+     */
     public void jump() {
         float force = body.getMass() * 10 * 2;
         body.setLinearVelocity(body.getLinearVelocity().x, 0);
@@ -191,6 +218,9 @@ public class Player extends GameEntity {
         }
     }
 
+    /*
+     * This method flips the player's sprite and weapons horizontally.
+     */
     public void flip() { // TODO?: replace unneeded texture?
         sprite.flip(true, false);
         knife.flip(true, false);
@@ -214,6 +244,11 @@ public class Player extends GameEntity {
         return Player.PPM;
     }
 
+    /**
+     * This method is used to move the player entity. 
+     * It takes a direction and sets the player's x-velocity depending on the direction.
+     * @param direction the direction the player is going.
+     */
     @Override
     public void move(Direction direction) {
         switch (direction) {
@@ -272,18 +307,33 @@ public class Player extends GameEntity {
         }
     }
 
+    /**
+     * This method returns the player's attack damage.
+     * @return the attack damage of the player
+     */
     public int getAttackDamage() {
         return this.attackDamage;
     }
 
+    /**
+     * This method returns the range of the player's knife attack.
+     * @return the range of the player's knife attack
+     */
     public int getKnifeAttackRange() {
         return this.knifeAttackRange;
     }
 
+    /**
+     * This method returns the range of the player's gun attack.
+     * @return the range of the player's gun attack
+     */
     public int getGunAttackRange() {
         return this.gunAttackRange;
     }
 
+    /**
+     * This method is called when the player is hurt by an enemy.
+     */
     public void gotHurt() {
         this.audioManager.Play("Hurt");
         this.gotHurt = true;
@@ -297,10 +347,18 @@ public class Player extends GameEntity {
          }, 1);
     }
 
+    /**
+     * This method returns the player's Gun object.
+     * @return the player's Gun object.
+     */
     public Gun getGun(){
         return gun;
     }
 
+    /**
+     * This method returns whether the player is currently hurt.
+     * @return a bool that tells whether the player is currently hurt
+     */
     public boolean isHurt(){
         return gotHurt;
     }
