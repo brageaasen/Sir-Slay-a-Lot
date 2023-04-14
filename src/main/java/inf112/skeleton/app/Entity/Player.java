@@ -41,6 +41,7 @@ public class Player extends GameEntity {
     private Direction facing;
     public Knife knifeObj;
     public Gun gun;
+    public int killCount = 0;
 
     // Audio
     private AudioManager audioManager = new AudioManager();

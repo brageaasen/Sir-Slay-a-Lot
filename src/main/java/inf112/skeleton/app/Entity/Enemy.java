@@ -165,6 +165,8 @@ public class Enemy extends GameEntity {
             canMove = true;
         } else if (currentSprite == CurrentSprite.Dead && spriteNum > 6) {  // Death animation is done
             this.dead = true;
+            player.killCount++;
+            System.out.println("Kill Count: "+player.killCount);
         }
 
         // Reset the animation timers if we change animation state or the spriteNum is out of bounds for the given animation
