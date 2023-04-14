@@ -92,24 +92,28 @@ public class KeyHandler {
      * Method that checks if the player is holding the gun and updates the gun object's state accordingly.
      */
     private void isHoldingGun() {
-        
-        if (Gdx.input.isKeyPressed(Input.Keys.NUM_2)) {
-            startWithKnife = false;
-            player.knifeObj.setHoldKnife(false);
-            keyAlreadyPressed = false;
-            if (!gunKeyAlreadyPressed) {
-                player.gun.setHoldGun(true);
-                gunKeyAlreadyPressed = true;   
+        int priceGun = 1; //Number of kills you need before unlocking the gun
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
+            if(player.killCount >= priceGun){
+                startWithKnife = false;
+                player.knifeObj.setHoldKnife(false);
+                keyAlreadyPressed = false;
+                if (!gunKeyAlreadyPressed) {
+                    player.gun.setHoldGun(true);
+                    gunKeyAlreadyPressed = true;   
+                }
+            } else{
+                System.out.println("You need "+(priceGun-player.killCount)+" more kill(s) before unlocking this");
             }
-        } 
-        else {
-            gunKeyAlreadyPressed = false;
-            if (Gdx.input.isKeyPressed(Input.Keys.ENTER)){
-                player.gun.setFiring(true);;
-            }
-            else {
-                player.gun.setFiring(false);;
-            }
+        }else {
+                gunKeyAlreadyPressed = false;
+                if (Gdx.input.isKeyPressed(Input.Keys.ENTER)){
+                    player.gun.setFiring(true);;
+                }
+                else {
+                    player.gun.setFiring(false);;
+                }
         }
     }
 }

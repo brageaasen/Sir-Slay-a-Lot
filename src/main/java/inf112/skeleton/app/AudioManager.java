@@ -36,7 +36,7 @@ public class AudioManager {
     {
         try {
             sounds.get(sound).play(this.volume);
-            System.out.println("Played sound!");
+            //System.out.println("Played sound!");
         } catch (Exception e) {
             // TODO: handle exception
         }
@@ -44,7 +44,7 @@ public class AudioManager {
             Music song = music.get(sound);
             song.setVolume(this.volume - 0.75f);
             song.play();
-            System.out.println("Played music!");
+            //System.out.println("Played music!");
             
         } catch (Exception e) {
             // TODO: handle exception
