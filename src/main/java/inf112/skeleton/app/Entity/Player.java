@@ -117,6 +117,7 @@ public class Player extends GameEntity {
         gun.update(Gdx.graphics.getDeltaTime());
         keyH.checkUserInput();
         this.checkFallDamage();
+        this.unlockGun();
         // dealDamage();
     }
 
@@ -145,7 +146,7 @@ public class Player extends GameEntity {
             
             if (gun.getFiring()){
                 this.attack = true;
-                gun.fire(new Vector2(dx + (sprite.isFlipX() ? -width + 40 : width), dy + (sprite.isFlipX() ? 0 : 13)), (sprite.isFlipX() ? new Vector2(-10,0) : new Vector2(10,0)) );
+                gun.fire(new Vector2(dx + (sprite.isFlipX() ? -width + 40 : width), dy + (sprite.isFlipX() ? 3 : 19)), (sprite.isFlipX() ? new Vector2(-10,0) : new Vector2(10,0)) );
                 gun.renderGun(batch);
             }
         }
@@ -362,5 +363,11 @@ public class Player extends GameEntity {
      */
     public boolean isHurt(){
         return gotHurt;
+    }
+
+    public void unlockGun(){
+        if (killCount >= 1){
+            this.gun.setUnlocked();
+        }
     }
 }

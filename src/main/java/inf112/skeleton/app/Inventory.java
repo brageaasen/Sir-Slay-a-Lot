@@ -19,6 +19,8 @@ public class Inventory {
 
     private Sprite gunSprite;
     private Sprite knife;
+
+    private Sprite lock;
     private Gun gun;
     private BitmapFont font;
 
@@ -35,6 +37,7 @@ public class Inventory {
         this.knife = new Sprite(new Texture("assets/Player/Weapons/knife.png"));
         this.gun = gun;
         this.player = player;
+        this.lock = new Sprite(new Texture("assets/Player/Weapons/lock.png"));
         this.font = new BitmapFont();
     }
 
@@ -81,6 +84,9 @@ public class Inventory {
         batch.begin();
         batch.draw(gunSprite, 164,585,50,50);
         font.draw(batch, gun.bulletsInChamber().toString(),183,593);
+        if (!player.getGun().getUnlocked()){
+            batch.draw(lock, 150,580, 50, 50);
+        }
         batch.draw(knife, 84, 585, 45, 45);
         batch.end();
     }

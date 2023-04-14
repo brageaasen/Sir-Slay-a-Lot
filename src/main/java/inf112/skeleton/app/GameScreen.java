@@ -1,13 +1,11 @@
 package inf112.skeleton.app;
 
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -23,6 +21,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.skeleton.app.Entity.Player;
 import inf112.skeleton.app.Entity.Enemy;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 /*
  * The code defines a GameScreen class that extends ScreenAdapter and contains the main logic for the game.
@@ -46,6 +45,9 @@ public class GameScreen extends ScreenAdapter {
     private Timer spawnTimer;
     private Set<Enemy> enemies;
     private Inventory inventory;
+
+    private float textTime = 2f;
+    private float timeElapsed;
     // private Box2DDebugRenderer box2dDebugRenderer;
 
     /**
@@ -207,6 +209,15 @@ public class GameScreen extends ScreenAdapter {
         
         player.render(batch);
 
+        if (this.player.getGun().getUnlocked()){
+            timeElapsed += delta;
+            if (timeElapsed <= textTime) {
+                BitmapFont font = new BitmapFont();
+                font.getData().setScale(2);
+                font.draw(batch,  "GUN UNLOCKED!", Gdx.graphics.getWidth() / 2 + 750, Gdx.graphics.getHeight() / 2);
+            }
+        }
+        
         for (Enemy e : enemies) {
             if (!e.enemyIsDead())
                 e.render(batch);

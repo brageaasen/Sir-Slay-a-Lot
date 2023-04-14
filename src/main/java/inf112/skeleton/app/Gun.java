@@ -26,6 +26,7 @@ public class Gun {
     private final List<Bullet> bullets;
     private Integer bulletChamber;
 
+    private boolean isUnlocked;
     private boolean holdGun;
     private boolean isFiring;
     private AudioManager audioManager;
@@ -49,7 +50,7 @@ public class Gun {
         this.audioManager = new AudioManager();
         this.bulletTexture = new Texture(bulletTexturePath);
         this.bulletSprite = new Sprite(bulletTexture);
-
+        this.isUnlocked = false;
         this.gunSprite = new Sprite(new Texture(gunTexturePath));
         this.bulletSprite.setOrigin(gunSprite.getOriginX() - 20, gunSprite.getOriginY() - 5);
         this.bullets = new ArrayList<>();
@@ -192,5 +193,14 @@ public class Gun {
 
     public void setBulletsInChamber(Integer numBullets){
         this.bulletChamber = numBullets;
+    }
+
+
+    public void setUnlocked(){
+        this.isUnlocked = true;
+    }
+
+    public boolean getUnlocked(){
+        return this.isUnlocked;
     }
 }
