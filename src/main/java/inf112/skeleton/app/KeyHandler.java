@@ -44,10 +44,10 @@ public class KeyHandler {
             player.move(GameEntity.Direction.NONE);
         }
 
-
+        this.isHoldingGun();
         this.isHoldingKnife();
 
-        this.isHoldingGun();
+        
 
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && player.jumpCounter < 2){
             startTime = System.currentTimeMillis();
@@ -95,6 +95,7 @@ public class KeyHandler {
         int priceGun = 1; //Number of kills you need before unlocking the gun
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
+            System.out.println("test");
             if(player.killCount >= priceGun){
                 startWithKnife = false;
                 player.knifeObj.setHoldKnife(false);
