@@ -227,7 +227,7 @@ public class Enemy extends GameEntity {
         //double random = Math.random(); //for random jumping
         if((lastPos == enemyPositionX || body.getLinearVelocity().x == 0) && jumpCounter < 2 && isGrounded()){
             startTime = System.currentTimeMillis();
-            float force = body.getMass() * 10 * 2;
+            float force = body.getMass() * 30 * 2;
             body.setLinearVelocity(body.getLinearVelocity().x, 0);
             body.applyLinearImpulse(new Vector2(0, force), body.getPosition(), true);
             jumpCounter++;
