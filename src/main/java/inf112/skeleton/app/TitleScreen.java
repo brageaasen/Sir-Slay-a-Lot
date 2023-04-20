@@ -17,6 +17,10 @@ public class TitleScreen extends ScreenAdapter {
     private static final int LOGO_HEIGHT = 200;
     private static final int LOGO_Y = 400;
 
+    private static final int LOGO_TEXT_WIDTH = 125;
+    private static final int LOGO_TEXT_HEIGHT = 75;
+    private static final int LOGO_TEXT_Y = 325;
+
     // Button UI
     private static final int PLAY_BUTTON_WIDTH = 200;
     private static final int PLAY_BUTTON_HEIGHT = 100;
@@ -35,6 +39,7 @@ public class TitleScreen extends ScreenAdapter {
 
     Texture background;
     Texture logo;
+    Texture logoText;
     Texture playButtonActive;
     Texture playButtonInactive;
     Texture exitButtonActive;
@@ -48,6 +53,7 @@ public class TitleScreen extends ScreenAdapter {
         this.game = game;
         background = new Texture("assets/UI/background.png");
         logo = new Texture("assets/UI/logo.png");
+        logoText = new Texture("assets/UI/logoText.png");
         playButtonActive = new Texture("assets/UI/playButtonActive.png");
         playButtonInactive = new Texture("assets/UI/playButtonInactive.png");
         exitButtonActive = new Texture("assets/UI/exitButtonActive.png");
@@ -70,6 +76,9 @@ public class TitleScreen extends ScreenAdapter {
         // Draw logo
         int x = VIEWPORT_WIDTH / 2 - LOGO_WIDTH / 2;
         game.batch.draw(logo, x, LOGO_Y, LOGO_WIDTH, LOGO_HEIGHT);
+
+        x = VIEWPORT_WIDTH / 2 - LOGO_TEXT_WIDTH / 2;
+        game.batch.draw(logoText, x, LOGO_TEXT_Y, LOGO_TEXT_WIDTH, LOGO_TEXT_HEIGHT);
 
 
         // Draw play button
