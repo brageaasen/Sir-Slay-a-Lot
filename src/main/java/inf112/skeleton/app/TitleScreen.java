@@ -19,7 +19,7 @@ public class TitleScreen extends ScreenAdapter {
 
     private static final int LOGO_TEXT_WIDTH = 125;
     private static final int LOGO_TEXT_HEIGHT = 75;
-    private static final int LOGO_TEXT_Y = 325;
+    private static final int LOGO_TEXT_Y = 320;
 
     // Button UI
     private static final int PLAY_BUTTON_WIDTH = 200;
