@@ -28,8 +28,14 @@ public class Player extends GameEntity {
         Attack(4);
 
         final int frames;
+        final Texture[] textures;
         CurrentSprite(int i) {
             frames = i;
+            textures = new Texture[frames];
+            for (int j = 0; j < frames; j++) {
+                // Preload textures instead of reloading them every frame.
+                textures[j] = new Texture("assets/Player/%s/%s%d.png".formatted(this.name(), this.name(), j+1));
+            }
         }
     }
 
@@ -83,7 +89,7 @@ public class Player extends GameEntity {
 
         this.jumpCounter = 0;
         this.facing = Direction.NONE;
-        this.sprite = new Sprite(new Texture("assets/Player/Idle/Idle1.png")); //?? Should we preload textures instead of loading them every time? (does it even matter?)
+        this.sprite = new Sprite(new Texture("assets/Player/Idle/Idle1.png"));
         this.knife = new Sprite(new Texture("assets/Player/Weapons/knife.png"));
         this.keyH = new KeyHandler(this);   //?? Should the player class hold input handling?
         this.sprite.setScale(2);
@@ -156,30 +162,20 @@ public class Player extends GameEntity {
      *  This method updates the player's sprite based on the player's current state.
      */
     public void updateSprite() {
-        if (this.attack) {
+        if (attack) {
             if (currentSprite != CurrentSprite.Attack)
                 spriteNum = 1;
             currentSprite = CurrentSprite.Attack;
-            
-        } 
-
-        else if (this.gotHurt == true) {
+        } else if (gotHurt) {
             currentSprite = CurrentSprite.Hurt;
             this.gotHurt = false;
         } else if (facing == Direction.NONE && getBody().getLinearVelocity().y == 0) {
             currentSprite = CurrentSprite.Idle;
-        } 
-        else if (getBody().getLinearVelocity().y < 0) {
-            currentSprite = CurrentSprite.Idle;
-        }
-        else if (getBody().getLinearVelocity().y > 0) { // Checking if player is jumping
+        } else if (getBody().getLinearVelocity().y > 0) { // Checking if player is jumping
             currentSprite = CurrentSprite.Jump;
-        } else if (getBody().getLinearVelocity().y < -3) { // Checking if player is falling
-            System.out.println(getBody().getLinearVelocity().y);
+        } else if (getBody().getLinearVelocity().y < 0) { // Checking if player is falling
             currentSprite = CurrentSprite.Fall;
-        } 
-    
-        else {
+        } else {
             currentSprite = CurrentSprite.Run;
         }
 
@@ -190,7 +186,7 @@ public class Player extends GameEntity {
             this.attack = false;
         }
 
-        sprite.setTexture(new Texture("assets/Player/%s/%s%d.png".formatted(currentSprite.toString(), currentSprite.toString(), spriteNum)));
+        sprite.setTexture(currentSprite.textures[spriteNum - 1]);
     }
 
     /**
@@ -206,9 +202,6 @@ public class Player extends GameEntity {
         jumpCounter++;
     }
 
-
-   
-
     /**
      * n is speed of which sprites changes
      */
@@ -221,14 +214,13 @@ public class Player extends GameEntity {
     }
 
     /*
-     * This method flips the player's sprite and weapons horizontally.
+     * Flip the player's sprite and weapons horizontally.
      */
-    public void flip() { // TODO?: replace unneeded texture?
+    public void flip() {
         sprite.flip(true, false);
         knife.flip(true, false);
         gun.getSprite().flip(true, false);
     }
-    
 
     /**
      * Get direction player is facing

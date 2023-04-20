@@ -27,8 +27,14 @@ public class Enemy extends GameEntity {
         Hit(3);
 
         final int frames;
+        final Texture[] textures;
         CurrentSprite(int i) {
             frames = i;
+            textures = new Texture[frames];
+            for (int j = 0; j < frames; j++) {
+                // Preload textures instead of reloading them every frame.
+                textures[j] = new Texture("assets/Enemy/%s/%s%d.png".formatted(this.name(), this.name(), j+1));
+            }
         }
     }
 
@@ -181,7 +187,7 @@ public class Enemy extends GameEntity {
         }
 
 
-        sprite.setTexture(new Texture("assets/Enemy/%s/%s%d.png".formatted(currentSprite.toString(), currentSprite.toString(), spriteNum)));
+        sprite.setTexture(currentSprite.textures[spriteNum - 1]);
     }
 
     /**
