@@ -86,7 +86,7 @@ public class Enemy extends GameEntity {
         this.player = player;
         this.spriteNum = 1;
         this.attackRange = 40;
-        this.attackDamage = 5;
+        this.attackDamage = 10;
 
         this.sprite = new Sprite(new Texture("assets/Enemy/Run/Run1.png"));
         this.sprite.setScale(2);
