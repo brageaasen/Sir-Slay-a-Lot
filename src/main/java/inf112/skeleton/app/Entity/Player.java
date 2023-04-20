@@ -77,7 +77,7 @@ public class Player extends GameEntity {
     public Player(float width, float height, Body body) {
         super(width, height, body);
         this.speed = 20f;   //?? Introduce constant?
-        this.attackDamage = 50;
+        this.attackDamage = 25;
         this.knifeAttackRange = 40;
         this.gunAttackRange = 40;
 
