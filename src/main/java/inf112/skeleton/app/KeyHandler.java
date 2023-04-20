@@ -50,16 +50,18 @@ public class KeyHandler {
 
         
 
-        if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && player.jumpCounter < 2){
+        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && player.jumpCounter > 0){
             startTime = System.currentTimeMillis();
             player.jump();
             audioManager.Play("Jump");
+            player.jumpCounter--;
+            //System.out.println("Jumps: "+player.jumpCounter);
         }
 
         endTime = System.currentTimeMillis();
         elapsedTime = endTime - startTime;
         if(player.getBody().getLinearVelocity().y == 0 && elapsedTime >= 250){
-            player.jumpCounter = 0;
+            player.jumpCounter = 1;
         }
 
         player.getBody().setLinearVelocity(player.getVelocity().x * player.getSpeed(), player.getBody().getLinearVelocity().y < 25 ? player.getBody().getLinearVelocity().y : 25);
@@ -105,7 +107,6 @@ public class KeyHandler {
         int priceGun = 1; //Number of kills you need before unlocking the gun
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
-            System.out.println("test");
             if(player.killCount >= priceGun){
                 startWithKnife = false;
                 player.knifeObj.setHoldKnife(false);

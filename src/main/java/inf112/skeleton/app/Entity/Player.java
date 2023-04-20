@@ -66,7 +66,7 @@ public class Player extends GameEntity {
     private final Sprite sprite;
 
     private final Health playerHealth; 
-    private int expectedFallDamage = 0;
+    private float expectedFallDamage = 0;
 
     private boolean attack = false;
 
@@ -199,10 +199,9 @@ public class Player extends GameEntity {
      * Finally, it increments the jump counter.
      */
     public void jump() {
-        float force = body.getMass() * 10 * 2;
+        float force = body.getMass() * 21;
         body.setLinearVelocity(body.getLinearVelocity().x, 0);
         body.applyLinearImpulse(new Vector2(0, force), body.getPosition(), true);
-        jumpCounter++;
     }
 
     /**
@@ -292,27 +291,18 @@ public class Player extends GameEntity {
     }
 
     /**
-     * Checks if the player has fallen from too high and how much damage is inflicted
+     * Checks and apply falldamage if the player has fallen from too high
      */
-    public void checkFallDamage() {
-        float verticalSpeed = body.getLinearVelocity().y;
-        if (verticalSpeed < -37) {
-            expectedFallDamage++;
-        }
-        takeFallDamage(expectedFallDamage);
-    }
-
-    /**
-     * Applies the fall damage when you land
-     */
-    public void takeFallDamage(int fallDamage){
-        if(isGrounded() && expectedFallDamage > 0){
-            int damageScale = ((expectedFallDamage)*3);
+    public void checkFallDamage(){ 
+        float multiplier = 1.0f;
+        if(isGrounded() && expectedFallDamage > 37){
+            int damageScale = (int)(expectedFallDamage * multiplier);
             System.out.println("Fall damage: "+damageScale);
             playerHealth.decreaseHP(damageScale);
+        }
 
-            expectedFallDamage = 0;
-        }    
+        expectedFallDamage = Math.abs(body.getLinearVelocity().y);
+
     }
 
     /**
