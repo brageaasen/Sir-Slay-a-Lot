@@ -19,7 +19,7 @@ public class PlayerTest {
         Player player = mock(Player.class, Mockito.CALLS_REAL_METHODS);
         assertFalse(player.isHurt());
 
-        player.gotHurt();
+        player.gotHurt(1);
         assertTrue(player.isHurt());
     }
 

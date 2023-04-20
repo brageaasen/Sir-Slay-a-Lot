@@ -3,6 +3,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import inf112.skeleton.app.Entity.GameEntity;
 import inf112.skeleton.app.Entity.Player;
+import inf112.skeleton.app.TileMapHelper;
 
 /*
  * The KeyHandler class is responsible for handling key inputs for the Player object and updating the game state accordingly.
@@ -62,6 +63,15 @@ public class KeyHandler {
         }
 
         player.getBody().setLinearVelocity(player.getVelocity().x * player.getSpeed(), player.getBody().getLinearVelocity().y < 25 ? player.getBody().getLinearVelocity().y : 25);
+    
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+            Gdx.app.exit();
+        }
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.P)){
+            TileMapHelper.gameScreen.spawnEnemy();
+        }
+        
     }
 
     /**

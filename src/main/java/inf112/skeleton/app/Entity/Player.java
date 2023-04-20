@@ -56,6 +56,7 @@ public class Player extends GameEntity {
     private int attackDamage;
     private int knifeAttackRange, gunAttackRange;
     private boolean gotHurt;
+    private int iframes = 0; //invinsibility frames
 
     private Timer timer;
     private boolean canMove = true;
@@ -65,6 +66,7 @@ public class Player extends GameEntity {
     private final Sprite sprite;
 
     private final Health playerHealth; 
+    private int expectedFallDamage = 0;
 
     private boolean attack = false;
 
@@ -125,6 +127,7 @@ public class Player extends GameEntity {
         this.checkFallDamage();
         this.unlockGun();
         // dealDamage();
+        decreaseIframes();
     }
 
     /**
@@ -293,12 +296,23 @@ public class Player extends GameEntity {
      */
     public void checkFallDamage() {
         float verticalSpeed = body.getLinearVelocity().y;
-
         if (verticalSpeed < -37) {
-            int damageScale = (int) ((Math.abs(verticalSpeed) - 10));
-
-            playerHealth.decreaseHP(damageScale);
+            expectedFallDamage++;
         }
+        takeFallDamage(expectedFallDamage);
+    }
+
+    /**
+     * Applies the fall damage when you land
+     */
+    public void takeFallDamage(int fallDamage){
+        if(isGrounded() && expectedFallDamage > 0){
+            int damageScale = ((expectedFallDamage)*3);
+            System.out.println("Fall damage: "+damageScale);
+            playerHealth.decreaseHP(damageScale);
+
+            expectedFallDamage = 0;
+        }    
     }
 
     /**
@@ -328,9 +342,10 @@ public class Player extends GameEntity {
     /**
      * This method is called when the player is hurt by an enemy.
      */
-    public void gotHurt() {
-        this.audioManager.Play("Hurt");
-        this.gotHurt = true;
+    public void gotHurt(int damage) {
+        if(iframes == 0){
+            this.audioManager.Play("Hurt");
+            this.gotHurt = true;
         this.canMove = false;
         timer.scheduleTask(new Timer.Task() {
             @Override
@@ -338,7 +353,20 @@ public class Player extends GameEntity {
             {
                 canMove = true;
             }        
-         }, 1);
+        }, 1);
+
+        
+        playerHealth.decreaseHP(damage);
+         
+        iframes = 60;
+        }
+        
+    }
+
+    private void decreaseIframes(){
+        if(iframes > 0){
+            iframes--;
+        }
     }
 
     /**
