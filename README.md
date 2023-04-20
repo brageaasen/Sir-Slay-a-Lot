@@ -17,10 +17,11 @@
 ## Credits
 * LibGDX for rammeverk
 
-* Sprites: Alle sprites/animasjoner (med unntak av kniv/gun/enemies) er laget av Brage, ved hjelp av pixel-art programmet Aseprite.
+* Sprites: Alle sprites/animasjoner (med unntak av kniv/enemies) er laget av Brage, ved hjelp av pixel-art programmet Aseprite.
 
 * Sprites (enemies): Skeleton enemy er funnet med gratis download på spill-utviklings nettsiden itch.io.
-* Sprites (gun/knife): Gun/Knife er midlertidig, og er funnet på nettet.
+* Sprites (gun/knife): Gun & Knife er laget selv. 
+* Sprites (ammocrate) : https://www.pngwing.com/en/free-png-bjmep
 
 * Lyd (sfx): All lyd (sfx) er laget av Brage, ved hjelp av programmet Bfxr.
 * Lyd (musikk): Spill musikken er laget av Nicky Flowers, og sangen heter "Pretty Girls Make Graves".

@@ -370,4 +370,8 @@ public class Player extends GameEntity {
             this.gun.setUnlocked();
         }
     }
+
+    public int getKillcount(){
+        return this.killCount;
+    }
 }
