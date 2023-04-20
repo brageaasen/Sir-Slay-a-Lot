@@ -137,7 +137,7 @@ public class Enemy extends GameEntity {
      * This method updates the sprite of the enemy based on its current state
      */
     public void updateSprite() {
-        if (enemyHealthIsZero()) {
+        if (enemyHealthIsZero() && !enemyIsDead()) {
             setState(CurrentSprite.Dead);
         } else if (this.gotHit) {
             setState(CurrentSprite.Hit);
@@ -262,7 +262,8 @@ public class Enemy extends GameEntity {
             if (bullet.getBulletHit())  // Skip bullets that have already hit something
                 continue;
 
-            if (Math.abs(bullet.getPosition().x - enemyPositionX) < player.getGunAttackRange() && Math.abs(bullet.getPosition().y - enemyPositionY) < player.getGunAttackRange())
+            if (Math.abs(bullet.getPosition().x - enemyPositionX) < player.getGunAttackRange() && Math.abs(bullet.getPosition().y - enemyPositionY) < player.getGunAttackRange()
+            && !this.gotHit)
             {
                 enemyHealth.decreaseHP(player.getAttackDamage());
                 bullet.setBulletHit(true);
@@ -270,7 +271,8 @@ public class Enemy extends GameEntity {
             }
         }
 
-        if (Math.abs(playerPositionX - enemyPositionX) < player.getKnifeAttackRange() && Math.abs(playerPositionY - enemyPositionY) < player.getKnifeAttackRange() && player.knifeObj.getHoldKnife() && player.knifeObj.getDealingDamage())
+        if (Math.abs(playerPositionX - enemyPositionX) < player.getKnifeAttackRange() && Math.abs(playerPositionY - enemyPositionY) < player.getKnifeAttackRange()
+         && player.knifeObj.getHoldKnife() && player.knifeObj.getDealingDamage() && !this.gotHit)
         {
             enemyHealth.decreaseHP(player.getAttackDamage());
             player.knifeObj.setDealingDamage(false);
