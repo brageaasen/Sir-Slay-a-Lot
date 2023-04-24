@@ -146,7 +146,7 @@ public class GameScreen extends ScreenAdapter {
         }
 
         if(player.isDead() == true){
-            game.setScreen(new EndScreen(game));
+            game.setScreen(new EndScreen(game, player.getKillcount()));
         }
 
        
