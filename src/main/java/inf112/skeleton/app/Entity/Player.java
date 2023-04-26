@@ -337,7 +337,7 @@ public class Player extends GameEntity {
      * This method is called when the player is hurt by an enemy.
      */
     public void gotHurt() {
-        this.audioManager.Play("Hurt");
+        this.getAudio().Play("Hurt");
         this.gotHurt = true;
         this.canMove = false;
         timer.scheduleTask(new Timer.Task() {
@@ -347,6 +347,15 @@ public class Player extends GameEntity {
                 canMove = true;
             }        
          }, 1);
+    }
+
+    /**
+     * TESTING ONLY: WITHOUT TIMER
+     */
+    public void gotHurtTest() {
+        this.getAudio().Play("Hurt");
+        this.gotHurt = true;
+        this.canMove = false;
     }
 
     /**
@@ -369,5 +378,13 @@ public class Player extends GameEntity {
         if (killCount >= 1){
             this.gun.setUnlocked();
         }
+    }
+
+    /**
+     * Currently used for testing
+     * @return
+     */
+    public AudioManager getAudio() {
+        return this.audioManager;
     }
 }
