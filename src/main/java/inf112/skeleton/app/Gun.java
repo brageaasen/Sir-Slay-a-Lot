@@ -195,6 +195,9 @@ public class Gun {
         this.bulletChamber = numBullets;
     }
 
+    public void bulletsPowerUp(){
+        this.bulletChamber += 20;
+    }
 
     public void setUnlocked(){
         this.isUnlocked = true;

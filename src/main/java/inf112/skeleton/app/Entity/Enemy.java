@@ -27,8 +27,14 @@ public class Enemy extends GameEntity {
         Hit(3);
 
         final int frames;
+        final Texture[] textures;
         CurrentSprite(int i) {
             frames = i;
+            textures = new Texture[frames];
+            for (int j = 0; j < frames; j++) {
+                // Preload textures instead of reloading them every frame.
+                textures[j] = new Texture("assets/Enemy/%s/%s%d.png".formatted(this.name(), this.name(), j+1));
+            }
         }
     }
 
@@ -80,7 +86,7 @@ public class Enemy extends GameEntity {
         this.player = player;
         this.spriteNum = 1;
         this.attackRange = 40;
-        this.attackDamage = 5;
+        this.attackDamage = 10;
 
         this.sprite = new Sprite(new Texture("assets/Enemy/Run/Run1.png"));
         this.sprite.setScale(2);
@@ -97,13 +103,11 @@ public class Enemy extends GameEntity {
         spriteChecker();
         x = body.getPosition().x * PPM + 5;
         y = body.getPosition().y * PPM + 17;
-        
-        //System.out.println(this.canMove);
+
         if (!this.attack && this.canMove)
             updatePosition();
         else
-            body.setLinearVelocity(0,0);    // Attacking or can't move, so we don't move it
-        //System.out.println(this.canMove);
+            body.setLinearVelocity(0,body.getLinearVelocity().y);    // We will still allow it to fall, otherwise it will hover in the air.
         
         updateSprite();
         takeDamage();
@@ -122,66 +126,67 @@ public class Enemy extends GameEntity {
 
         sprite.setPosition(dx,dy);
         sprite.draw(batch);
-
-        
-    }
-
-    public void resetHitFlags() {
-        
     }
 
     @Override
     public void move(Direction direction) {
-
+        // TODO: set velocity using this or remove entirely?
     }
 
     /**
      * This method updates the sprite of the enemy based on its current state
      */
     public void updateSprite() {
-        var lastState = currentSprite;
-
-        if (enemyHealthIsZero()) {
-            currentSprite = CurrentSprite.Dead;
-        } else if (this.getBody().getLinearVelocity().y != 0 && this.isGrounded()) {
-            currentSprite = CurrentSprite.Run;
+        if (enemyHealthIsZero() && !enemyIsDead()) {
+            setState(CurrentSprite.Dead);
         } else if (this.gotHit) {
-            currentSprite = CurrentSprite.Hit;
-            this.gotHit = false;
+            setState(CurrentSprite.Hit);
+        } else if (this.getBody().getLinearVelocity().y != 0 && this.isGrounded()) {
+            setState(CurrentSprite.Run);
         } else if (this.getBody().getLinearVelocity().y > 0) {  // Checking if enemy is jumping
-            currentSprite = CurrentSprite.Jump;
+            setState(CurrentSprite.Jump);
         } else if (this.getBody().getLinearVelocity().y < 0) {  // Checking if enemy is falling
-            currentSprite = CurrentSprite.Fall;
+            setState(CurrentSprite.Fall);
         } else if (this.attack) {
             if (currentSprite != CurrentSprite.Attack)
                 this.justAttacked = false;
-            currentSprite = CurrentSprite.Attack;
-        } 
-        else if (canMove){
-            currentSprite = CurrentSprite.Run;
+            setState(CurrentSprite.Attack);
+        } else {
+            setState(CurrentSprite.Run);
         }
 
         if (currentSprite == CurrentSprite.Hit && spriteNum > 3) {  // Hit animation is done
             canMove = true;
+            gotHit = false;
         } else if (currentSprite == CurrentSprite.Dead && spriteNum > 6) {  // Death animation is done
             this.dead = true;
             player.killCount++;
             System.out.println("Kill Count: "+player.killCount);
+        } else if (currentSprite == CurrentSprite.Attack && spriteCounter > 6) {
+            this.attack = false;
         }
 
-        // Reset the animation timers if we change animation state or the spriteNum is out of bounds for the given animation
-        if (lastState != currentSprite || spriteNum > currentSprite.frames) {
+        // Reset the animation timers if the spriteNum is out of bounds for the given animation
+        if (spriteNum > currentSprite.frames) {
             spriteNum = 1;
             spriteCounter = 0;
         }
 
+        sprite.setTexture(currentSprite.textures[spriteNum - 1]);
+    }
 
-        if (currentSprite == CurrentSprite.Attack && spriteCounter > 6) {
-            this.attack = false;
-        }
+    /**
+     * Update the current sprite state.
+     *
+     * @param newState The new sprite state to use.
+     */
+    void setState(CurrentSprite newState) {
+        if (currentSprite == newState)
+            return;
 
-
-        sprite.setTexture(new Texture("assets/Enemy/%s/%s%d.png".formatted(currentSprite.toString(), currentSprite.toString(), spriteNum)));
+        currentSprite = newState;
+        spriteNum = 1;
+        spriteCounter = 0;
     }
 
     /**
@@ -201,6 +206,7 @@ public class Enemy extends GameEntity {
      */
     private void updatePosition() {
         if (enemyHealthIsZero() || player == null) {
+            System.out.println("health is zero");
             body.setLinearVelocity(0,0);
             return;
         }
@@ -245,7 +251,6 @@ public class Enemy extends GameEntity {
      * Take damage from player based on player current attack damage
      */
     public void takeDamage() {
-        
         playerPositionX = player.getPosition().x;
         playerPositionY = player.getPosition().y;
         enemyPositionX = body.getPosition().x * PPM + 5;
@@ -257,7 +262,8 @@ public class Enemy extends GameEntity {
             if (bullet.getBulletHit())  // Skip bullets that have already hit something
                 continue;
 
-            if (Math.abs(bullet.getPosition().x - enemyPositionX) < player.getGunAttackRange() && Math.abs(bullet.getPosition().y - enemyPositionY) < player.getGunAttackRange())
+            if (Math.abs(bullet.getPosition().x - enemyPositionX) < player.getGunAttackRange() && Math.abs(bullet.getPosition().y - enemyPositionY) < player.getGunAttackRange()
+            && !this.gotHit)
             {
                 enemyHealth.decreaseHP(player.getAttackDamage());
                 bullet.setBulletHit(true);
@@ -265,7 +271,8 @@ public class Enemy extends GameEntity {
             }
         }
 
-        if (Math.abs(playerPositionX - enemyPositionX) < player.getKnifeAttackRange() && Math.abs(playerPositionY - enemyPositionY) < player.getKnifeAttackRange() && player.knifeObj.getHoldKnife() && player.knifeObj.getDealingDamage())
+        if (Math.abs(playerPositionX - enemyPositionX) < player.getKnifeAttackRange() && Math.abs(playerPositionY - enemyPositionY) < player.getKnifeAttackRange()
+         && player.knifeObj.getHoldKnife() && player.knifeObj.getDealingDamage() && !this.gotHit)
         {
             enemyHealth.decreaseHP(player.getAttackDamage());
             player.knifeObj.setDealingDamage(false);
@@ -354,6 +361,7 @@ public class Enemy extends GameEntity {
         this.audioManager.Play("Hit");
         this.gotHit = true;
         this.canMove = false;
+        this.attack = false;
     }
 
     /**

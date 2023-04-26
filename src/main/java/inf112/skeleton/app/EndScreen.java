@@ -5,6 +5,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 /*
  * This is a class called EndScreen that extends ScreenAdapter from the LibGDX library. 
@@ -12,15 +13,23 @@ import com.badlogic.gdx.graphics.Texture;
  */
 public class EndScreen extends ScreenAdapter {
 
+    public Integer killCount;
+    BitmapFont font = new BitmapFont();
+
     // Logo UI
     private static final int LOGO_WIDTH = 200;
     private static final int LOGO_HEIGHT = 200;
-    private static final int LOGO_Y = 400;
+    private static final int LOGO_Y = 425;
+
+    // Game over UI
+    private static final int GAME_OVER_WIDTH = 250;
+    private static final int GAME_OVER_HEIGHT = 125;
+    private static final int GAME_OVER_Y = 300;
 
     // Button UI
     private static final int RESTART_BUTTON_WIDTH = 200;
     private static final int RESTART_BUTTON_HEIGHT = 100;
-    private static final int RESTART_BUTTON_Y = 200;
+    private static final int RESTART_BUTTON_Y = 175;
     private static final int EXIT_BUTTON_WIDTH = 200;
     private static final int EXIT_BUTTON_HEIGHT = 100;
     private static final int EXIT_BUTTON_Y = 50;
@@ -33,21 +42,16 @@ public class EndScreen extends ScreenAdapter {
 
     GameScreenLauncher game;
 
-    Texture background;
-    Texture logo;
-    Texture playButtonActive;
-    Texture playButtonInactive;
-    Texture exitButtonActive;
-    Texture exitButtonInactive;
-    Texture restartButtonActive;
-    Texture restartButtonInactive;
+    Texture background, logo, playButtonActive, playButtonInactive, exitButtonActive, exitButtonInactive, restartButtonActive, restartButtonInactive, gameOverUI;
 
     /**
      * Constructor that creates a new instance of EndScreen class
      * @param game an instance of the GameScreenLauncher class
      */
-    public EndScreen(GameScreenLauncher game) {
+    public EndScreen(GameScreenLauncher game, int killCount) {
         this.game = game;
+        this.killCount = killCount;
+
         background = new Texture("assets/UI/background.png");
         logo = new Texture("assets/UI/logo.png");
         playButtonActive = new Texture("assets/UI/playButtonActive.png");
@@ -56,6 +60,7 @@ public class EndScreen extends ScreenAdapter {
         exitButtonInactive = new Texture("assets/UI/exitButtonInactive.png");
         restartButtonActive = new Texture("assets/UI/restartButtonActive.png");
         restartButtonInactive = new Texture("assets/UI/restartButtonInactive.png");
+        gameOverUI = new Texture("assets/UI/gameOverUI.png");
     }
 
     /**
@@ -74,6 +79,11 @@ public class EndScreen extends ScreenAdapter {
         // Draw logo
         int x = VIEWPORT_WIDTH / 2 - LOGO_WIDTH / 2;
         game.batch.draw(logo, x, LOGO_Y, LOGO_WIDTH, LOGO_HEIGHT);
+
+        // Draw game over
+        x = VIEWPORT_WIDTH / 2 - GAME_OVER_WIDTH / 2;
+        game.batch.draw(gameOverUI, x, GAME_OVER_Y, GAME_OVER_WIDTH, GAME_OVER_HEIGHT);
+        font.draw(game.batch, Integer.toString(killCount), x + 175, GAME_OVER_Y + 55);
 
 
         // Draw restart button
