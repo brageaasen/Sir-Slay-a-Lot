@@ -16,7 +16,6 @@ public abstract class GameEntity{
     
     protected float x,y,velX,velY,speed;
     protected float width,height;
-    protected boolean flipped;
 
     protected Body body;
 
@@ -35,7 +34,6 @@ public abstract class GameEntity{
         this.velX=0;
         this.velY=0;
         this.speed=0;
-        this.flipped = false;
     }
 
     /*
