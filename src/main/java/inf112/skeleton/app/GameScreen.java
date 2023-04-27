@@ -190,7 +190,7 @@ public class GameScreen extends ScreenAdapter {
         camera.update();
 		batch.setProjectionMatrix(camera.combined);
         
-        
+    
         tileMapHelper.movePlatform(delta);   
         
         

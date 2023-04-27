@@ -47,8 +47,6 @@ public class KeyHandler {
         this.isHoldingGun();
         this.isHoldingKnife();
 
-        
-
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && player.jumpCounter < 2){
             startTime = System.currentTimeMillis();
             player.jump();
