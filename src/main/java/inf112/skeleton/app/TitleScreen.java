@@ -1,6 +1,7 @@
 package inf112.skeleton.app;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -192,6 +193,14 @@ public class TitleScreen extends ScreenAdapter {
             }
         }
         
+        if(Gdx.input.isKeyJustPressed(Input.Keys.R))
+        {
+            this.dispose();
+            this.ortographicCamera = new OrthographicCamera();
+            this.ortographicCamera.setToOrtho(false, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+            game.setScreen(new GameScreen(ortographicCamera, game));
+        }
+
         game.batch.end();
     }
 
