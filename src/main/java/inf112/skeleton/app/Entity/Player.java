@@ -175,7 +175,7 @@ public class Player extends GameEntity {
         }
 
         anim.update(anim.getState() == PlayerState.Idle ? ANIM_FRAME_RATE_IDLE : ANIM_FRAME_RATE_DEFAULT);
-        anim.updateSprite(sprite);
+        sprite.setTexture(anim.getAnimTexture());
     }
 
     /**
@@ -344,19 +344,25 @@ public class Player extends GameEntity {
         return gotHurt;
     }
 
+    /**
+     * Unlock the gun.
+     */
     public void unlockGun(){
         if (killCount >= 1){
             this.gun.setUnlocked();
         }
     }
 
+    /**
+     * Get the current kill count.
+     * @return the total amount of enemies killed.
+     */
     public int getKillcount(){
         return this.killCount;
     }
 
     /**
      * Currently used for testing
-     * @return
      */
     public AudioManager getAudio() {
         return this.audioManager;

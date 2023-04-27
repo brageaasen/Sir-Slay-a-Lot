@@ -164,7 +164,7 @@ public class Enemy extends GameEntity {
         }
 
         anim.update(ANIM_FRAME_RATE);
-        anim.updateSprite(sprite);
+        sprite.setTexture(anim.getAnimTexture());
     }
 
     /**
@@ -268,7 +268,7 @@ public class Enemy extends GameEntity {
 
     /**
      * Method to check if enemy health is below or equal to zero.
-     * @return
+     * @return `true` if the enemy has no more health, `false` otherwise.
      */
     public boolean enemyHealthIsZero() {
         return enemyHealth.getHP() <= 0;
