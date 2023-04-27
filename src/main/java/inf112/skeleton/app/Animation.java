@@ -18,6 +18,16 @@ public class Animation {
         }
     }
 
+    // For testing only
+    public Animation(int frames) {
+        this.frames = frames;
+        textures = new Texture[this.frames];
+
+        for (int i = 0; i < this.frames; i++) {
+            textures[i] = null;
+        }
+    }
+
     /**
      * Get the frame corresponding to index `i`
      * @param i the index of the frame.
