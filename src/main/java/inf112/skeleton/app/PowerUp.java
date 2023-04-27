@@ -36,6 +36,10 @@ public class PowerUp {
             if (player.getKillcount() > 0 && player.getKillcount() % 10 == 0){
                 this.ammoActive = true;
             }
+            if (player.getKillcount() % 9 == 0){
+                this.ammoActive = false;
+                this.ammoPickedUp = false;
+            }
             if (!ammoPickedUp && ammoActive){
                 inRange();
                 Sprite.setPosition(position.x, position.y);
@@ -45,6 +49,10 @@ public class PowerUp {
         else if (id == 2){
             if (player.getKillcount() > 0 && player.getKillcount() % 15 == 0){
                 this.healthActive = true;
+            }
+            if (player.getKillcount() % 14 == 0){
+                this.healthActive = false;
+                this.healthPickedUp = false;
             }
             if (!healthPickedUp && healthActive){
                 inRange();
