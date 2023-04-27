@@ -4,6 +4,9 @@ import inf112.skeleton.app.Entity.Player;
 
 import org.mockito.Mockito;
 
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -17,9 +20,12 @@ public class PlayerTest {
     @Test
     void testHurt(){
         Player player = mock(Player.class, Mockito.CALLS_REAL_METHODS);
+        AudioManager audioManager = mock(AudioManager.class);
         assertFalse(player.isHurt());
 
-        player.gotHurt();
+        player.gotHurt(1);
+        when(player.getAudio()).thenReturn(audioManager);
+        player.gotHurtTest();
         assertTrue(player.isHurt());
     }
 

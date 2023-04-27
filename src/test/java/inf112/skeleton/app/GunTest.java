@@ -42,13 +42,31 @@ public class GunTest {
     }
 
     @Test 
+    void testPowerUp(){
+        Gun gun = mock(Gun.class, Mockito.CALLS_REAL_METHODS);
+        gun.setBulletsInChamber(20);
+        assertEquals(20, gun.bulletsInChamber());
+
+        gun.bulletsPowerUp();
+        assertEquals(40, gun.bulletsInChamber());
+    }
+
+    @Test 
+    void testUnlocked(){
+        Gun gun = mock(Gun.class, Mockito.CALLS_REAL_METHODS);
+        assertFalse(gun.getUnlocked());
+
+        gun.setUnlocked();
+        assertTrue(gun.getUnlocked());
+    }
+
+    @Test 
     void testFire(){
         Gun gun = mock(Gun.class, Mockito.CALLS_REAL_METHODS);
 
         assertFalse(gun.getFiring());
         gun.setFiring(true);
         assertTrue(gun.getFiring());
-        
     }
 
 

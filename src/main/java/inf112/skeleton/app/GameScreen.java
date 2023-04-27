@@ -111,13 +111,16 @@ public class GameScreen extends ScreenAdapter {
         spawnTimer.scheduleTask(new Timer.Task() {
             @Override
             public void run() {
-                tileMapHelper.updateMapObjects();
+                spawnEnemy();
             }
         }, 5, 5);
 
             
     }   
     
+    public void spawnEnemy(){
+        tileMapHelper.updateMapObjects();
+    }
 
     /**
      * This method is used to update the game objects, such as the physics world, camera, player, enemies, and the tile map. 
@@ -190,7 +193,7 @@ public class GameScreen extends ScreenAdapter {
         camera.update();
 		batch.setProjectionMatrix(camera.combined);
         
-        
+    
         tileMapHelper.movePlatform(delta);   
         
         

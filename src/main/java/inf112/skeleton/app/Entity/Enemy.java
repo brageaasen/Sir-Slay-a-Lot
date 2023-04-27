@@ -289,12 +289,13 @@ public class Enemy extends GameEntity {
         enemyPositionX = body.getPosition().x * PPM + 5;
         enemyPositionY = body.getPosition().y * PPM + 5;
 
-        if (Math.abs(playerPositionX - enemyPositionX) < this.attackRange && Math.abs(playerPositionY - enemyPositionY) < this.attackRange) {
+        if (Math.abs(playerPositionX - enemyPositionX) < this.attackRange &&
+         Math.abs(playerPositionY - enemyPositionY) < this.attackRange) {
             this.attack = true;
-            if (currentSprite == CurrentSprite.Attack && spriteNum == 4 && !this.justAttacked) {
-                player.getPlayerHealth().decreaseHP(this.attackDamage);
+            if (currentSprite == CurrentSprite.Attack && spriteNum == 4) {
+                //player.getPlayerHealth().decreaseHP(this.attackDamage);
                 this.justAttacked = true;
-                player.gotHurt();
+                player.gotHurt(this.attackDamage);
             }
         }
     }
