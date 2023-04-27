@@ -142,7 +142,7 @@ public class Player extends GameEntity {
         sprite.setPosition(dx, dy);
         sprite.draw(batch);
 
-        if (knifeObj.isHoldKnife()) {
+        if (knifeObj.getHoldKnife()) {
             this.attack = true;
             knife.setPosition(dx + (sprite.isFlipX() ? -width : width), dy);
             knife.draw(batch);
