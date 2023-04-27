@@ -10,6 +10,8 @@
 
 ## Kjøring
 * Krever Java 17 eller Java 19
+* <img src="/src/main/resources/assets/Gitlab/screen.png" alt="Opening Screen" title="Opening Screen">
+* <img src="/src/main/resources/assets/Gitlab/runJava.png" alt="Opening Screen" title="Opening Screen">
 
 ## Kjente feil
 * 
