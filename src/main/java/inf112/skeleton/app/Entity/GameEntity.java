@@ -4,6 +4,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
+/*
+ * A factory for creating a GameEntity
+ */
 public abstract class GameEntity{
     public enum Direction {
         NONE,
@@ -17,6 +20,12 @@ public abstract class GameEntity{
 
     protected Body body;
 
+    /**
+     * This is the constructor for the GameEntity class
+     * @param width The width of the entity
+     * @param height The height of the entity
+     * @param body Box2D body
+     */
     public GameEntity(float width, float height, Body body){
         this.x = body.getPosition().x;
         this.y = body.getPosition().y;
@@ -29,10 +38,19 @@ public abstract class GameEntity{
         this.flipped = false;
     }
 
+    /*
+     * This is an abstract method that is used to update the state of the entity every frame.
+     */
     public abstract void update();
 
+    /*
+     * This is an abstract method that is used to draw the entity every frame.
+     */
     public abstract void render(SpriteBatch batch);
 
+    /*
+     * This method returns the Box2D body associated with the entity.
+     */
     public Body getBody(){
         return body;
     }

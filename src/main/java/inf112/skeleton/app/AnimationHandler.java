@@ -23,7 +23,10 @@ public class AnimationHandler<S> {
     }
 
     public void setState(S s) {
-        currState = s;
+        if (currState != s) {
+            currState = s;
+            reset();
+        }
     }
 
     public S getState() {
@@ -51,6 +54,11 @@ public class AnimationHandler<S> {
     }
 
     // TODO: make `n` a parameter of the animation itself.
+    /**
+     * Update the animation
+     *
+     * @param n The animaion speed to use
+     */
     public void update(int n) {
         animTimer++;
         if (animTimer > n) {
@@ -66,10 +74,8 @@ public class AnimationHandler<S> {
         currFrame = 1;
     }
 
-    public void updateSprite(Sprite sprite, boolean flipped) {
-        var t = getAnimTexture();
+    public void updateSprite(Sprite sprite) {
+        Texture t = getAnimTexture();
         sprite.setTexture(t);  // Should hopefully be optimized away if it's the same object (since we do sprite.texture = sprite.texture)
-        if ((!flipped && !sprite.isFlipX()) || (flipped && sprite.isFlipX()))
-            sprite.flip(true, false);
     }
 }
