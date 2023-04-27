@@ -88,7 +88,5 @@ public abstract class GameEntity{
     /**
      * Flip the entity.
      */
-    public void flip() {
-        flipped = !flipped;
-    }
+    public abstract void flip();
 }

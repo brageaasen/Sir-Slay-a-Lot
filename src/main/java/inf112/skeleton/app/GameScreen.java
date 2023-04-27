@@ -22,6 +22,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.skeleton.app.Entity.Player;
 import inf112.skeleton.app.Entity.Enemy;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 
 /*
  * The code defines a GameScreen class that extends ScreenAdapter and contains the main logic for the game.
@@ -45,6 +46,8 @@ public class GameScreen extends ScreenAdapter {
     private Timer spawnTimer;
     private Set<Enemy> enemies;
     private Inventory inventory;
+    private PowerUp moreAmmo;
+    private PowerUp moreHealth;
 
     private float textTime = 2f;
     private float timeElapsed;
@@ -83,6 +86,9 @@ public class GameScreen extends ScreenAdapter {
 		}
 
         shapeRenderer = new ShapeRenderer();
+        this.moreAmmo = new PowerUp(player, new Vector2(1120,480), new Sprite(new Texture("assets/Player/Weapons/ammoCrates.png")), 1);
+        this.moreHealth = new PowerUp(player, new Vector2(1710,360), new Sprite(new Texture("assets/Player/Weapons/health.png")), 2);
+
 
         float screenWidth = Gdx.graphics.getWidth();
         float screenHeight = Gdx.graphics.getHeight();
@@ -99,7 +105,7 @@ public class GameScreen extends ScreenAdapter {
                 healthBar.renderRegen(shapeRenderer);
             }
             
-        }, 3, 3);
+        }, 5, 3);
 
         spawnTimer = new Timer();
         spawnTimer.scheduleTask(new Timer.Task() {
@@ -140,7 +146,7 @@ public class GameScreen extends ScreenAdapter {
         }
 
         if(player.isDead() == true){
-            game.setScreen(new EndScreen(game));
+            game.setScreen(new EndScreen(game, player.getKillcount()));
         }
 
        
@@ -204,7 +210,8 @@ public class GameScreen extends ScreenAdapter {
 
         batch.begin();
         tileMapHelper.render(batch);
-        
+        moreAmmo.render(batch);
+        moreHealth.render(batch);
         orthogonalTiledMapRenderer.render();
         
         player.render(batch);

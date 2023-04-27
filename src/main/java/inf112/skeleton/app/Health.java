@@ -47,5 +47,9 @@ public class Health {
         }
     }
 
+    public void fullHealth(){
+        this.hitPoints = 100;
+    }
+
 }
 

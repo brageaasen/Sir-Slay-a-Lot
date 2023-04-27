@@ -75,7 +75,7 @@ public class Enemy extends GameEntity {
         this.jumpCounter = 0;
         this.player = player;
         this.attackRange = 40;
-        this.attackDamage = 5;
+        this.attackDamage = 10;
 
         anim = new AnimationHandler<>(EnemyState.Run, "assets/Enemy/Run/Run%d.png", 6);
         anim.addAnimation(EnemyState.Jump, "assets/Enemy/Jump/Jump%d.png", 1);
@@ -132,7 +132,7 @@ public class Enemy extends GameEntity {
      * This method updates the sprite of the enemy based on its current state
      */
     public void updateSprite() {
-        if (enemyHealthIsZero()) {
+        if (enemyHealthIsZero() && !enemyIsDead()) {
             anim.setState(EnemyState.Dead);
         } else if (this.gotHit) {
             anim.setState(EnemyState.Hit);
@@ -229,7 +229,8 @@ public class Enemy extends GameEntity {
             if (bullet.getBulletHit())  // Skip bullets that have already hit something
                 continue;
 
-            if (Math.abs(bullet.getPosition().x - enemyPositionX) < player.getGunAttackRange() && Math.abs(bullet.getPosition().y - enemyPositionY) < player.getGunAttackRange())
+            if (Math.abs(bullet.getPosition().x - enemyPositionX) < player.getGunAttackRange() && Math.abs(bullet.getPosition().y - enemyPositionY) < player.getGunAttackRange()
+            && !this.gotHit)
             {
                 enemyHealth.decreaseHP(player.getAttackDamage());
                 bullet.setBulletHit(true);
@@ -237,7 +238,8 @@ public class Enemy extends GameEntity {
             }
         }
 
-        if (Math.abs(playerPositionX - enemyPositionX) < player.getKnifeAttackRange() && Math.abs(playerPositionY - enemyPositionY) < player.getKnifeAttackRange() && player.knifeObj.getHoldKnife() && player.knifeObj.getDealingDamage())
+        if (Math.abs(playerPositionX - enemyPositionX) < player.getKnifeAttackRange() && Math.abs(playerPositionY - enemyPositionY) < player.getKnifeAttackRange()
+         && player.knifeObj.getHoldKnife() && player.knifeObj.getDealingDamage() && !this.gotHit)
         {
             enemyHealth.decreaseHP(player.getAttackDamage());
             player.knifeObj.setDealingDamage(false);
@@ -293,8 +295,7 @@ public class Enemy extends GameEntity {
      */
     @Override
     public void flip() {
-        super.flip();
-        //sprite.flip(true, false);
+        sprite.flip(true, false);
     }
 
     /**
