@@ -61,7 +61,7 @@ public class KeyHandler {
         endTime = System.currentTimeMillis();
         elapsedTime = endTime - startTime;
         if(player.getBody().getLinearVelocity().y == 0 && elapsedTime >= 250){
-            player.jumpCounter = 1;
+            player.jumpCounter = 2;
         }
 
         player.getBody().setLinearVelocity(player.getVelocity().x * player.getSpeed(), player.getBody().getLinearVelocity().y < 25 ? player.getBody().getLinearVelocity().y : 25);
