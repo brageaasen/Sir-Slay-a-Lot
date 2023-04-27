@@ -222,9 +222,9 @@ public class GameScreen extends ScreenAdapter {
         if (this.player.getGun().getUnlocked()){
             timeElapsed += delta;
             if (timeElapsed <= textTime) {
-                BitmapFont font = new BitmapFont();
-                font.getData().setScale(2);
-                font.draw(batch,  "GUN UNLOCKED!", Gdx.graphics.getWidth() / 2 + 750, Gdx.graphics.getHeight() / 2);
+                Texture gunUnlocked = new Texture("assets/UI/gunUnlocked.png");
+                // Draw gun unlocked
+                batch.draw(gunUnlocked, Gdx.graphics.getWidth() / 2 + 760, Gdx.graphics.getHeight() / 2 - 50, 200, 90);
             }
         }
         
