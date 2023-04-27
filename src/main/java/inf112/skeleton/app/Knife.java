@@ -20,14 +20,6 @@ public class Knife {
      * This method returns the value of the holdKnife boolean field.
      * @return A boolean indicating whether the player is currently holding the knife.
      */
-    public boolean isHoldKnife() {
-        return this.holdKnife;
-    }
-
-    /**
-     * This method returns the value of the holdKnife boolean field.
-     * @return A boolean indicating whether the player is currently holding the knife.
-     */
     public boolean getHoldKnife() {
         return this.holdKnife;
     }
@@ -38,14 +30,6 @@ public class Knife {
      */
     public void setHoldKnife(boolean holdKnife) {
         this.holdKnife = holdKnife;
-    }
-
-    /**
-     * This method returns the value of the dealingDamage boolean field.
-     * @return A boolean indicating whether the knife can deal damage.
-     */
-    public boolean canDealDamage() {
-        return this.dealingDamage;
     }
 
     /**

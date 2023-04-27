@@ -50,7 +50,7 @@ public class KeyHandler {
 
         
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && player.jumpCounter > 0){
+        if(Gdx.input.isKeyPressed(Input.Keys.SPACE) && player.jumpCounter > 0){
             startTime = System.currentTimeMillis();
             player.jump();
             audioManager.Play("Jump");
