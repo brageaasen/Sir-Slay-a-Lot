@@ -332,10 +332,16 @@ public class Player extends GameEntity {
     /**
      * This method is called when the player is hurt by an enemy.
      */
+<<<<<<< HEAD
     public void gotHurt(int damage) {
         if(iframes == 0){
             this.audioManager.Play("Hurt");
             this.gotHurt = true;
+=======
+    public void gotHurt() {
+        this.getAudio().Play("Hurt");
+        this.gotHurt = true;
+>>>>>>> main
         this.canMove = false;
         timer.scheduleTask(new Timer.Task() {
             @Override
@@ -357,6 +363,15 @@ public class Player extends GameEntity {
         if(iframes > 0){
             iframes--;
         }
+    }
+
+    /**
+     * TESTING ONLY: WITHOUT TIMER
+     */
+    public void gotHurtTest() {
+        this.getAudio().Play("Hurt");
+        this.gotHurt = true;
+        this.canMove = false;
     }
 
     /**
@@ -383,5 +398,13 @@ public class Player extends GameEntity {
 
     public int getKillcount(){
         return this.killCount;
+    }
+
+    /**
+     * Currently used for testing
+     * @return
+     */
+    public AudioManager getAudio() {
+        return this.audioManager;
     }
 }

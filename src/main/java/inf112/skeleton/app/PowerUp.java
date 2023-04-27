@@ -13,7 +13,10 @@ public class PowerUp {
     private float playerPositionX, playerPositionY;
     private Vector2 position;
     private boolean ammoPickedUp;
+    private boolean ammoActive;
     private boolean healthPickedUp;
+    private boolean healthActive;
+    
     private int id;
 
     public PowerUp(Player player, Vector2 pos, Sprite sprite, int id){
@@ -23,26 +26,30 @@ public class PowerUp {
         this.position = pos;
         this.ammoPickedUp = false;
         this.healthPickedUp = false;
+        this.ammoActive = false;
+        this.healthActive = false;
         this.id = id;
     }
 
     public void render(SpriteBatch batch){
         if (id == 1){
             if (player.getKillcount() > 0 && player.getKillcount() % 10 == 0){
+                this.ammoActive = true;
+            }
+            if (!ammoPickedUp && ammoActive){
                 inRange();
-                if (!ammoPickedUp){
-                    Sprite.setPosition(position.x, position.y);
-                    Sprite.draw(batch);
-                }
+                Sprite.setPosition(position.x, position.y);
+                Sprite.draw(batch);
             }
         }
         else if (id == 2){
             if (player.getKillcount() > 0 && player.getKillcount() % 15 == 0){
+                this.healthActive = true;
+            }
+            if (!healthPickedUp && healthActive){
                 inRange();
-                if (!healthPickedUp){
-                    Sprite.setPosition(position.x, position.y);
-                    Sprite.draw(batch);
-                }
+                Sprite.setPosition(position.x, position.y);
+                Sprite.draw(batch);
             }
         }
     }
