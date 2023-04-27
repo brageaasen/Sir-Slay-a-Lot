@@ -332,16 +332,10 @@ public class Player extends GameEntity {
     /**
      * This method is called when the player is hurt by an enemy.
      */
-<<<<<<< HEAD
     public void gotHurt(int damage) {
         if(iframes == 0){
             this.audioManager.Play("Hurt");
             this.gotHurt = true;
-=======
-    public void gotHurt() {
-        this.getAudio().Play("Hurt");
-        this.gotHurt = true;
->>>>>>> main
         this.canMove = false;
         timer.scheduleTask(new Timer.Task() {
             @Override
@@ -354,7 +348,7 @@ public class Player extends GameEntity {
         
         playerHealth.decreaseHP(damage);
          
-        iframes = 60;
+        iframes = 30;
         }
         
     }

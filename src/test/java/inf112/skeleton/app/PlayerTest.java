@@ -23,12 +23,9 @@ public class PlayerTest {
         AudioManager audioManager = mock(AudioManager.class);
         assertFalse(player.isHurt());
 
-<<<<<<< HEAD
         player.gotHurt(1);
-=======
         when(player.getAudio()).thenReturn(audioManager);
         player.gotHurtTest();
->>>>>>> main
         assertTrue(player.isHurt());
     }
 
