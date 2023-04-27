@@ -9,8 +9,10 @@
 *«Du er flyttet til en annen verden med fiender. Du har ingenting utenom sverd. Klarer du å overleve hauer av fiender?»*
 
 ## Kjøring
-* Krever Java 17 eller Java 19
+* Spillet krever Java 17 eller Java 19:
+* For å starte spillet må du først laste ned prosjektet. Når du åpner prosjektet i en IDE så vil skjermen din se noe slik ut:
 * <img src="/src/main/resources/assets/Gitlab/screen.png" alt="Opening Screen" title="Opening Screen">
+* For å åpne spillet må du trykke på denne start knappen oppe i høyre hjørnet av skjermen.
 * <img src="/src/main/resources/assets/Gitlab/runJava.png" alt="Opening Screen" title="Opening Screen">
 
 ## Kjente feil
@@ -35,4 +37,4 @@
 * Spilleren kan få poeng ved å skade og drepe fiendene
 * Spilleren kan bli skadet/drept av fiendene
 * Poengene kan brukes til å få nye våpen
-* Power-ups kan gi midlertidig fordeler (f.eks insta-kill, alle fiender har 1 health-point, eller double points, der du får dobbel så mange poeng for å skade/drepe fiender enn vanlig)
+* Power-ups kan gi midlertidig fordeler (f.eks mer ammunisjon til spiller sin pistol)
