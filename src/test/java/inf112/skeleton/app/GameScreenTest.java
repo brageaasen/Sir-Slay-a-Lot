@@ -56,4 +56,3 @@ public class GameScreenTest {
         verify(enemies).add(e2);
     }
 }
-
