@@ -1,5 +1,6 @@
 package inf112.skeleton.app;
 
+import com.badlogic.gdx.Files;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 
@@ -9,8 +10,9 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 public class Main {
     public static void main(String[] args) {
         Lwjgl3ApplicationConfiguration cfg = new Lwjgl3ApplicationConfiguration();
-        cfg.setTitle("hello-world");
+        cfg.setTitle("Sir Slay-a-Lot");
         cfg.setWindowedMode(1280, 640);
+        cfg.setWindowIcon("assets/UI/logo.png");
 
         new Lwjgl3Application(new GameScreenLauncher(), cfg);
     }

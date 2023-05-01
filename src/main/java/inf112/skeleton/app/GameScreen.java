@@ -111,13 +111,16 @@ public class GameScreen extends ScreenAdapter {
         spawnTimer.scheduleTask(new Timer.Task() {
             @Override
             public void run() {
-                tileMapHelper.updateMapObjects();
+                spawnEnemy();
             }
         }, 5, 5);
 
             
     }   
     
+    public void spawnEnemy(){
+        tileMapHelper.updateMapObjects();
+    }
 
     /**
      * This method is used to update the game objects, such as the physics world, camera, player, enemies, and the tile map. 
@@ -190,7 +193,7 @@ public class GameScreen extends ScreenAdapter {
         camera.update();
 		batch.setProjectionMatrix(camera.combined);
         
-        
+    
         tileMapHelper.movePlatform(delta);   
         
         
@@ -219,9 +222,9 @@ public class GameScreen extends ScreenAdapter {
         if (this.player.getGun().getUnlocked()){
             timeElapsed += delta;
             if (timeElapsed <= textTime) {
-                BitmapFont font = new BitmapFont();
-                font.getData().setScale(2);
-                font.draw(batch,  "GUN UNLOCKED!", Gdx.graphics.getWidth() / 2 + 750, Gdx.graphics.getHeight() / 2);
+                Texture gunUnlocked = new Texture("assets/UI/gunUnlocked.png");
+                // Draw gun unlocked
+                batch.draw(gunUnlocked, Gdx.graphics.getWidth() / 2 + 760, Gdx.graphics.getHeight() / 2 - 50, 200, 90);
             }
         }
         

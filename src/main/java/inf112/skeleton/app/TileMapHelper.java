@@ -30,7 +30,7 @@ import inf112.skeleton.app.Entity.Enemy;
 public class TileMapHelper {
     
     private TiledMap tiledMap;
-    private GameScreen gameScreen;
+    public static GameScreen gameScreen;
     private static final int PPM = 16;
 
     private Body body2;

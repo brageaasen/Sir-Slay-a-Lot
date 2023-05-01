@@ -56,6 +56,7 @@ public class Player extends GameEntity {
     private int attackDamage;
     private int knifeAttackRange, gunAttackRange;
     private boolean gotHurt;
+    private int iframes = 0; //invinsibility frames
 
     private Timer timer;
     private boolean canMove = true;
@@ -65,6 +66,7 @@ public class Player extends GameEntity {
     private final Sprite sprite;
 
     private final Health playerHealth; 
+    private float expectedFallDamage = 0;
 
     private boolean attack = false;
 
@@ -125,6 +127,7 @@ public class Player extends GameEntity {
         this.checkFallDamage();
         this.unlockGun();
         // dealDamage();
+        decreaseIframes();
     }
 
     /**
@@ -139,7 +142,7 @@ public class Player extends GameEntity {
         sprite.setPosition(dx, dy);
         sprite.draw(batch);
 
-        if (knifeObj.isHoldKnife()) {
+        if (knifeObj.getHoldKnife()) {
             this.attack = true;
             knife.setPosition(dx + (sprite.isFlipX() ? -width : width), dy);
             knife.draw(batch);
@@ -196,10 +199,9 @@ public class Player extends GameEntity {
      * Finally, it increments the jump counter.
      */
     public void jump() {
-        float force = body.getMass() * 10 * 2;
+        float force = body.getMass() * 21;
         body.setLinearVelocity(body.getLinearVelocity().x, 0);
         body.applyLinearImpulse(new Vector2(0, force), body.getPosition(), true);
-        jumpCounter++;
     }
 
     /**
@@ -289,16 +291,18 @@ public class Player extends GameEntity {
     }
 
     /**
-     * Checks if the player has fallen from too high and how much damage is inflicted
+     * Checks and apply falldamage if the player has fallen from too high
      */
-    public void checkFallDamage() {
-        float verticalSpeed = body.getLinearVelocity().y;
-
-        if (verticalSpeed < -37) {
-            int damageScale = (int) ((Math.abs(verticalSpeed) - 10));
-
+    public void checkFallDamage(){ 
+        float multiplier = 1.0f;
+        if(isGrounded() && expectedFallDamage > 37){
+            int damageScale = (int)(expectedFallDamage * multiplier);
+            System.out.println("Fall damage: "+damageScale);
             playerHealth.decreaseHP(damageScale);
         }
+
+        expectedFallDamage = Math.abs(body.getLinearVelocity().y);
+
     }
 
     /**
@@ -328,9 +332,10 @@ public class Player extends GameEntity {
     /**
      * This method is called when the player is hurt by an enemy.
      */
-    public void gotHurt() {
-        this.getAudio().Play("Hurt");
-        this.gotHurt = true;
+    public void gotHurt(int damage) {
+        if(iframes == 0){
+            this.audioManager.Play("Hurt");
+            this.gotHurt = true;
         this.canMove = false;
         timer.scheduleTask(new Timer.Task() {
             @Override
@@ -338,7 +343,20 @@ public class Player extends GameEntity {
             {
                 canMove = true;
             }        
-         }, 1);
+        }, 1);
+
+        
+        playerHealth.decreaseHP(damage);
+         
+        iframes = 30;
+        }
+        
+    }
+
+    private void decreaseIframes(){
+        if(iframes > 0){
+            iframes--;
+        }
     }
 
     /**
