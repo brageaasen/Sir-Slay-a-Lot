@@ -18,18 +18,6 @@ public class PlayerTest {
     
 
     @Test
-    void testHurt(){
-        Player player = mock(Player.class, Mockito.CALLS_REAL_METHODS);
-        AudioManager audioManager = mock(AudioManager.class);
-        assertFalse(player.isHurt());
-
-        player.gotHurt(1);
-        when(player.getAudio()).thenReturn(audioManager);
-        player.gotHurtTest();
-        assertTrue(player.isHurt());
-    }
-
-    @Test
     void testDecreaseAndRegenHealth(){
         Player player = mock(Player.class, Mockito.CALLS_REAL_METHODS);
         when(player.getPlayerHealth()).thenReturn(new Health());

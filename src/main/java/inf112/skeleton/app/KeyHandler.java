@@ -104,7 +104,7 @@ public class KeyHandler {
      * Method that checks if the player is holding the gun and updates the gun object's state accordingly.
      */
     private void isHoldingGun() {
-        int priceGun = 1; //Number of kills you need before unlocking the gun
+        int priceGun = 5; //Number of kills you need before unlocking the gun
 
         if (Gdx.input.isKeyPressed(Input.Keys.NUM_2)) {
             if(player.killCount >= priceGun){
