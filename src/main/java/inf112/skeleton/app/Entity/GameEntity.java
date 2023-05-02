@@ -34,7 +34,6 @@ public abstract class GameEntity{
         this.velX=0;
         this.velY=0;
         this.speed=0;
-        
     }
 
     /*
@@ -83,4 +82,9 @@ public abstract class GameEntity{
      * @param direction The direction to move in.
      */
     public abstract void move(Direction direction);
+
+    /**
+     * Flip the entity.
+     */
+    public abstract void flip();
 }

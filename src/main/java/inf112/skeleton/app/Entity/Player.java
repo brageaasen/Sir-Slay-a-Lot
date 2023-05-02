@@ -13,37 +13,30 @@ import inf112.skeleton.app.Gun;
 import inf112.skeleton.app.Health;
 import inf112.skeleton.app.KeyHandler;
 import inf112.skeleton.app.Knife;
+import inf112.skeleton.app.*;
 
 
 /*
- * This class is where the Player entity is created. It extends the GameEntity class. 
+ * This class is where the Player entity is created. It extends the GameEntity class.
  */
 public class Player extends GameEntity {
-    public enum CurrentSprite {
-        Idle(4),
-        Run(8),
-        Hurt(1),
-        Jump(3),
-        Fall(3),
-        Attack(4);
 
-        final int frames;
-        final Texture[] textures;
-        CurrentSprite(int i) {
-            frames = i;
-            textures = new Texture[frames];
-            for (int j = 0; j < frames; j++) {
-                // Preload textures instead of reloading them every frame.
-                textures[j] = new Texture("assets/Player/%s/%s%d.png".formatted(this.name(), this.name(), j+1));
-            }
-        }
+    public static final int ANIM_FRAME_RATE_IDLE = 8;
+    public static final int ANIM_FRAME_RATE_DEFAULT = 6;
+
+    public enum PlayerState {
+        Idle,
+        Run,
+        Hurt,
+        Jump,
+        Fall,
+        Attack,
     }
+    private final AnimationHandler<PlayerState> anim;
 
     private static final int PPM = 16; //?? what does this mean???
 
     public int jumpCounter;     //?? Set to private, change using API (e.g. 'Jump')
-    private int spriteCounter, spriteNum;
-    private CurrentSprite currentSprite;
     private Direction facing;
     public Knife knifeObj;
     public Gun gun;
@@ -65,7 +58,7 @@ public class Player extends GameEntity {
     private final KeyHandler keyH;
     private final Sprite sprite;
 
-    private final Health playerHealth; 
+    private final Health playerHealth;
     private float expectedFallDamage = 0;
 
     private boolean attack = false;
@@ -85,41 +78,40 @@ public class Player extends GameEntity {
 
         knifeObj = new Knife();
 
-        this.spriteCounter = 0;
-        this.spriteNum = 1;
-        this.currentSprite = CurrentSprite.Idle;
-
         this.jumpCounter = 0;
         this.facing = Direction.NONE;
-        this.sprite = new Sprite(new Texture("assets/Player/Idle/Idle1.png"));
         this.knife = new Sprite(new Texture("assets/Player/Weapons/knife.png"));
         this.keyH = new KeyHandler(this);   //?? Should the player class hold input handling?
-        this.sprite.setScale(2);
 
         playerHealth = new Health();
 
         this.gun = new Gun(700f, 20, 500, 0.5f, "assets/Player/Weapons/gunBullet.png", "assets/Player/Weapons/gun.png");
 
         this.timer = new Timer();
-        
+
+        anim = new AnimationHandler<>(PlayerState.Idle, new Animation("assets/Player/Idle/Idle%d.png", 4));
+        anim.addAnimation(PlayerState.Run, new Animation("assets/Player/Run/Run%d.png", 8));
+        anim.addAnimation(PlayerState.Hurt, new Animation("assets/Player/Hurt/Hurt%d.png", 1));
+        anim.addAnimation(PlayerState.Jump, new Animation("assets/Player/Jump/Jump%d.png", 3));
+        anim.addAnimation(PlayerState.Fall, new Animation("assets/Player/Fall/Fall%d.png", 3));
+        anim.addAnimation(PlayerState.Attack, new Animation("assets/Player/Attack/Attack%d.png", 3));
+        anim.setState(PlayerState.Idle);
+
+        this.sprite = new Sprite(anim.getAnimTexture());
+        this.sprite.setScale(2);
+        flip();
     }
 
     /**
-     * This method updates the player object every game loop. 
-     * It updates the sprite based on the player's current state, 
-     * updates the player's position and velocity, updates the gun object, 
+     * This method updates the player object every game loop.
+     * It updates the sprite based on the player's current state,
+     * updates the player's position and velocity, updates the gun object,
      * checks user input using the KeyHandler object, and checks for fall damage.
      */
     @Override
     public void update() {
-        if (currentSprite == CurrentSprite.Idle)
-            spriteChecker(8);
-        else 
-            spriteChecker(6);
-        
         x = body.getPosition().x * PPM + 5;
         y = body.getPosition().y * PPM + 17;
-
 
         updateSprite();
         gun.update(Gdx.graphics.getDeltaTime());
@@ -131,7 +123,7 @@ public class Player extends GameEntity {
     }
 
     /**
-     * This method renders the player object to the screen using a SpriteBatch. 
+     * This method renders the player object to the screen using a SpriteBatch.
      * It positions and draws the player's sprite, and also draws the knife or gun if the player is attacking.
      */
     @Override
@@ -146,13 +138,12 @@ public class Player extends GameEntity {
             this.attack = true;
             knife.setPosition(dx + (sprite.isFlipX() ? -width : width), dy);
             knife.draw(batch);
-
         }
 
         if (gun.getHoldGun()){
             gun.setPosition(new Vector2(dx + (sprite.isFlipX() ? -width-5 : width+5), dy + 5));
             gun.renderBullets(batch);
-            
+
             if (gun.getFiring()){
                 this.attack = true;
                 gun.fire(new Vector2(dx + (sprite.isFlipX() ? -width + 40 : width), dy + (sprite.isFlipX() ? 3 : 19)), (sprite.isFlipX() ? new Vector2(-10,0) : new Vector2(10,0)) );
@@ -166,36 +157,34 @@ public class Player extends GameEntity {
      */
     public void updateSprite() {
         if (attack) {
-            if (currentSprite != CurrentSprite.Attack)
-                spriteNum = 1;
-            currentSprite = CurrentSprite.Attack;
+            if (anim.getState() != PlayerState.Attack)
+                anim.reset();
+            anim.setState(PlayerState.Attack);
         } else if (gotHurt) {
-            currentSprite = CurrentSprite.Hurt;
-            this.gotHurt = false;
+            anim.setState(PlayerState.Hurt);
+            gotHurt = false;
         } else if (facing == Direction.NONE && getBody().getLinearVelocity().y == 0) {
-            currentSprite = CurrentSprite.Idle;
-        } else if (getBody().getLinearVelocity().y > 0) { // Checking if player is jumping
-            currentSprite = CurrentSprite.Jump;
-        } else if (getBody().getLinearVelocity().y < 0) { // Checking if player is falling
-            currentSprite = CurrentSprite.Fall;
+            anim.setState(PlayerState.Idle);
+        } else if (getBody().getLinearVelocity().y > 0) {  // Checking if player is jumping
+            anim.setState(PlayerState.Jump);
+        } else if (getBody().getLinearVelocity().y < 0) {  // Checking if player is falling
+            anim.setState(PlayerState.Fall);
         } else {
-            currentSprite = CurrentSprite.Run;
+            anim.setState(PlayerState.Run);
         }
 
-        if (spriteNum > currentSprite.frames) // Check if spriteNum is out of bounds for the given animation
-            spriteNum = 1;
-
-        if (currentSprite == CurrentSprite.Attack && spriteCounter > 4) {
+        if (anim.getState() == PlayerState.Attack && anim.getCurrFrame() == 3) {
             this.attack = false;
         }
 
-        sprite.setTexture(currentSprite.textures[spriteNum - 1]);
+        anim.update(anim.getState() == PlayerState.Idle ? ANIM_FRAME_RATE_IDLE : ANIM_FRAME_RATE_DEFAULT);
+        sprite.setTexture(anim.getAnimTexture());
     }
 
     /**
-     * This method makes the player entity jump. 
-     * It first calculates the force required to make the player jump by multiplying the player's mass by 10 (gravity) and 2 (jump strength). 
-     * Then it sets the player's y-velocity to 0 and applies the calculated force as a linear impulse to the player's body. 
+     * This method makes the player entity jump.
+     * It first calculates the force required to make the player jump by multiplying the player's mass by 10 (gravity) and 2 (jump strength).
+     * Then it sets the player's y-velocity to 0 and applies the calculated force as a linear impulse to the player's body.
      * Finally, it increments the jump counter.
      */
     public void jump() {
@@ -205,23 +194,13 @@ public class Player extends GameEntity {
     }
 
     /**
-     * n is speed of which sprites changes
+     * Flip the player
      */
-    private void spriteChecker(int n) {
-        spriteCounter++;
-        if (spriteCounter > n) {
-            spriteCounter = 0;
-            spriteNum++;
-        }
-    }
-
-    /*
-     * Flip the player's sprite and weapons horizontally.
-     */
+    @Override
     public void flip() {
         sprite.flip(true, false);
         knife.flip(true, false);
-        gun.getSprite().flip(true, false);
+        gun.getSprite().flip(true,false);
     }
 
     /**
@@ -241,7 +220,7 @@ public class Player extends GameEntity {
     }
 
     /**
-     * This method is used to move the player entity. 
+     * This method is used to move the player entity.
      * It takes a direction and sets the player's x-velocity depending on the direction.
      * @param direction the direction the player is going.
      */
@@ -250,7 +229,7 @@ public class Player extends GameEntity {
         switch (direction) {
             case RIGHT -> {
                 velX = 1;
-                
+
                 if (this.facing != Direction.RIGHT && sprite.isFlipX())
                     flip();
             }
@@ -293,7 +272,7 @@ public class Player extends GameEntity {
     /**
      * Checks and apply falldamage if the player has fallen from too high
      */
-    public void checkFallDamage(){ 
+    public void checkFallDamage(){
         float multiplier = 1.0f;
         if(isGrounded() && expectedFallDamage > 37){
             int damageScale = (int)(expectedFallDamage * multiplier);
@@ -339,18 +318,17 @@ public class Player extends GameEntity {
         this.canMove = false;
         timer.scheduleTask(new Timer.Task() {
             @Override
-            public void run()
-            {
+            public void run() {
                 canMove = true;
             }        
         }, 1);
 
-        
+
         playerHealth.decreaseHP(damage);
-         
+
         iframes = 30;
         }
-        
+
     }
 
     private void decreaseIframes(){
@@ -384,19 +362,25 @@ public class Player extends GameEntity {
         return gotHurt;
     }
 
+    /**
+     * Unlock the gun.
+     */
     public void unlockGun(){
         if (killCount >= 1){
             this.gun.setUnlocked();
         }
     }
 
+    /**
+     * Get the current kill count.
+     * @return the total amount of enemies killed.
+     */
     public int getKillcount(){
         return this.killCount;
     }
 
     /**
      * Currently used for testing
-     * @return
      */
     public AudioManager getAudio() {
         return this.audioManager;

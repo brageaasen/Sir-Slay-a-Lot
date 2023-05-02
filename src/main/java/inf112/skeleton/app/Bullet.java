@@ -102,7 +102,7 @@ public class Bullet {
 
     /**
      * This method is used to set the bulletHit variable to true or false.
-     * @param hitA boolean value indicating whether or not the bullet has hit its target. 
+     * @param hit boolean value indicating whether or not the bullet has hit its target.
      * If true, the bullet has hit its target. If false, the bullet has not hit its target.
      */
     public void setBulletHit(boolean hit){

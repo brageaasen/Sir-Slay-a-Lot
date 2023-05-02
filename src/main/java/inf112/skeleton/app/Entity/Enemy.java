@@ -2,42 +2,34 @@ package inf112.skeleton.app.Entity;
 
 import java.util.List;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Timer;
 
+import inf112.skeleton.app.AnimationHandler;
 import inf112.skeleton.app.AudioManager;
 import inf112.skeleton.app.Bullet;
 import inf112.skeleton.app.Health;
 
 /*
- * This class is where the Enemy entity is created. It extends the GameEntity class. 
+ * This class is where the Enemy entity is created. It extends the GameEntity class.
  */
 public class Enemy extends GameEntity {
 
-    public enum CurrentSprite {
-        Run(6),
-        Jump(1),
-        Fall(1),
-        Attack(6),
-        Dead(6),
-        Hit(3);
+    private static final int ANIM_FRAME_RATE = 10;
 
-        final int frames;
-        final Texture[] textures;
-        CurrentSprite(int i) {
-            frames = i;
-            textures = new Texture[frames];
-            for (int j = 0; j < frames; j++) {
-                // Preload textures instead of reloading them every frame.
-                textures[j] = new Texture("assets/Enemy/%s/%s%d.png".formatted(this.name(), this.name(), j+1));
-            }
-        }
+    public enum EnemyState {
+        Run,
+        Jump,
+        Fall,
+        Attack,
+        Dead,
+        Hit,
     }
 
+    private final AnimationHandler<EnemyState> anim;
     private int jumpCounter;
     private final Sprite sprite;
     private static final int PPM = 16;
@@ -68,12 +60,10 @@ public class Enemy extends GameEntity {
     private AudioManager audioManager = new AudioManager();
 
     // Sprite field variables
-    private int spriteCounter;
-    private int spriteNum;
-    private CurrentSprite currentSprite;
+    private int attackTimer;
 
     /**
-     * The constructor of the Enemy class 
+     * The constructor of the Enemy class
      * @param width the width of the enemy.
      * @param height the height of the enemy.
      * @param body a Body object representing the Box2D body of the enemy.
@@ -84,11 +74,16 @@ public class Enemy extends GameEntity {
         this.speed = 5f;
         this.jumpCounter = 0;
         this.player = player;
-        this.spriteNum = 1;
         this.attackRange = 40;
         this.attackDamage = 10;
 
-        this.sprite = new Sprite(new Texture("assets/Enemy/Run/Run1.png"));
+        anim = new AnimationHandler<>(EnemyState.Run, "assets/Enemy/Run/Run%d.png", 6);
+        anim.addAnimation(EnemyState.Jump, "assets/Enemy/Jump/Jump%d.png", 1);
+        anim.addAnimation(EnemyState.Fall, "assets/Enemy/Fall/Fall%d.png", 1);
+        anim.addAnimation(EnemyState.Attack, "assets/Enemy/Attack/Attack%d.png", 6);
+        anim.addAnimation(EnemyState.Dead, "assets/Enemy/Dead/Dead%d.png", 6);
+        anim.addAnimation(EnemyState.Hit, "assets/Enemy/Hit/Hit%d.png", 3);
+        this.sprite = new Sprite(anim.getAnimTexture());
         this.sprite.setScale(2);
         enemyHealth = new Health();
 
@@ -100,18 +95,18 @@ public class Enemy extends GameEntity {
      */
     @Override
     public void update() {
-        spriteChecker();
         x = body.getPosition().x * PPM + 5;
         y = body.getPosition().y * PPM + 17;
 
-        if (!this.attack && this.canMove)
+        if (!this.attack && this.canMove) {
             updatePosition();
-        else
-            body.setLinearVelocity(0,body.getLinearVelocity().y);    // We will still allow it to fall, otherwise it will hover in the air.
-        
+        } else {
+            body.setLinearVelocity(0, body.getLinearVelocity().y);    // We will still allow it to fall, otherwise it will hover in the air.
+            attackTimer++;
+        }
+
         updateSprite();
         takeDamage();
-        
         dealDamage();
     }
 
@@ -138,70 +133,42 @@ public class Enemy extends GameEntity {
      */
     public void updateSprite() {
         if (enemyHealthIsZero() && !enemyIsDead()) {
-            setState(CurrentSprite.Dead);
+            anim.setState(EnemyState.Dead);
         } else if (this.gotHit) {
-            setState(CurrentSprite.Hit);
+            anim.setState(EnemyState.Hit);
         } else if (this.getBody().getLinearVelocity().y != 0 && this.isGrounded()) {
-            setState(CurrentSprite.Run);
+            anim.setState(EnemyState.Run);
         } else if (this.getBody().getLinearVelocity().y > 0) {  // Checking if enemy is jumping
-            setState(CurrentSprite.Jump);
+            anim.setState(EnemyState.Jump);
         } else if (this.getBody().getLinearVelocity().y < 0) {  // Checking if enemy is falling
-            setState(CurrentSprite.Fall);
+            anim.setState(EnemyState.Fall);
         } else if (this.attack) {
-            if (currentSprite != CurrentSprite.Attack)
+            if (anim.getState() != EnemyState.Attack) {
                 this.justAttacked = false;
-            setState(CurrentSprite.Attack);
-        } else {
-            setState(CurrentSprite.Run);
+            }
+            anim.setState(EnemyState.Attack);
+        }
+        else {
+            anim.setState(EnemyState.Run);
         }
 
-        if (currentSprite == CurrentSprite.Hit && spriteNum > 3) {  // Hit animation is done
+        if (anim.getState() == EnemyState.Hit && anim.getCurrFrame() == 3) {  // Hit animation is done
             canMove = true;
             gotHit = false;
-        } else if (currentSprite == CurrentSprite.Dead && spriteNum > 6) {  // Death animation is done
+        } else if (anim.getState() == EnemyState.Dead && anim.getCurrFrame() == 6) {  // Death animation is done
             this.dead = true;
             player.killCount++;
             System.out.println("Kill Count: "+player.killCount);
-        } else if (currentSprite == CurrentSprite.Attack && spriteCounter > 6) {
+        } else if (anim.getState() == EnemyState.Attack && attackTimer > 6) {
             this.attack = false;
         }
 
-        // Reset the animation timers if the spriteNum is out of bounds for the given animation
-        if (spriteNum > currentSprite.frames) {
-            spriteNum = 1;
-            spriteCounter = 0;
-        }
-
-        sprite.setTexture(currentSprite.textures[spriteNum - 1]);
+        anim.update(ANIM_FRAME_RATE);
+        sprite.setTexture(anim.getAnimTexture());
     }
 
     /**
-     * Update the current sprite state.
-     *
-     * @param newState The new sprite state to use.
-     */
-    void setState(CurrentSprite newState) {
-        if (currentSprite == newState)
-            return;
-
-        currentSprite = newState;
-        spriteNum = 1;
-        spriteCounter = 0;
-    }
-
-    /**
-     * This method updates the sprite of the enemy by incrementing the spriteCounter field and spriteNum if necessary.
-     */
-    private void spriteChecker() {
-        spriteCounter++;
-        if (spriteCounter > 10) {
-            spriteCounter = 0;
-            spriteNum++;
-        }
-    }
-
-    /**
-     * This method updates the position of the enemy based on the position of the player. 
+     * This method updates the position of the enemy based on the position of the player.
      * It sets the velX field to 1 if the enemy is to the left of the player, -1 if the enemy is to the right of the player, and 0 otherwise.
      */
     private void updatePosition() {
@@ -292,7 +259,7 @@ public class Enemy extends GameEntity {
         if (Math.abs(playerPositionX - enemyPositionX) < this.attackRange &&
          Math.abs(playerPositionY - enemyPositionY) < this.attackRange) {
             this.attack = true;
-            if (currentSprite == CurrentSprite.Attack && spriteNum == 4) {
+            if (anim.getState() == EnemyState.Attack && anim.getCurrFrame() == 4 && !this.justAttacked) {
                 //player.getPlayerHealth().decreaseHP(this.attackDamage);
                 this.justAttacked = true;
                 player.gotHurt(this.attackDamage);
@@ -302,14 +269,14 @@ public class Enemy extends GameEntity {
 
     /**
      * Method to check if enemy health is below or equal to zero.
-     * @return
+     * @return `true` if the enemy has no more health, `false` otherwise.
      */
     public boolean enemyHealthIsZero() {
         return enemyHealth.getHP() <= 0;
     }
 
     /**
-     * Method to check if enemy is dead. 
+     * Method to check if enemy is dead.
      * @return a bool that tells us if the enemy is dead or not
      */
     public boolean enemyIsDead(){
@@ -327,12 +294,13 @@ public class Enemy extends GameEntity {
     /*
      * This method flips the sprite of the enemy horizontally.
      */
+    @Override
     public void flip() {
         sprite.flip(true, false);
     }
 
     /**
-     * Method that returns the direction of the enemy. 
+     * Method that returns the direction of the enemy.
      * @return the direction of the enemy.
      */
     public Direction getDirection() {
@@ -340,7 +308,7 @@ public class Enemy extends GameEntity {
     }
 
     /**
-     * Method that returns the Health of the enemy. 
+     * Method that returns the Health of the enemy.
      * @return the Health of the enemy.
      */
     public Health getHealth() {
@@ -348,7 +316,7 @@ public class Enemy extends GameEntity {
     }
 
     /**
-     * Method that returns the max health of the enemy. 
+     * Method that returns the max health of the enemy.
      * @return the max health of the enemy.
      */
     public Health getMaxHealth() {
@@ -356,7 +324,7 @@ public class Enemy extends GameEntity {
     }
 
     /**
-     * Method that check whether or not the enemy got hit. If so, it plays  sound and stops it's movement. 
+     * Method that check whether or not the enemy got hit. If so, it plays  sound and stops it's movement.
      */
     public void gotHit() {
         this.audioManager.Play("Hit");
@@ -366,7 +334,7 @@ public class Enemy extends GameEntity {
     }
 
     /**
-     * A method to clone an enemy. 
+     * A method to clone an enemy.
      * @return a clone of the enemy.
      */
     public Enemy clone() {

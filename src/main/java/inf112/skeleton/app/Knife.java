@@ -26,7 +26,7 @@ public class Knife {
 
     /**
      * This method sets the value of the holdKnife boolean field to the value passed in as a parameter.
-     * @param holdKnifeA boolean indicating whether the player is currently holding the knife.
+     * @param holdKnife boolean indicating whether the player is currently holding the knife.
      */
     public void setHoldKnife(boolean holdKnife) {
         this.holdKnife = holdKnife;
