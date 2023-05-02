@@ -29,6 +29,9 @@ public class AnimationHandler<S> {
      * @param s the new state.
      */
     public void setState(S s) {
+        if (animations.get(s) == null)
+            throw new IllegalArgumentException("No animation corresponding to the state: " + s);
+
         if (currState != s) {
             currState = s;
             reset();
@@ -89,10 +92,9 @@ public class AnimationHandler<S> {
     /**
      * Update the animation
      *
-     * @param n The framerate of the animation to use.
+     * @param n The frame rate of the animation to use.
      */
     public void update(int n) {
-        //TODO? Should `n` be a parameter of the animation itself?
         animTimer++;
         if (animTimer > n) {
             animTimer = 0;

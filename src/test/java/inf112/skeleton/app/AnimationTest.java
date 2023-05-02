@@ -19,7 +19,6 @@ public class AnimationTest {
         assertNotEquals(f, anim.getCurrFrame());
 //        assertNotEquals(t, anim.getAnimTexture());
         assertEquals(2, anim.getCurrFrame());
-        f = anim.getCurrFrame();
         anim.update(2); // animTimer -> 1
         anim.update(2); // animTimer -> 2
         assertEquals(2, anim.getCurrFrame());
@@ -52,8 +51,7 @@ public class AnimationTest {
         assertEquals(1, anim.getCurrFrame());
         assertNotEquals(a, anim.getCurrAnim());
 
-        anim.setState("c"); // TODO: should throw?
-        assertNull(anim.getCurrAnim());
-        assertEquals("c", anim.getState());
+        // Unset animation
+        assertThrows(IllegalArgumentException.class, () -> anim.setState("c"));
     }
 }
