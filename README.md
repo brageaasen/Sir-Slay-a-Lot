@@ -9,7 +9,11 @@
 *«Du er flyttet til en annen verden med fiender. Du har ingenting utenom sverd. Klarer du å overleve hauer av fiender?»*
 
 ## Kjøring
-* Krever Java 17 eller Java 19
+* Spillet krever Java 17 eller Java 19:
+* For å starte spillet må du først laste ned prosjektet. Når du åpner prosjektet i en IDE så vil skjermen din se noe slik ut:
+* <img src="/src/main/resources/assets/Gitlab/screen.png" alt="Opening Screen" title="Opening Screen">
+* For å åpne spillet må du trykke på denne start knappen oppe i høyre hjørnet av skjermen.
+* <img src="/src/main/resources/assets/Gitlab/runJava.png" alt="Opening Screen" title="Opening Screen">
 
 ## Kjente feil
 * Et par bugs, f.eks når fiendene prøver å slå

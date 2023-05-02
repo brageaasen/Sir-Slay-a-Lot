@@ -106,7 +106,7 @@ public class KeyHandler {
     private void isHoldingGun() {
         int priceGun = 1; //Number of kills you need before unlocking the gun
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.NUM_2)) {
             if(player.killCount >= priceGun){
                 startWithKnife = false;
                 player.knifeObj.setHoldKnife(false);
