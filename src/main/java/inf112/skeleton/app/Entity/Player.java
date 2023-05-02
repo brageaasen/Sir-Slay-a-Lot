@@ -72,7 +72,7 @@ public class Player extends GameEntity {
     public Player(float width, float height, Body body) {
         super(width, height, body);
         this.speed = 20f;   //?? Introduce constant?
-        this.attackDamage = 25;
+        this.attackDamage = 50;
         this.knifeAttackRange = 40;
         this.gunAttackRange = 40;
 
@@ -366,7 +366,7 @@ public class Player extends GameEntity {
      * Unlock the gun.
      */
     public void unlockGun(){
-        if (killCount >= 1){
+        if (killCount >= 5){
             this.gun.setUnlocked();
         }
     }
