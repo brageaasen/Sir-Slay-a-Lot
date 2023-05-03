@@ -260,7 +260,7 @@ public class Enemy extends GameEntity {
         if (Math.abs(playerPositionX - enemyPositionX) < this.attackRange &&
          Math.abs(playerPositionY - enemyPositionY) < this.attackRange) {
             this.attack = true;
-            if (anim.getState() == EnemyState.Attack && anim.getCurrFrame() == 4 && !this.justAttacked) {
+            if (anim.getState() == EnemyState.Attack && anim.getCurrFrame() == 4) {
                 //player.getPlayerHealth().decreaseHP(this.attackDamage);
                 this.justAttacked = true;
                 player.gotHurt(this.attackDamage);
