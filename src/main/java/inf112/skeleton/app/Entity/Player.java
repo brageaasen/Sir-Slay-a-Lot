@@ -413,4 +413,11 @@ public class Player extends GameEntity {
     public AudioManager getAudio() {
         return this.audioManager;
     }
+
+    /**
+     * Currently used for testing
+     */
+    public Sprite getSprite() {
+        return this.sprite;
+    }
 }
