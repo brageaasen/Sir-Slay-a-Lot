@@ -37,18 +37,32 @@
 
 
 ## Manuelle tester: (Antall: )
-* Bevege høyre og venstre med A og D. Hoppe med Space.
-* Hoppe på en blokk for å sjekke collision.
-* Se at sprites endrer seg etter bevegelse og retning.
-* Se at spiller kan angripe med enter-knappen.
-* Se at pistol skyter.
-* Se at spiller kan bytte mellom kniv og pistol.
-* Se at spiller får falldamage av å falle for hardt.
-* Se at angrepssprites vises for spiller og enemy.
-* Se at fiende beveger seg av seg selv.
-* Se at fiende dør dersom han blir slått mange ganger.
-* Se at flere fiender spawner.
-* Se at fiender har en død-animasjon
+* Player
+    * Bevege høyre og venstre med A og D. Hoppe med Space.
+    * Hoppe på en blokk for å sjekke collision.
+    * Se at spiller kan angripe med enter-knappen.
+    * Se at pistol skyter.
+    * Se at spiller kan bytte mellom kniv og pistol.
+    * Se at spiller får falldamage av å falle for hardt.
+* Player / Enemy
+    * Se at angrepssprites vises for spiller og enemy.
+    * Se at sprites endrer seg etter bevegelse og retning.
+* Enemy
+    * Se at fiende beveger seg av seg selv.
+    * Se at fiende dør dersom han blir slått mange ganger.
+    * Se at flere fiender spawner.
+    * Se at fiender har en død-animasjon
+* SFX / Musikk
+    * Sjekke at lyd spilles av én gang, og når de skal for lydene: Hit, Hurt, Jump, Pickup, Select og Shoot.
+    * Sjekke at musikk spilles ved start.
+    * Sjekke at musikk looper etter at sangen er spilt ferdig.
+* UI
+    * Sjekke at start meny vises som den skal, og at knappene funker.
+    * Sjekke at game over screen vises ved tap, og at knappene funker.
+    * Sjekke at player score ved game over screen viser korrekt score i forhold til player sin killcount.
+* Bakgrunn
+    * Sjekke at parallax bakgrunnen fungerer som den skal horisontalt.
+    * Sjekke at parallax bakgrunn går over til "evig himmel" vertikalt når player kommer seg høyt opp på mapet.
 
 ## Klassediagram
 <img src="/src/main/resources/assets/Gitlab/klassediagram.png" alt="Opening Screen" title="Opening Screen">
