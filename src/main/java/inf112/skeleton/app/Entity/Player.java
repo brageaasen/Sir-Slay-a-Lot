@@ -58,7 +58,7 @@ public class Player extends GameEntity {
     private final KeyHandler keyH;
     private final Sprite sprite;
 
-    private final Health playerHealth;
+    private Health playerHealth;
     private float expectedFallDamage = 0;
 
     private boolean attack = false;
@@ -252,6 +252,13 @@ public class Player extends GameEntity {
         return playerHealth;
     }
 
+    /**
+     * Setter method for setting the Health object
+     * @param health new health
+     */
+    public void setPlayerHealth(Health health) {
+        this.playerHealth = health;
+    }
 
     /**
      * Checks if the player is dead by checking HP
@@ -293,6 +300,13 @@ public class Player extends GameEntity {
     }
 
     /**
+     * Testing purposes
+     */
+    public void setAttackDamage(int damage) {
+        this.attackDamage = damage;
+    }
+
+    /**
      * This method returns the range of the player's knife attack.
      * @return the range of the player's knife attack
      */
@@ -301,11 +315,25 @@ public class Player extends GameEntity {
     }
 
     /**
+     * Testing purposes
+     */
+    public void setKnifeAttackRange(int range) {
+        this.knifeAttackRange = range;
+    }
+
+    /**
      * This method returns the range of the player's gun attack.
      * @return the range of the player's gun attack
      */
     public int getGunAttackRange() {
         return this.gunAttackRange;
+    }
+
+    /**
+     * Testing purposes
+     */
+    public void setGunAttackRange(int range) {
+        this.gunAttackRange = range;
     }
 
     /**

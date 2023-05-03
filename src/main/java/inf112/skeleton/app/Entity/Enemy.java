@@ -276,6 +276,14 @@ public class Enemy extends GameEntity {
     }
 
     /**
+     * Testing purposes
+     * @param health
+     */
+    public void setEnemyHealth(Health health){
+        this.enemyHealth = health;
+    }
+
+    /**
      * Method to check if enemy is dead.
      * @return a bool that tells us if the enemy is dead or not
      */
