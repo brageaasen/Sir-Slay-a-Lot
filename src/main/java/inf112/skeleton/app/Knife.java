@@ -7,6 +7,8 @@ public class Knife {
     
     private boolean holdKnife;
     private boolean dealingDamage;
+    public int nextAttack;
+    private int nextAttackFrames = 50;
 
     /**
      * Creates a new instance of the Knife class with default values.
@@ -14,6 +16,7 @@ public class Knife {
     public Knife() {
         holdKnife = false;
         dealingDamage = false;
+        nextAttack = 0;
     }
 
     /**
@@ -46,5 +49,23 @@ public class Knife {
      */
     public void setDealingDamage(boolean dealingDamage) {
         this.dealingDamage = dealingDamage;
+    }
+
+     /**
+     * This method returns the current ammount of frames before you can attack again.
+     * @return An int indicating the ammount of frames before you can attack again.
+     */
+    public int getNextAttack(){
+        //System.out.println(this.nextAttack);
+        return this.nextAttack;
+    }
+
+    /**
+     * This method sets the frames to next attack.
+     */
+    public void setNextAttack(){
+        if(this.nextAttack == 0){
+            this.nextAttack = nextAttackFrames;
+        }
     }
 }
