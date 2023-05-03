@@ -51,13 +51,6 @@ public class PowerUp {
                 Sprite.setPosition(position.x, position.y);
                 Sprite.draw(batch);
             }
-        }else if (id == 3){
-            this.ammoActive = true;
-            if (!ammoPickedUp && ammoActive){
-                inRange();
-                Sprite.setPosition(position.x, position.y);
-                Sprite.draw(batch);
-            }
         }
     }
 
@@ -77,12 +70,6 @@ public class PowerUp {
                 if (!healthPickedUp){
                     player.getPlayerHealth().fullHealth();
                     healthPickedUp = true;
-                }
-            }
-            else if (id == 3){
-                if (!ammoPickedUp){
-                    player.getGun().bulletsPowerUp();
-                    ammoPickedUp = true;
                 }
             }
         }

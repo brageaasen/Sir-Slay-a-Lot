@@ -148,8 +148,9 @@ public class Enemy extends GameEntity {
         } else if (this.getBody().getLinearVelocity().y < 0) {  // Checking if enemy is falling
             setState(CurrentSprite.Fall);
         } else if (this.attack) {
-            if (currentSprite != CurrentSprite.Attack)
+            if (currentSprite != CurrentSprite.Attack){
                 this.justAttacked = false;
+            }
             setState(CurrentSprite.Attack);
         } else {
             setState(CurrentSprite.Run);

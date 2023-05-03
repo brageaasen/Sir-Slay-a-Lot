@@ -48,7 +48,6 @@ public class GameScreen extends ScreenAdapter {
     private Inventory inventory;
     private PowerUp moreAmmo;
     private PowerUp moreHealth;
-    private PowerUp dropAmmo;
     private float monsterDeathPosX;
     private float monsterDeathPosY;
 
@@ -91,8 +90,6 @@ public class GameScreen extends ScreenAdapter {
         shapeRenderer = new ShapeRenderer();
         this.moreAmmo = new PowerUp(player, new Vector2(1120,480), new Sprite(new Texture("assets/Player/Weapons/ammoCrates.png")), 1);
         this.moreHealth = new PowerUp(player, new Vector2(1710,360), new Sprite(new Texture("assets/Player/Weapons/health.png")), 2);
-        this.dropAmmo = new PowerUp(player, new Vector2(monsterDeathPosX,monsterDeathPosY-16), new Sprite(new Texture("assets/Player/Weapons/ammoCrates.png")), 3);
-        
 
         float screenWidth = Gdx.graphics.getWidth();
         float screenHeight = Gdx.graphics.getHeight();
@@ -235,11 +232,6 @@ public class GameScreen extends ScreenAdapter {
         for (Enemy e : enemies) {
             if (!e.enemyIsDead()){
                 e.render(batch);
-            }else{
-            monsterDeathPosX = e.getPosition().x;
-            monsterDeathPosY = e.getPosition().y;
-            System.out.println("monster died: "+monsterDeathPosX+", "+monsterDeathPosY);
-            dropAmmo.render(batch);
             }
         }
         batch.end();
