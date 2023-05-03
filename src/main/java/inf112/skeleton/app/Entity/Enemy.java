@@ -239,9 +239,10 @@ public class Enemy extends GameEntity {
         }
 
         if (Math.abs(playerPositionX - enemyPositionX) < player.getKnifeAttackRange() && Math.abs(playerPositionY - enemyPositionY) < player.getKnifeAttackRange()
-         && player.knifeObj.getHoldKnife() && player.knifeObj.getDealingDamage() && !this.gotHit)
+         && player.knifeObj.getHoldKnife() && player.knifeObj.getDealingDamage() && !this.gotHit && player.knifeObj.getNextAttack() == 0)
         {
             enemyHealth.decreaseHP(player.getAttackDamage());
+            player.knifeObj.setNextAttack();
             player.knifeObj.setDealingDamage(false);
             this.gotHit();
         }
