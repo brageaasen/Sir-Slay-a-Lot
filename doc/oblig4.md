@@ -2,28 +2,32 @@
 
 ## Brukerhistorier:
 * Som spiller trenger jeg at spillet ikke har bugs for en god spillopplevelse
-* Akseptansekriterie: Spillet kan ikke inneholde bugs.
-* Arbeidsoppgave: Finne og fikse bugs.
+    * Akseptansekriterie: Spillet kan ikke inneholde bugs.
+    * Arbeidsoppgave: Finne og fikse bugs.
 
 * Som spiller trenger jeg at spillet har en spennende startskjerm for å bli interessert i spillet.
-* Akseptansekriterie: Spillet må ha en innbydende startskjerm.
-* Arbeidsoppgave: Lage en fin startskjerm.
+    * Akseptansekriterie: Spillet må ha en innbydende startskjerm.
+    * Arbeidsoppgave: Lage en fin startskjerm.
 
 * Som spiller trenger jeg at spillet har en forklaring på knappene for at jeg skal skjønne hvordan jeg spiller.
-* Akseptansekriterie: Spillet må ha en forklaring på knappene.
-* Arbeidsoppgave: Skrive forklaring på knappene på startskjermen.
+    * Akseptansekriterie: Spillet må ha en forklaring på knappene.
+    * Arbeidsoppgave: Skrive forklaring på knappene på startskjermen.
 
 * Som spiller trenger jeg en mulighet for å få påfyll av skudd når jeg er tom.
-* Akseptansekriterie: Spillet må ha powerups for skudd.
-* Arbeidsoppgave: Implementere powerups.
+    * Akseptansekriterie: Spillet må ha powerups for skudd.
+    * Arbeidsoppgave: Implementere powerups.
 
 * Som spiller trenger jeg en mulighet for å få påfyll av health når jeg har lite.
-* Akseptansekriterie: Spillet må ha powerups for health.
-* Arbeidsoppgave: Implementere powerups.
+    * Akseptansekriterie: Spillet må ha powerups for health.
+    * Arbeidsoppgave: Implementere powerups.
 
 * Som spiller trenger jeg game sounds for å leve meg inn i spillet.
-* Akseptansekriterie: Spillet må ha diverse lyder ved diverse bevegelser.
-* Arbeidsoppgave: Implementere lyder.
+    * Akseptansekriterie: Spillet må ha diverse lyder ved diverse bevegelser.
+    * Arbeidsoppgave: Implementere lyder.
+
+* Som spiller trenger jeg en mulighet for å starte spillet på nytt når jeg taper.
+    * Akseptansekriterie: Spillet må ha en knapp ved slutten av spillet som starter spillet på nytt.
+    * Arbeidsoppgave: Legg til en "Restart" knapp i game over screen.
 
 
 ## Dette har vi fikset siden sist oblig:
