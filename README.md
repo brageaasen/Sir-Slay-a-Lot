@@ -8,22 +8,21 @@
 
 ## Om spillet
 
-«Du er flyttet til en annen verden med fiender. Du har ingenting utenom sverd. Klarer du å overleve hauer av fiender?»
+«I Sir Slay-a-Lot  må spilleren ta på seg rollen som den tapre ridderen Sir Slay-a-Lot, og kjempe mot en horde av zombier som har invadert kongeriket. Spilleren må bruke sverdet sitt til å drepe zombiene og beskytte byen fra den ondskapsfulle hæren.»
+
 
 ## Kjøring
 
 * Spillet krever Java 17 eller Java 19.
 * For å starte spillet må du først laste ned prosjektet. Når du åpner prosjektet i en IDE så vil skjermen din se noe slik ut:
 
-<img src="/src/main/resources/assets/Gitlab/screen.png" alt="Opening Screen" title="Opening Screen">
+<img src="/doc/Gitlab/screen.png" alt="Opening Screen" title="Opening Screen">
 
 * For å åpne spillet må du trykke på denne start knappen oppe i høyre hjørnet av skjermen.
 
-<img src="/src/main/resources/assets/Gitlab/runJava.png" alt="Opening Screen" title="Opening Screen">
+<img src="/doc/Gitlab/runJava.png" alt="Opening Screen" title="Opening Screen">
 
-## Kjente feil
 
-* Et par bugs, f.eks når fiendene prøver å slå
 
 ## Hvordan fungerer spillet?
 
@@ -32,7 +31,8 @@
 * Det vises kill-count ved å drepe fiendene
 * Spilleren kan bli skadet/drept av fiendene
 * Når spilleren får 10 kills kan han bruke nytt våpen
-* Power-ups kan gi midlertidige/umiddelbare fordeler (f.eks ekstra liv)
+* Spilleren må også samle oppgraderinger, som kan gi spilleren midlertidige fordeler som ekstra helse eller ekstra skudd.
+* Målet med spillet er å overleve zombiene, og samtidig samle så mange poeng som mulig. 
 
 ---
 
