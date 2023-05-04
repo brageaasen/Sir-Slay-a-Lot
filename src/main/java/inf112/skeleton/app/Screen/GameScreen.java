@@ -18,6 +18,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import inf112.skeleton.app.Controller.KeyHandler;
 import inf112.skeleton.app.Entity.Player;
 import inf112.skeleton.app.Entity.PowerUp;
 import inf112.skeleton.app.Back_end.*;
@@ -37,6 +38,7 @@ public class GameScreen extends ScreenAdapter {
     private final World world;
     private final Viewport viewport;
     private final GameScreenLauncher game;
+    private final KeyHandler keyH;
 
     private final OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
     private final TileMapHelper tileMapHelper;
@@ -88,6 +90,7 @@ public class GameScreen extends ScreenAdapter {
 		}
 
         shapeRenderer = new ShapeRenderer();
+        this.keyH = new KeyHandler(player);   //?? Should the player class hold input handling?
         this.moreAmmo = new PowerUp(player, new Vector2(1120,480), new Sprite(new Texture("assets/Player/Weapons/ammoCrates.png")), 1);
         this.moreHealth = new PowerUp(player, new Vector2(1710,360), new Sprite(new Texture("assets/Player/Weapons/health.png")), 2);
 
@@ -132,8 +135,8 @@ public class GameScreen extends ScreenAdapter {
         world.step(1/60f, 6, 2);
         cameraUpdate();
 
-        
         orthogonalTiledMapRenderer.setView(camera);
+        keyH.checkUserInput();
         player.update();
         
         List<Enemy> enemiesToRemove = new ArrayList<>();
@@ -186,16 +189,13 @@ public class GameScreen extends ScreenAdapter {
      */
     @Override 
     public void render(float delta){
-        
-
         this.update();
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         camera.update();
 		batch.setProjectionMatrix(camera.combined);
-        
-    
+
         tileMapHelper.movePlatform(delta);   
         
         
@@ -254,7 +254,7 @@ public class GameScreen extends ScreenAdapter {
      */
     public void setPlayer(Player player){
         this.player = player;
-        
+        keyH.setPlayer(this.player);
     }
 
     /**
