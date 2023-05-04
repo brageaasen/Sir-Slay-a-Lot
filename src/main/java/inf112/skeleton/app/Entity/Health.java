@@ -4,12 +4,8 @@ package inf112.skeleton.app.Entity;
  * Simple implementation of a player's health.
  */
 public class Health {
-    
     private int hitPoints;
     private final int regenPerSecond;
-
-    // Audio
-   
 
     public Health() {
         hitPoints = 100;

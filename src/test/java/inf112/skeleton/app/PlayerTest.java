@@ -33,7 +33,7 @@ public class PlayerTest {
         player.getPlayerHealth().decreaseHP(100);
         assertEquals(0, player.getPlayerHealth().getHP());
 
-        player.getPlayerHealth().regenHealth();;
+        player.getPlayerHealth().regenHealth();
         assertEquals(2, player.getPlayerHealth().getHP());
     }
 
@@ -56,7 +56,7 @@ public class PlayerTest {
      */
     @Test 
     void testGetKillCount(){
-        assertEquals(0, player.getKillcount());
+        assertEquals(0, player.getKillCount());
     }
 
     /**

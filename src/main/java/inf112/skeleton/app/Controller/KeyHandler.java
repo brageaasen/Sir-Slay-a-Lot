@@ -22,7 +22,7 @@ public class KeyHandler {
      * Constructor method that initializes a new KeyHandler object with a Player object as input parameter.
      * @param player The player object to which the key inputs will be applied.
      */
-    public KeyHandler(Player player){
+    public KeyHandler(Player player) {
         this.player = player;
         this.keyAlreadyPressed = false;
         this.gunKeyAlreadyPressed = false;
@@ -41,6 +41,9 @@ public class KeyHandler {
      * Method that checks the user inputs and updates the player object's state accordingly.
      */
     public void checkUserInput() {
+        if (player == null)
+            return;
+
         if (Gdx.input.isKeyPressed(Input.Keys.D)){
             player.move(GameEntity.Direction.RIGHT);
         } else if (Gdx.input.isKeyPressed(Input.Keys.A)){
