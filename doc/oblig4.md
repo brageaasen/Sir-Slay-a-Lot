@@ -218,7 +218,7 @@ Developer - Ole Kristian Breivik
         * Posisjionen på ulike plasserte tiles er i forskjellige plasser enn forventet fra Tiled plasseringen.
 
 ## Klassediagram
-<img src="/doc/Gitlab/klassediagram.png" alt="Opening Screen" title="Opening Screen">
+<img src="/doc/Gitlab/diagramOblig4.png" alt="Opening Screen" title="Opening Screen">
 
 ## Beskrivelse av arkitektur
 
