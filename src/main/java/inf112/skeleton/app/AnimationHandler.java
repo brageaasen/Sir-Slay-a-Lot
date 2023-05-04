@@ -1,8 +1,6 @@
 package inf112.skeleton.app;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-
 import java.util.HashMap;
 
 /**

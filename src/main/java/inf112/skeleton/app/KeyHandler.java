@@ -3,7 +3,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import inf112.skeleton.app.Entity.GameEntity;
 import inf112.skeleton.app.Entity.Player;
-import inf112.skeleton.app.TileMapHelper;
 
 /*
  * The KeyHandler class is responsible for handling key inputs for the Player object and updating the game state accordingly.
