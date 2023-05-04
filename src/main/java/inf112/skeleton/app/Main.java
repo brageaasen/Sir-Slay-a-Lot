@@ -13,6 +13,7 @@ public class Main {
         cfg.setTitle("Sir Slay-a-Lot");
         cfg.setWindowedMode(1280, 640);
         cfg.setWindowIcon("assets/UI/logo.png");
+        cfg.setForegroundFPS(60);
 
         new Lwjgl3Application(new GameScreenLauncher(), cfg);
     }
