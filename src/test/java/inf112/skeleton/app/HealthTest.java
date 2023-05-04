@@ -25,10 +25,11 @@ public class HealthTest {
      */
     @Test
     void testFullHealth() {
-        int health = healthModel.getHP();
-
-        assertEquals(100, health);
-        assertNotEquals(59, health);
+        assertEquals(100, healthModel.getHP());
+        healthModel.decreaseHP(50);
+        assertEquals(50, healthModel.getHP());
+        healthModel.fullHealth();
+        assertEquals(100, healthModel.getHP());
     }
 
     /**
