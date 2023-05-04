@@ -69,20 +69,34 @@
     * Sjekke at parallax bakgrunn går over til "evig himmel" vertikalt når player kommer seg høyt opp på mapet.
 
 ## Klassediagram
-<img src="/src/main/resources/assets/Gitlab/klassediagram.png" alt="Opening Screen" title="Opening Screen">
+<img src="/doc/Gitlab/klassediagram.png" alt="Opening Screen" title="Opening Screen">
 
 ## Spotbugs: 
-* Vi har testet ut SpotBugs og den fant ingen store feil. Men, den fant flere BugInstances som ligner på denne: "BugInstance message is inf112.skeleton.app.GameScreen.getEnemies() may expose internal representation by returning GameScreen.enemies". Dette betyr at det ikke er enkapsulert nok. Derfor er dette nå endret fra å returnere listen med enemies, til en copy av listen med enemies.
+* Vi har testet ut SpotBugs og den fant ingen errors, men noen bugs. 
+Den returnerte blant annet disse bugsene: 
+* [ERROR] Medium: BugInstance message is inf112.skeleton.app.GameScreen.getEnemies() may expose internal representation by returning GameScreen.enemies
+Dette betyr at det ikke er enkapsulert nok. Derfor er dette nå endret fra å returnere listen med enemies, til en copy av listen med enemies. 
+
+* [ERROR] Medium: Unwritten field: inf112.skeleton.app.Entity.Enemy.maxHealth [inf112.skeleton.app.Entity.Enemy] At Enemy.java:[line 320] UWF_UNWRITTEN_FIELD
+Denne erroren betyr at vi prøver å få tilgang til en udefinert variabel. I dette tilfellet fant vi ut at denne metoden/variablen ikke blir brukt, derfor fjernet vi den og løste det på den måten. 
+
+* [ERROR] Medium: inf112.skeleton.app.TileMapHelper.gameScreen should be package protected [inf112.skeleton.app.TileMapHelper] In TileMapHelper.java MS_PKGPROTECT
+Denne erroren betyr at gameScreen variabelen burde være package protected og ikke public. Så vi fjernet public og gjorde den package protected. 
+
+
+
+
+
 * Rollene i teamet fungerer fint. Vi jobber litt hver for oss med forskjellige oppgaver også pleier vi å merge litt når vi møtes. Tarjei tar ansvar for dette ettersom han har mest erfaring med merging. Vi har ikke valgt noe teamlead ettersom vi klarer oss fint uten. Kundekontakten funker fint, selv om han ikke har hatt noe særlig kontakt med kunder.. 
 * Vi hadde ikke skrevet om dette som en rolle sist. Men Brage har fått ansvar for å lage sprites/texture og lyd. Så han har en slags designer-rolle.
 * Vi synes at valget å bruke Discord fungerer fint. Trello-board for ideer funker også bra. Foreløpig har vi vært fornøyd med valgene vi har tatt. Vi har pleid å dele ut oppgaver til hver enkelt og det har egentlig fungert fint.  
 Gruppedynamikken er fin. Det har ikke oppstått noen konflikter enda. Kommunikasjonen funker som nevnt tidligere fint og det skjer over Discord.
-* Det vi har klart til nå er å bruke git som et verktøy. Vi har lært mye om merging og branches. Vi er fornøyde med hvordan prosjektet vårt er blitt bygd opp, nemlig steg for steg. Da har det vært lett å dele ut oppgaver og henge med. Ting vi kan bli bedre på er å si hvor langt vi er kommet på forskjellige oppgaver. I tillegg kan vi bli flinkere til å skrive tester underveis. Selv om vi kanskje ikke har trengt det foreløpig, kan vi bli bedre til å spørre hverandre om hjelp til koding utenom de tidene vi møtes.
+* Det vi har klart er å bruke git som et verktøy. Vi har lært mye om merging og branches. Vi er fornøyde med hvordan prosjektet vårt er blitt bygd opp, nemlig steg for steg. Da har det vært lett å dele ut oppgaver og henge med. Ting vi kan bli bedre på er å si hvor langt vi er kommet på forskjellige oppgaver. I tillegg kan vi bli flinkere til å skrive tester underveis. Selv om vi kanskje ikke har trengt det foreløpig, kan vi bli bedre til å spørre hverandre om hjelp til koding utenom de tidene vi møtes.
 * Forrige oblig skulle vi følge opp disse punktene:
     * Skrive tester underveis
     * Si hvor langt vi er kommet på oppgaver
 * Vi er fortsatt ikke blitt så flinke til å skrive tester underveis, mye på grunn av at vi finner det vanskelig å teste med libgdx. Vi er blitt flinkere til å si hvor langt vi er kommer på oppgaver, ofte gjennom å oppdatere trello.
-* Vi har prioritert oppgavene fremover ut fra hva som er viktigst først. Vi må fikse diverse bugs vi har funnet. I tillegg skal vi få på plass powerups, som f.eks. flere skudd og liv. I tillegg skal vi få på plass lyd for de fleste bevegelser. Vi må også bytte navn på prosjektet. Dette er vi ikke sikre på om er en enkel prosess, men det finner vi ut av. Vi må også finne et navn på spillet. 
+*Vi må også bytte navn på prosjektet. Dette er vi ikke sikre på om er en enkel prosess, men det finner vi ut av. Vi må også finne et navn på spillet. 
 * En bug vi har funnet er at spillet kjører mye raskere på Vetle sin mac enn de andre sin pc. Derfor eksperimenterer vi litt med jumpforce, speed og gravity for å finne det som funker best. 
 * Ettersom vi har funnet ut at det er vanskelig å teste med JUnit og LibGdx har vi laget noen manuelle tester.
 
@@ -103,27 +117,27 @@ Gruppedynamikken er fin. Det har ikke oppstått noen konflikter enda. Kommunikas
         - Markdown er foreløpig ikke oversiktlig nok (se Belmin sin tilbakemelding).
 
     * Det vi mener må gjøres:
-        * Legge til cooldown på angrep med kniven (eks: 1 sekund / 0.5 sekund) - OLE
-        * Fikse bugs med at fiender blir angrepet / dør flere ganger (lyden av at de blir skadet blir også kjørt flere ganger). - OLE
-        * Endre game over screen sånn at det står game over som UI i tillegg til det andre. - BRAGE
-        * Legge til tittelen: Slay-a-Lot  som både UI, og i git. Altså at spillet vårt ikke heter java-platformer-thing eller hva det gjør nå. - BRAGE
-        * Legge til en instruksjon for å kontrollere. - BRAGE
-        * Legge til en kill count/score i game over. - BRAGE
-        * Gjøre at sangen i spillet looper. - BRAGE
-        * Skriv en litt bedre forklaring på hvordan man kjører spillet. - BRAGE
-        * Bytte “Gun Unlocked” text til bilde så resolution ikke blir ødelagt (bruke gjentakende font gjennom hele spillet). - BRAGE
-        * Legge til kildereferanser til lyd / sprites om er blitt brukt i spillet. - BRAGE
-        * Legge til powerup hvis spiller får eks 10 kills - EKS: en timer som gir spiller mer hastighet/mer skade i en gitt tid. - VETLE
-        * Fikse at klassediagrammet ikke ser rotete ut lenger, fjerne unødvendig tekst / innhold. - VETLE
-        * Fikse mangel / feil på brukerhistorier vi har skrevet (se Belmin sin tilbakemelding). - VETLE
-        * Legge til “powerup” UI for ammo refill & health. Spiller må fysisk hente den etter at den er låst opp. - VETLE
-        * Fikse bug at enemy beveger seg når de blir skadet (har prøvd å implementere at de skal stå stille i et  sekund hvis de blir skadet). - Tarjei
-        * Gjøre Markdown-filen mer oversiktlig og lettere å lese (fått beskjed at den ikke er formatert bra i tilbakemelding fra Belmin): - ALLE
-        * Oppdatere readme. - ALLE
-        * Prøve å utvide testene: - ALLE
+        * Legge til cooldown på angrep med kniven (eks: 1 sekund / 0.5 sekund) 
+        * Fikse bugs med at fiender blir angrepet / dør flere ganger (lyden av at de blir skadet blir også kjørt flere ganger). 
+        * Endre game over screen sånn at det står game over som UI i tillegg til det andre. 
+        * Legge til tittelen: Slay-a-Lot  som både UI, og i git. Altså at spillet vårt ikke heter java-platformer-thing eller hva det gjør nå. 
+        * Legge til en instruksjon for å kontrollere.
+        * Legge til en kill count/score i game over. 
+        * Gjøre at sangen i spillet looper. 
+        * Skriv en litt bedre forklaring på hvordan man kjører spillet.
+        * Bytte “Gun Unlocked” text til bilde så resolution ikke blir ødelagt (bruke gjentakende font gjennom hele spillet). 
+        * Legge til kildereferanser til lyd / sprites om er blitt brukt i spillet. 
+        * Legge til powerup hvis spiller får eks 10 kills - EKS: en timer som gir spiller mer hastighet/mer skade i en gitt tid. 
+        * Fikse at klassediagrammet ikke ser rotete ut lenger, fjerne unødvendig tekst / innhold. 
+        * Fikse mangel / feil på brukerhistorier vi har skrevet (se Belmin sin tilbakemelding). 
+        * Legge til “powerup” UI for ammo refill & health. Spiller må fysisk hente den etter at den er låst opp. 
+        * Fikse bug at enemy beveger seg når de blir skadet (har prøvd å implementere at de skal stå stille i et  sekund hvis de blir skadet). 
+        * Gjøre Markdown-filen mer oversiktlig og lettere å lese (fått beskjed at den ikke er formatert bra i tilbakemelding fra Belmin): 
+        * Oppdatere readme. 
+        * Prøve å utvide testene: 
         * Rydde Trello boardet og sortere hva som har blitt gjort / ikke blitt gjort.
         * Skrive hele teambeskrivelse og rollefordeling på git.
-        * DELE OPP I MVC 
+       
 
 * REFERAT møte Torsdag. 27/04/2023
     * Tilstede: Vetle, Kavya, Tarje, Brage, Ole Kristian

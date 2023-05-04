@@ -43,7 +43,6 @@ public class Enemy extends GameEntity {
     private float lastPos;
     private final Player player;
     private Health enemyHealth;
-    private Health maxHealth;
     private Direction facing;
 
     private boolean gotHit;
@@ -310,14 +309,6 @@ public class Enemy extends GameEntity {
      */
     public Health getHealth() {
         return this.enemyHealth;
-    }
-
-    /**
-     * Method that returns the max health of the enemy.
-     * @return the max health of the enemy.
-     */
-    public Health getMaxHealth() {
-        return this.maxHealth;
     }
 
     /**
