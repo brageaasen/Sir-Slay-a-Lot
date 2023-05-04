@@ -1,4 +1,4 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.Screen;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -19,7 +19,11 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.skeleton.app.Entity.Player;
+import inf112.skeleton.app.Entity.PowerUp;
+import inf112.skeleton.app.Back_end.*;
 import inf112.skeleton.app.Entity.Enemy;
+import inf112.skeleton.app.Entity.Inventory;
+
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 /*

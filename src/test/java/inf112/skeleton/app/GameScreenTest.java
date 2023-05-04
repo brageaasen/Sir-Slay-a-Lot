@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import inf112.skeleton.app.Entity.Enemy;
 import inf112.skeleton.app.Entity.Player;
+import inf112.skeleton.app.Screen.GameScreen;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;

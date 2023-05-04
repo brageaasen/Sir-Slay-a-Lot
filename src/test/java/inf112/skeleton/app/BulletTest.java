@@ -3,6 +3,8 @@ package inf112.skeleton.app;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import inf112.skeleton.app.Weapons.Bullet;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;

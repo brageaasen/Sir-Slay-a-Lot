@@ -1,6 +1,7 @@
 package inf112.skeleton.app;
 
 import inf112.skeleton.app.Entity.Player;
+import inf112.skeleton.app.Entity.PowerUp;
 
 import org.mockito.Mockito;
 

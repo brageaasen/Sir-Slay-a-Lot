@@ -1,10 +1,8 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.Entity;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-
-import inf112.skeleton.app.Entity.Player;
 
 public class PowerUp {
     

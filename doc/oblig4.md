@@ -74,6 +74,19 @@ Developer - Ole Kristian Breivik
 * Lagt inn flere lyder
 * Laget flere tester
 * Lagt inn jar-fil
+* Lagt til cooldown på angrep med kniven
+* Fikset så sangen i spillet looper. 
+* Skrevet en litt bedre forklaring på hvordan man kjører spillet.
+* Byttet “Gun Unlocked” text til bilde så resolution ikke blir ødelagt 
+* Legge til kildereferanser til lyd / sprites om er blitt brukt i spillet. 
+* Lagt til powerups for hvert 10. og 15. kill
+* Fikset at klassediagrammet ikke ser rotete ut lenger
+* Fikset mangel / feil på brukerhistorier 
+* Fikset bug at enemy beveger seg når de blir skadet 
+* Oppdatery readme. 
+* Ryddet Trello boardet og sortert hva som har blitt gjort / ikke blitt gjort.
+* Skrevet hele teambeskrivelse og rollefordeling i oblig4
+       
 
 ## Manuelle tester: (Antall: 21)
 

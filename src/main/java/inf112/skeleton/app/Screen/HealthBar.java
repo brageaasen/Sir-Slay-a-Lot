@@ -1,6 +1,8 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+
+import inf112.skeleton.app.Entity.Health;
 
 /*
  * class for creating the healthbar that shows the player's health.

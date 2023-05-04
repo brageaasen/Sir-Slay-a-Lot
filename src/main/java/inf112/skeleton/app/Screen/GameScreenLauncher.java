@@ -1,9 +1,11 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.Screen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+
+import inf112.skeleton.app.Back_end.AudioManager;
 
 /**
  * The GameScreenLauncher class is a subclass of the Game class from the LibGDX game development framework. 

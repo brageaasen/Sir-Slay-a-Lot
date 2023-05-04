@@ -1,4 +1,4 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.Back_end;
 
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.graphics.Texture;
@@ -20,6 +20,7 @@ import com.badlogic.gdx.physics.box2d.Shape;
 
 
 import inf112.skeleton.app.Entity.Player;
+import inf112.skeleton.app.Screen.GameScreen;
 import inf112.skeleton.app.Entity.Enemy;
 
 /*
@@ -30,7 +31,7 @@ import inf112.skeleton.app.Entity.Enemy;
 public class TileMapHelper {
     
     private TiledMap tiledMap;
-    static GameScreen gameScreen;
+    public static GameScreen gameScreen;
     private static final int PPM = 16;
 
     private Body body2;

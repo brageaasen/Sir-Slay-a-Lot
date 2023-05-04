@@ -3,6 +3,9 @@ package inf112.skeleton.app;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
 
+import inf112.skeleton.app.Animation.Animation;
+import inf112.skeleton.app.Animation.AnimationHandler;
+
 public class AnimationTest {
 
     @Test
