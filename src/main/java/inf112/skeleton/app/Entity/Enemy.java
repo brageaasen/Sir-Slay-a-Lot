@@ -49,11 +49,8 @@ public class Enemy extends GameEntity {
     private boolean gotHit;
     private boolean canMove = true;
 
-    private Timer timer;
-
     private int attackRange, attackDamage;
     private boolean attack = false;
-    private boolean justAttacked = false;
     private boolean dead = false;
 
     // Audio
@@ -87,7 +84,7 @@ public class Enemy extends GameEntity {
         this.sprite.setScale(2);
         enemyHealth = new Health();
 
-        this.timer = new Timer();
+        new Timer();
     }
 
     /**
@@ -99,7 +96,7 @@ public class Enemy extends GameEntity {
         y = body.getPosition().y * PPM + 17;
 
         if (!this.attack && this.canMove) {
-            updatePosition();
+            move(null);
         } else {
             body.setLinearVelocity(0, body.getLinearVelocity().y);    // We will still allow it to fall, otherwise it will hover in the air.
             attackTimer++;
@@ -123,55 +120,12 @@ public class Enemy extends GameEntity {
         sprite.draw(batch);
     }
 
-    @Override
-    public void move(Direction direction) {
-        // TODO: set velocity using this or remove entirely?
-    }
-
-    /**
-     * This method updates the sprite of the enemy based on its current state
-     */
-    public void updateSprite() {
-        if (enemyHealthIsZero() && !enemyIsDead()) {
-            anim.setState(EnemyState.Dead);
-        } else if (this.gotHit) {
-            anim.setState(EnemyState.Hit);
-        } else if (this.getBody().getLinearVelocity().y != 0 && this.isGrounded()) {
-            anim.setState(EnemyState.Run);
-        } else if (this.getBody().getLinearVelocity().y > 0) {  // Checking if enemy is jumping
-            anim.setState(EnemyState.Jump);
-        } else if (this.getBody().getLinearVelocity().y < 0) {  // Checking if enemy is falling
-            anim.setState(EnemyState.Fall);
-        } else if (this.attack) {
-            if (anim.getState() != EnemyState.Attack) {
-                this.justAttacked = false;
-            }
-            anim.setState(EnemyState.Attack);
-        }
-        else {
-            anim.setState(EnemyState.Run);
-        }
-
-        if (anim.getState() == EnemyState.Hit && anim.getCurrFrame() == 3) {  // Hit animation is done
-            canMove = true;
-            gotHit = false;
-        } else if (anim.getState() == EnemyState.Dead && anim.getCurrFrame() == 6) {  // Death animation is done
-            this.dead = true;
-            player.killCount++;
-            System.out.println("Kill Count: "+player.killCount);
-        } else if (anim.getState() == EnemyState.Attack && attackTimer > 6) {
-            this.attack = false;
-        }
-
-        anim.update(ANIM_FRAME_RATE);
-        sprite.setTexture(anim.getAnimTexture());
-    }
-
     /**
      * This method updates the position of the enemy based on the position of the player.
      * It sets the velX field to 1 if the enemy is to the left of the player, -1 if the enemy is to the right of the player, and 0 otherwise.
      */
-    private void updatePosition() {
+    @Override
+    public void move(Direction direction) {
         if (enemyHealthIsZero() || player == null) {
             System.out.println("health is zero");
             body.setLinearVelocity(0,0);
@@ -212,6 +166,43 @@ public class Enemy extends GameEntity {
             jumpCounter = 0;
         }
     }
+
+    /**
+     * This method updates the sprite of the enemy based on its current state
+     */
+    public void updateSprite() {
+        if (enemyHealthIsZero() && !enemyIsDead()) {
+            anim.setState(EnemyState.Dead);
+        } else if (this.gotHit) {
+            anim.setState(EnemyState.Hit);
+        } else if (this.getBody().getLinearVelocity().y != 0 && this.isGrounded()) {
+            anim.setState(EnemyState.Run);
+        } else if (this.getBody().getLinearVelocity().y > 0) {  // Checking if enemy is jumping
+            anim.setState(EnemyState.Jump);
+        } else if (this.getBody().getLinearVelocity().y < 0) {  // Checking if enemy is falling
+            anim.setState(EnemyState.Fall);
+        } else if (this.attack) {
+            anim.setState(EnemyState.Attack);
+        }
+        else {
+            anim.setState(EnemyState.Run);
+        }
+
+        if (anim.getState() == EnemyState.Hit && anim.getCurrFrame() == 3) {  // Hit animation is done
+            canMove = true;
+            gotHit = false;
+        } else if (anim.getState() == EnemyState.Dead && anim.getCurrFrame() == 6) {  // Death animation is done
+            this.dead = true;
+            player.killCount++;
+            System.out.println("Kill Count: "+player.killCount);
+        } else if (anim.getState() == EnemyState.Attack && attackTimer > 6) {
+            this.attack = false;
+        }
+
+        anim.update(ANIM_FRAME_RATE);
+        sprite.setTexture(anim.getAnimTexture());
+    }
+
 
     /**
      * Take damage from player based on player current attack damage
@@ -260,8 +251,6 @@ public class Enemy extends GameEntity {
          Math.abs(playerPositionY - enemyPositionY) < this.attackRange) {
             this.attack = true;
             if (anim.getState() == EnemyState.Attack && anim.getCurrFrame() == 4) {
-                //player.getPlayerHealth().decreaseHP(this.attackDamage);
-                this.justAttacked = true;
                 player.gotHurt(this.attackDamage);
             }
         }

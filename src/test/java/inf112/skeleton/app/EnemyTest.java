@@ -7,12 +7,9 @@ import org.junit.jupiter.api.Test;
 
 import org.mockito.Mockito;
 
-import com.badlogic.gdx.physics.box2d.Body;
-
 import static org.mockito.Mockito.*;
 
 import inf112.skeleton.app.Entity.Enemy;
-import inf112.skeleton.app.Entity.Player;
 
 public class EnemyTest {
 

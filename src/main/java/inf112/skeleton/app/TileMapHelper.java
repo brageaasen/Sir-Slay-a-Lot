@@ -45,7 +45,7 @@ public class TileMapHelper {
      * @param gameScreen the GameScreen object that the TileMapHelper is assisting.
      */
     public TileMapHelper(GameScreen gameScreen){
-        this.gameScreen = gameScreen;
+        TileMapHelper.gameScreen = gameScreen;
         timer = new Timer();
         this.movingPlatform= new Sprite(new Texture("assets/Background/movingPlatform.png"));
     }

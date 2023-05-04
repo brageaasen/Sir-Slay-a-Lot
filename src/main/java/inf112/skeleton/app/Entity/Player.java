@@ -52,8 +52,6 @@ public class Player extends GameEntity {
     private int iframes = 0; //invinsibility frames
 
     private Timer timer;
-    private boolean canMove = true;
-
     private final Sprite knife;
     private final KeyHandler keyH;
     private final Sprite sprite;
@@ -342,11 +340,9 @@ public class Player extends GameEntity {
         if(iframes == 0){
             this.audioManager.Play("Hurt");
             this.gotHurt = true;
-        this.canMove = false;
         timer.scheduleTask(new Timer.Task() {
             @Override
             public void run() {
-                canMove = true;
             }        
         }, 1);
 
@@ -373,7 +369,6 @@ public class Player extends GameEntity {
     public void gotHurtTest() {
         this.getAudio().Play("Hurt");
         this.gotHurt = true;
-        this.canMove = false;
     }
 
     /**
