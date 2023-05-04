@@ -14,11 +14,16 @@
 ## Kjøring
 
 * Spillet krever Java 17 eller Java 19.
-* For å starte spillet må du først laste ned prosjektet. Når du åpner prosjektet i en IDE så vil skjermen din se noe slik ut:
+* Kompileres med `mvn package`.
+* Kjøres med `java -jar target/gdx-app-1.0-SNAPSHOT-fat.jar
+
+
+* Dersom du åpner spillet i IDE:
+Når du åpner prosjektet i en IDE så vil skjermen din se noe slik ut:
 
 <img src="/doc/Gitlab/screen.png" alt="Opening Screen" title="Opening Screen">
 
-* For å åpne spillet må du trykke på denne start knappen oppe i høyre hjørnet av skjermen.
+For å åpne spillet må du trykke på denne start knappen oppe i høyre hjørnet av skjermen.
 
 <img src="/doc/Gitlab/runJava.png" alt="Opening Screen" title="Opening Screen">
 
