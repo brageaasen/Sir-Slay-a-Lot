@@ -1,5 +1,6 @@
 # INF112 Prosjekt - *Sir Slay-a-lot*
 
+
 * Team: *Bit by bit* (Gruppe 5): Brage Aasen, Ole Kristian Breivik, Vetle Knutsen, Tarjei Landøy, Kavya Malhotra, Thomas Claussen Stakset
 
 * Lenker:

@@ -1,5 +1,24 @@
 # Oblig 4
 
+## Teambeskrivelse
+
+# Kompetanse:
+Vetle - Bare programmering gjennom skole.
+Thomas - Bare programmering gjennom skole.
+Ole - Hovedsakelig programmering gjennom skole. Har lært litt andre språk i egen fritid i tillegg.
+Kavya - Har programmert i ulike språk (C, Java, SQL, Haskell, JS, HTML), men har ikke særlig drevet mye med prosjekter. Begynte å programmere etter videregående.
+Tarjei - Har programmert i noen år før universitet. Også på fritiden.
+Brage - Programmert gjennom skole, drevet litt med Unity.
+
+# Roller:
+Developer/Grafisk ansvarlig - Brage Aasen
+Mergeansvarlig/Developer - Tarjei Landøy
+Developer - Thomas Claussen Stakset 
+Developer - Kavya Malhotra 
+Developer/Kundekontakt - Vetle Mathiesen Knutsen 
+Developer - Ole Kristian Breivik
+
+
 ## Minimal Viable Product (MVP).
 * Konkrete punkt for Minimal Viable Product: 
     * Vise et brett/verden.
@@ -54,7 +73,7 @@
 * Fikset bug hvor død-animasjon ikke alltid ble vist for fiende
 * Lagt inn flere lyder
 * Laget flere tester
-
+* Lagt inn jar-fil
 
 ## Manuelle tester: (Antall: 21)
 
@@ -188,6 +207,10 @@
 ## Klassediagram
 <img src="/doc/Gitlab/klassediagram.png" alt="Opening Screen" title="Opening Screen">
 
+## Beskrivelse av arkitektur
+
+
+
 ## Spotbugs: 
 * Vi har testet ut SpotBugs og den fant ingen errors, men noen bugs. 
 Den returnerte blant annet disse bugsene: 
@@ -202,20 +225,11 @@ Denne erroren betyr at gameScreen variabelen burde være package protected og ik
 
 
 
+## Retrospektiv
 
+Vi syntes prosjektet har gått fint og rollene i teamet fungerte bra. Vi har jobbet litt hver for oss med forskjellige oppgaver også å merget litt når vi møtes. Tarjei tok ansvar for dette ettersom han har mest erfaring med merging. Vi synes at valget om å bruke Discord har fungert fint. Trello-board for ideer funket også veldig bra. Vi har delt ut oppgaver til hver enkelt og det har egentlig fungert fint. Vi har lært å bruke git som et verktøy og mye om merging og branches. Alt i alt er vi fornøyd med hvordan spillet har blitt og vi er ganske stolte over grafikken. 
 
-* Rollene i teamet fungerer fint. Vi jobber litt hver for oss med forskjellige oppgaver også pleier vi å merge litt når vi møtes. Tarjei tar ansvar for dette ettersom han har mest erfaring med merging. Vi har ikke valgt noe teamlead ettersom vi klarer oss fint uten. Kundekontakten funker fint, selv om han ikke har hatt noe særlig kontakt med kunder.. 
-* Vi hadde ikke skrevet om dette som en rolle sist. Men Brage har fått ansvar for å lage sprites/texture og lyd. Så han har en slags designer-rolle.
-* Vi synes at valget å bruke Discord fungerer fint. Trello-board for ideer funker også bra. Foreløpig har vi vært fornøyd med valgene vi har tatt. Vi har pleid å dele ut oppgaver til hver enkelt og det har egentlig fungert fint.  
-Gruppedynamikken er fin. Det har ikke oppstått noen konflikter enda. Kommunikasjonen funker som nevnt tidligere fint og det skjer over Discord.
-* Det vi har klart er å bruke git som et verktøy. Vi har lært mye om merging og branches. Vi er fornøyde med hvordan prosjektet vårt er blitt bygd opp, nemlig steg for steg. Da har det vært lett å dele ut oppgaver og henge med. Ting vi kan bli bedre på er å si hvor langt vi er kommet på forskjellige oppgaver. I tillegg kan vi bli flinkere til å skrive tester underveis. Selv om vi kanskje ikke har trengt det foreløpig, kan vi bli bedre til å spørre hverandre om hjelp til koding utenom de tidene vi møtes.
-* Forrige oblig skulle vi følge opp disse punktene:
-    * Skrive tester underveis
-    * Si hvor langt vi er kommet på oppgaver
-* Vi er fortsatt ikke blitt så flinke til å skrive tester underveis, mye på grunn av at vi finner det vanskelig å teste med libgdx. Vi er blitt flinkere til å si hvor langt vi er kommer på oppgaver, ofte gjennom å oppdatere trello.
-*Vi må også bytte navn på prosjektet. Dette er vi ikke sikre på om er en enkel prosess, men det finner vi ut av. Vi må også finne et navn på spillet. 
-* En bug vi har funnet er at spillet kjører mye raskere på Vetle sin mac enn de andre sin pc. Derfor eksperimenterer vi litt med jumpforce, speed og gravity for å finne det som funker best. 
-* Ettersom vi har funnet ut at det er vanskelig å teste med JUnit og LibGdx har vi laget noen manuelle tester.
+Det er noen ting vi kunne gjort annerledes. Vi kunne laget tester underveis, i stedet for å lage mot slutten av prosjektet. Det at det har vært så vanskelig å teste libgdx har nok gjort at vi har utsatt det. I tillegg burde vi har startet tidligere med å sette opp et skjelett for spillet, ettersom vi kanskje undervurderte hvor lang tid dette ville ta. Vi kunne nok også lest oss litt mer opp på LibGDX og Box2D i starten. En ting vi også har tenkt på er hvordan vi har organisert branchene våre. I starten var vi litt ukjent med git og derfor tenkte vi å lage en branch hver der vi jobbet, også kalte vi denne branchen for våres egne navn. I ettertid ser vi at vi burde opprettet nye branches når vi startet på nye oppgaver og kalt disse noe relevant. Dette er noe vi lærer av og tar med oss videre. 
 
 
 ## Møtereferater
