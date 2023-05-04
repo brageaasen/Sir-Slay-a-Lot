@@ -6,13 +6,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import org.mockito.Mockito;
-
 import static org.mockito.Mockito.*;
 
 import inf112.skeleton.app.Entity.Enemy;
 
 public class EnemyTest {
 
+    /**
+     * Tests that the Enemy's health is returned with full health
+     */
     @Test
     void testHealth() {
         Enemy enemy = mock(Enemy.class, Mockito.CALLS_REAL_METHODS);
@@ -20,6 +22,9 @@ public class EnemyTest {
         assertEquals(100, enemy.getHealth().getHP());
     }
 
+    /**
+     * Tests that Enemy's health decreases
+     */
     @Test 
     void testEnemyDecreaseHP(){
         Enemy enemy = mock(Enemy.class, Mockito.CALLS_REAL_METHODS);
@@ -31,6 +36,9 @@ public class EnemyTest {
         assertEquals(0, enemy.getHealth().getHP());
     }
 
+    /**
+     * Tests that Enemy's health goes to 0
+     */
     @Test 
     void testEnemyHealthIsZero(){
         Enemy enemy = mock(Enemy.class, Mockito.CALLS_REAL_METHODS);

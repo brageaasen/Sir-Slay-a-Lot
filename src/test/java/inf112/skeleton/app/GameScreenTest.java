@@ -3,7 +3,6 @@ package inf112.skeleton.app;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import inf112.skeleton.app.Entity.Enemy;
@@ -25,6 +24,9 @@ public class GameScreenTest {
         gameScreen = mock(GameScreen.class);
     }
 
+    /**
+     * Tests getter for GameScreen's Player
+     */
     @Test
     void testGetPlayer() {
         Player p = mock(Player.class);
@@ -33,6 +35,9 @@ public class GameScreenTest {
         assertEquals(gameScreen.getPlayer(), p);
     }
 
+    /**
+     * Tests getter for set of Enemy objects in GameScreen
+     */
     @Test
     void testGetEnemies() {
         Set<Enemy> enemies = mock(Set.class);
@@ -41,6 +46,9 @@ public class GameScreenTest {
         assertEquals(gameScreen.getEnemies(), enemies);
     }
 
+    /**
+     * Tests adding Enemies to Enemy set
+     */
     @Test
     void testAddEnemies() {
         Enemy e = mock(Enemy.class);

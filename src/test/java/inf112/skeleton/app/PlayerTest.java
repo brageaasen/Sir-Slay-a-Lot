@@ -21,6 +21,9 @@ public class PlayerTest {
        player = mock(Player.class, Mockito.CALLS_REAL_METHODS);
     }
 
+    /**
+     * Tests health decrease and subsequent regeneration for Player
+     */
     @Test
     void testDecreaseAndRegenHealth(){
         when(player.getPlayerHealth()).thenReturn(new Health());
@@ -32,6 +35,9 @@ public class PlayerTest {
         assertEquals(2, player.getPlayerHealth().getHP());
     }
 
+    /**
+     * Tests whether the Player is dead when health is 0
+     */
     @Test 
     void isDead(){
         Health health = new Health();
@@ -43,16 +49,25 @@ public class PlayerTest {
         assertTrue(player.isDead());
     }
 
+    /**
+     * Test getter for kill count
+     */
     @Test 
     void testGetKillCount(){
         assertEquals(0, player.getKillcount());
     }
 
+    /**
+     * Tests whether the player has taken damage
+     */
     @Test 
     void testIsHurt(){
         assertFalse(player.isHurt());
     }
 
+    /**
+     * Tests getter for the Gun
+     */
     @Test 
     void testGetGun(){
         Gun gun = mock(Gun.class, Mockito.CALLS_REAL_METHODS);
@@ -61,23 +76,31 @@ public class PlayerTest {
         assertEquals(gun, player.getGun());
     }
 
+    /**
+     * Tests setter and getter for attack damage
+     */
     @Test 
     void testSetAndGetAttackDamage(){
         player.setAttackDamage(50);
         assertEquals(50, player.getAttackDamage());
     }
 
+    /**
+     * Tests setter and getter for knife attack range
+     */
     @Test 
     void testSetAndGetKnifeAttackRange(){
         player.setKnifeAttackRange(40);
         assertEquals(40, player.getKnifeAttackRange());
     }
 
+    /**
+     * Tests setter and getter for gun attack range
+     */
     @Test 
     void testSetAndGetGunAttackRange(){
         player.setGunAttackRange(40);
         assertEquals(40, player.getGunAttackRange());
     }
 
-    
 }
