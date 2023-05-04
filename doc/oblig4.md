@@ -3,20 +3,20 @@
 ## Teambeskrivelse
 
 # Kompetanse:
-Vetle - Bare programmering gjennom skole.
-Thomas - Bare programmering gjennom skole.
-Ole - Hovedsakelig programmering gjennom skole. Har lært litt andre språk i egen fritid i tillegg.
-Kavya - Har programmert i ulike språk (C, Java, SQL, Haskell, JS, HTML), men har ikke særlig drevet mye med prosjekter. Begynte å programmere etter videregående.
-Tarjei - Har programmert i noen år før universitet. Også på fritiden.
-Brage - Programmert gjennom skole, drevet litt med Unity.
+* Vetle - Bare programmering gjennom skole.
+* Thomas - Bare programmering gjennom skole.
+* Ole - Hovedsakelig programmering gjennom skole. Har lært litt andre språk i egen fritid i tillegg.
+* Kavya - Har programmert i ulike språk (C, Java, SQL, Haskell, JS, HTML), men har ikke særlig drevet mye med prosjekter. Begynte å programmere etter videregående.
+* Tarjei - Har programmert i noen år før universitet. Også på fritiden.
+* Brage - Programmert gjennom skole, drevet litt med Unity.
 
 # Roller:
-Developer/Grafisk ansvarlig - Brage Aasen
-Mergeansvarlig/Developer - Tarjei Landøy
-Developer - Thomas Claussen Stakset 
-Developer - Kavya Malhotra 
-Developer/Kundekontakt - Vetle Mathiesen Knutsen 
-Developer - Ole Kristian Breivik
+* Developer/Grafisk ansvarlig - Brage Aasen
+* Mergeansvarlig/Developer - Tarjei Landøy
+* Developer - Thomas Claussen Stakset 
+* Developer - Kavya Malhotra 
+* Developer/Kundekontakt - Vetle Mathiesen Knutsen 
+* Developer - Ole Kristian Breivik
 
 
 ## Minimal Viable Product (MVP).
