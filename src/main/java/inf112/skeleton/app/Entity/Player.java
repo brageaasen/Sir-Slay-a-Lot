@@ -13,7 +13,6 @@ import inf112.skeleton.app.Weapons.Knife;
 import inf112.skeleton.app.Animations.Animation;
 import inf112.skeleton.app.Animations.AnimationHandler;
 import inf112.skeleton.app.Back_end.*;
-import inf112.skeleton.app.Controller.KeyHandler;;
 
 
 /*
@@ -43,17 +42,15 @@ public class Player extends GameEntity {
     public int killCount = 0;
 
     // Audio
-    private AudioManager audioManager = new AudioManager();
+    private final AudioManager audioManager = new AudioManager();
 
     // Combat
     private int attackDamage;
     private int knifeAttackRange, gunAttackRange;
     private boolean gotHurt;
-    private int iframes = 0; //invinsibility frames
+    private int iframes = 0; // 'invincibility frames'
 
-    private Timer timer;
     private final Sprite knife;
-    private final KeyHandler keyH;
     private final Sprite sprite;
 
     private Health playerHealth;
@@ -79,13 +76,10 @@ public class Player extends GameEntity {
         this.jumpCounter = 0;
         this.facing = Direction.NONE;
         this.knife = new Sprite(new Texture("assets/Player/Weapons/knife.png"));
-        this.keyH = new KeyHandler(this);   //?? Should the player class hold input handling?
 
         playerHealth = new Health();
 
         this.gun = new Gun(700f, 20, 500, 0.5f, "assets/Player/Weapons/gunBullet.png", "assets/Player/Weapons/gun.png");
-
-        this.timer = new Timer();
 
         anim = new AnimationHandler<>(PlayerState.Idle, new Animation("assets/Player/Idle/Idle%d.png", 4));
         anim.addAnimation(PlayerState.Run, new Animation("assets/Player/Run/Run%d.png", 8));
@@ -113,9 +107,8 @@ public class Player extends GameEntity {
 
         updateSprite();
         gun.update(Gdx.graphics.getDeltaTime());
-        keyH.checkUserInput();
-        this.checkFallDamage();
-        this.unlockGun();
+        checkFallDamage();
+        unlockGun();
         updateFrames();
     }
 
@@ -201,14 +194,6 @@ public class Player extends GameEntity {
     }
 
     /**
-     * Get direction player is facing
-     * @return the direction
-     */
-    public Direction getDirection() {
-        return this.facing;
-    }
-
-    /**
      * Get PPM of player entity
      * @return the PPM
      */
@@ -285,7 +270,6 @@ public class Player extends GameEntity {
         }
 
         expectedFallDamage = Math.abs(body.getLinearVelocity().y);
-
     }
 
     /**
@@ -297,7 +281,7 @@ public class Player extends GameEntity {
     }
 
     /**
-     * Testing purposes
+     * For testing purposes
      */
     public void setAttackDamage(int damage) {
         this.attackDamage = damage;
@@ -337,23 +321,22 @@ public class Player extends GameEntity {
      * This method is called when the player is hurt by an enemy.
      */
     public void gotHurt(int damage) {
-        if(iframes == 0){
+        if(iframes == 0) {
             this.audioManager.Play("Hurt");
             this.gotHurt = true;
-        timer.scheduleTask(new Timer.Task() {
-            @Override
-            public void run() {
-            }        
-        }, 1);
 
+            playerHealth.decreaseHP(damage);
 
-        playerHealth.decreaseHP(damage);
-
-        iframes = 30;
+            iframes = 30;
         }
 
     }
 
+    /**
+     * Update the 'frames left' of certain variables.
+     *
+     * Decreases both 'iframe timer' and the knife's 'next attack frame timer'.
+     */
     private void updateFrames(){
         if(iframes > 0){
             iframes--;
