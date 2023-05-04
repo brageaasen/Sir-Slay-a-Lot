@@ -197,7 +197,6 @@ public class Enemy extends GameEntity {
         body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 25 ? body.getLinearVelocity().y : 25);
         enemyPos = body.getPosition().x;
 
-        //double random = Math.random(); //for random jumping
         if((lastPos == enemyPositionX || body.getLinearVelocity().x == 0) && jumpCounter < 2 && isGrounded()){
             startTime = System.currentTimeMillis();
             float force = body.getMass() * 30 * 2;
@@ -209,7 +208,7 @@ public class Enemy extends GameEntity {
 
         endTime = System.currentTimeMillis();
         elapsedTime = endTime - startTime;
-        if(body.getLinearVelocity().y == 0 && elapsedTime >= 250){
+        if(this.isGrounded() && elapsedTime >= 250){
             jumpCounter = 0;
         }
     }
