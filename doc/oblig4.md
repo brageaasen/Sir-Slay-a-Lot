@@ -1,5 +1,21 @@
 # Oblig 4
 
+## Minimal Viable Product (MVP).
+* Konkrete punkt for Minimal Viable Product: 
+    * Vise et brett/verden.
+    * Vise en spiller/karakter.
+    * Flytte spilleren høyre/venstre/hoppe med A/D/Space.
+    * Spilleren krasjer i vegg/platform og kan stå på platformene.
+    * Spilleren har liv og kan plukke opp nye hjerter eller regenerere liv (hvis spilleren er ikke slått).
+    * Vise en/flere fiende(r) som kan bevege seg.
+    * Fiender genereres automatisk.
+    * Spilleren kan miste liv / ta skade.
+    * Spilleren kan angripe tilbake / beskytte seg selv mot fiender.
+    * Game Over når fiende er død eller tom for liv.
+    * Vise Game Over skjerm UI, med en score til spiller.
+    * Mulighet for å kunne starte spillet på nytt uten å restarte applikasjonen.
+
+
 ## Brukerhistorier:
 * Som spiller trenger jeg at spillet ikke har bugs for en god spillopplevelse
     * Akseptansekriterie: Spillet kan ikke inneholde bugs.
@@ -40,33 +56,128 @@
 * Laget flere tester
 
 
-## Manuelle tester: (Antall: )
-* Player
-    * Bevege høyre og venstre med A og D. Hoppe med Space.
-    * Hoppe på en blokk for å sjekke collision.
-    * Se at spiller kan angripe med enter-knappen.
-    * Se at pistol skyter.
-    * Se at spiller kan bytte mellom kniv og pistol.
-    * Se at spiller får falldamage av å falle for hardt.
-* Player / Enemy
-    * Se at angrepssprites vises for spiller og enemy.
-    * Se at sprites endrer seg etter bevegelse og retning.
-* Enemy
-    * Se at fiende beveger seg av seg selv.
-    * Se at fiende dør dersom han blir slått mange ganger.
-    * Se at flere fiender spawner.
-    * Se at fiender har en død-animasjon
-* SFX / Musikk
-    * Sjekke at lyd spilles av én gang, og når de skal for lydene: Hit, Hurt, Jump, Pickup, Select og Shoot.
-    * Sjekke at musikk spilles ved start.
-    * Sjekke at musikk looper etter at sangen er spilt ferdig.
-* UI
-    * Sjekke at start meny vises som den skal, og at knappene funker.
-    * Sjekke at game over screen vises ved tap, og at knappene funker.
-    * Sjekke at player score ved game over screen viser korrekt score i forhold til player sin killcount.
-* Bakgrunn
-    * Sjekke at parallax bakgrunnen fungerer som den skal horisontalt.
-    * Sjekke at parallax bakgrunn går over til "evig himmel" vertikalt når player kommer seg høyt opp på mapet.
+## Manuelle tester: (Antall: 20)
+
+* Her testet vi funksjonaliteter som ikke lot seg teste i unit test. 
+
+* Player Movement
+    * Hva er forventet skal skje?
+        * Spiller skal bevege til høyre og venstre med tasteklikkene A og D, og hoppe med Space.
+    * Hvordan vurdere om det har skjedd en feil?
+        * Spiller beveger seg ikke eller beveger seg i feil retning
+
+* Player Collision
+    * Hva er forventet skal skje?
+        * Spiller skal hoppe på en blokk, og ikke bevege seg/falle gjennom blokken.
+    * Hvordan vurdere om det har skjedd en feil?
+        * Spiller hopper på en blokk, men beveger seg gjennom/faller gjennom blokken.
+
+* Player Attack
+    * Hva er forventet skal skje?
+        * Spiller skal kunne angripe fiender med bruk av Enter tastetrykk.
+    * Hvordan vurdere om det har skjedd en feil?
+        * Spiller gjør ikke skade på fiender, eller våpen dukker ikke opp med tastetrykket.
+
+* Player Gun
+    * Hva er forventet skal skje?
+        * Spiller skal skyte med pistolen, og det skal dukke opp kuler som beveger seg horisontalt på kartet.
+    * Hvordan vurdere om det har skjedd en feil?
+        * Spiller bruker angrepsknappen med pistol, men det dukker ikke opp kuler.
+
+* Player Weapon Changing
+    * Hva er forventet skal skje?
+        * Spiller bytter mellom våpnene kniv/pistol ved hjelp av tallene på tastaturet sitt (1, 2).
+    * Hvordan vurdere om det har skjedd en feil?
+        * Spiller klarer ikke å bytte mellom våpnene ved tastetrykk, selv etter at pistol har blitt låst opp.
+
+* Player Fall Damage
+    * Hva er forventet skal skje?
+        * Spiller skal ta skade når spilleren faller fra en viss høyde.
+    * Hvordan vurdere om det har skjedd en feil?
+        * Spiller faller fra en stor høyde, men tar ikke skade av fallet.
+
+* Show Player / Enemy Sprite
+    * Hva er forventet skal skje?
+        * Angrepssprites for spiller og enemy skal lastes og vises på skjermen.
+    * Hvordan vurdere om det har skjedd en feil?
+        * Angrepssprites for spiller og enemy dukker ikke opp på skjermen etter at spillet har startet.
+
+* Player / Enemy Sprite Movement
+    * Hva er forventet skal skje?
+        * Sprites for spiller / enemy skal endre seg etter relativ bevegelse og retning for spill-objekt.
+    * Hvordan vurdere om det har skjedd en feil?
+        * Sprites for spiller / enemy står låst i en sprite, eller viser feil sprite til feil handling.
+
+* Enemy Movement
+    * Hva er forventet skal skje?
+        * Enemy skal kunne bevege seg av seg selv, i retning av spilleren.
+    * Hvordan vurdere om det har skjedd en feil?
+        * Enemy beveger seg ikke, eller beveger seg i feil retning.
+
+* Enemy Death
+    * Hva er forventet skal skje?
+        * Enemy skal dø, og fjernes fra spillet dersom den blir angrepet tilstrekkelig mange ganger.
+    * Hvordan vurdere om det har skjedd en feil?
+        * Enemy dør, og fjernes fra spillet når livet dens går tomt.
+
+* Enemy spawning
+    * Hva er forventet skal skje?
+        * Flere enemies skal bli generert etterhvert som spiller går.
+    * Hvordan vurdere om det har skjedd en feil?
+        * Enemies blir ikke generert over tid, og spiller står alene på kartet.
+
+* Enemy Death Sprite
+    * Hva er forventet skal skje?
+        * Enemy skal spille av en død-animasjon når livet dens går tomt.
+    * Hvordan vurdere om det har skjedd en feil?
+        * Enemy forsvinner bare fra spillet, og spiller ikke av død-animasjonen dens.
+
+* SFX Avspilling
+    * Hva er forventet skal skje?
+        * Importert lyd skal spille av én gang når lyden blir tilkalt.
+    * Hvordan vurdere om det har skjedd en feil?
+        * Lyden spilles av flere ganger, eller ikke i det hele tatt for lydene: Hit, Hurt, Jump, Pickup, Select og Shoot.
+* Music Avspilling
+    * Hva er forventet skal skje?
+        * Musikken skal spilles av ved start.
+    * Hvordan vurdere om det har skjedd en feil?
+        * Musikken spilles ikke av ved start, eller begynner avspilling for sent.
+
+* Music Looping
+    * Hva er forventet skal skje?
+        * Musikken skal automatisk spilles av på nytt igjen etter endt kjøring.
+    * Hvordan vurdere om det har skjedd en feil?
+        * Musikken stopper å spille etter én kjøring, og kjører ikke igjen.
+
+* Start Meny UI
+    * Hva er forventet skal skje?
+        * Start meny skal vises som den skal, og knappen skal funke.
+    * Hvordan vurdere om det har skjedd en feil?
+        * Start menyen vises ikke, eller knappene funker ikke.
+
+* Game Over Screen UI
+    * Hva er forventet skal skje?
+        * Game over screen vises ved tap, og knappene skal funke.
+    * Hvordan vurdere om det har skjedd en feil?
+        * Game over screen vises ikke ved tap, eller knappene funker ikke.
+
+* Player Score
+    * Hva er forventet skal skje?
+        * Player score skal vises ved game over screen, og vise korrekt score i forhold til player sin killcount.
+    * Hvordan vurdere om det har skjedd en feil?
+        * Player score vises ikke i game over screen, eller viser feil score i forhold til player sin killcount.
+
+* Parallax Background Horisontal Movement
+    * Hva er forventet skal skje?
+        * Parallax bakgrunnen skal fungere som den skal horisontalt, og utvide seg automatisk.
+    * Hvordan vurdere om det har skjedd en feil?
+        * Parallax bakgrunn utvider seg ikke ved player bevegelse i horisontal retning.
+
+* Parallax Background Vertical Movement
+    * Hva er forventet skal skje?
+        * Parallax bakrunnen skal fungere som den skal vertikalt, og gå over til "evig himmel" etter spiller har nådd en viss høyde på kartet.
+    * Hvordan vurdere om det har skjedd en feil?
+        * Den vertikale parallax bakgrunnen går ikke over til evig himmel, men viser heller feil bilde/svart skjerm etter spiller går høyt opp på kartet.
 
 ## Klassediagram
 <img src="/doc/Gitlab/klassediagram.png" alt="Opening Screen" title="Opening Screen">
