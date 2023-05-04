@@ -34,9 +34,9 @@ public class Player extends GameEntity {
     }
     private final AnimationHandler<PlayerState> anim;
 
-    private static final int PPM = 16; //?? what does this mean???
+    private static final int PPM = 16; //Pixel Per Meter
 
-    public int jumpCounter;     //?? Set to private, change using API (e.g. 'Jump')
+    public int jumpCounter;
     private Direction facing;
     public Knife knifeObj;
     public Gun gun;
@@ -52,8 +52,6 @@ public class Player extends GameEntity {
     private int iframes = 0; //invinsibility frames
 
     private Timer timer;
-    private boolean canMove = true;
-
     private final Sprite knife;
     private final KeyHandler keyH;
     private final Sprite sprite;
@@ -72,7 +70,7 @@ public class Player extends GameEntity {
     public Player(float width, float height, Body body) {
         super(width, height, body);
         this.speed = 20f;   //?? Introduce constant?
-        this.attackDamage = 25;
+        this.attackDamage = 50;
         this.knifeAttackRange = 40;
         this.gunAttackRange = 40;
 
@@ -342,18 +340,16 @@ public class Player extends GameEntity {
         if(iframes == 0){
             this.audioManager.Play("Hurt");
             this.gotHurt = true;
-        this.canMove = false;
         timer.scheduleTask(new Timer.Task() {
             @Override
             public void run() {
-                canMove = true;
             }        
         }, 1);
 
 
         playerHealth.decreaseHP(damage);
 
-        iframes = 45;
+        iframes = 30;
         }
 
     }
@@ -373,7 +369,6 @@ public class Player extends GameEntity {
     public void gotHurtTest() {
         this.getAudio().Play("Hurt");
         this.gotHurt = true;
-        this.canMove = false;
     }
 
     /**
