@@ -12,10 +12,12 @@ public class KnifeTest {
 
     @BeforeEach
     void initEach() {
-        
         this.knife = new Knife();
     }
 
+    /**
+     * Tests whether the Knife is being held
+     */
     @Test 
     void testHoldingKnife(){
         knife.setHoldKnife(false);
@@ -27,6 +29,9 @@ public class KnifeTest {
     }
 
 
+    /**
+     * Tests whether the Knife can deal damage
+     */
     @Test 
     void testDealingDamage(){
         knife.setDealingDamage(false);

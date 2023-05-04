@@ -18,6 +18,9 @@ public class HealthTest {
         healthModel = new Health();
     }
 
+    /**
+     * Tests that the health is full
+     */
     @Test
     void testFullHealth() {
         int health = healthModel.getHP();
@@ -26,6 +29,9 @@ public class HealthTest {
         assertNotEquals(59, health);
     }
 
+    /**
+     * Tests decreasing health
+     */
     @Test
     void testDecreaseHealth() {
         healthModel.decreaseHP(30);
@@ -38,6 +44,9 @@ public class HealthTest {
         assertEquals(0, health);
     }
 
+    /**
+     * Tests health regeneration
+     */
     @Test
     void testHealthRegen() {
         healthModel.decreaseHP(30);
@@ -50,12 +59,15 @@ public class HealthTest {
         assertEquals(72, health);
     }
 
+    /**
+     * Tests health regeneration when the missing health is less than the amount of regeneration
+     */
     @Test
-    void testHealthRegenAbove90() {
-        healthModel.decreaseHP(5);
+    void testHealthRegenAboveLostHealth() {
+        healthModel.decreaseHP(1);
 
         int health = healthModel.getHP();
-        assertEquals(95, health);
+        assertEquals(99, health);
 
         healthModel.regenHealth();
         health = healthModel.getHP();

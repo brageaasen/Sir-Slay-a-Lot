@@ -8,19 +8,14 @@ import org.mockito.Mockito;
 import static org.mockito.Mockito.*;
 
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
 public class GunTest {
-    
-   
 
-    @BeforeEach
-    void initEach() {
-        
-    }
-
+    /**
+     * Tests setter and getter for holding the Gun
+     */
     @Test
     void testHoldGun(){
         Gun gun = mock(Gun.class, Mockito.CALLS_REAL_METHODS);
@@ -28,6 +23,9 @@ public class GunTest {
         assertTrue(gun.getHoldGun());
     }
 
+    /**
+     * Tests setters and getters for ammunition in Gun
+     */
     @Test
     void testBulletChamber() {
         Gun gun = mock(Gun.class, Mockito.CALLS_REAL_METHODS);
@@ -41,6 +39,9 @@ public class GunTest {
         assertEquals(18, gun.bulletsInChamber());
     }
 
+    /**
+     * Tests extra ammunition powerup for Gun
+     */
     @Test 
     void testPowerUp(){
         Gun gun = mock(Gun.class, Mockito.CALLS_REAL_METHODS);
@@ -51,6 +52,9 @@ public class GunTest {
         assertEquals(40, gun.bulletsInChamber());
     }
 
+    /**
+     * Tests setter and getter for unlocking the Gun
+     */
     @Test 
     void testUnlocked(){
         Gun gun = mock(Gun.class, Mockito.CALLS_REAL_METHODS);
@@ -60,6 +64,9 @@ public class GunTest {
         assertTrue(gun.getUnlocked());
     }
 
+    /**
+     * Tests whether the Gun is firing
+     */
     @Test 
     void testFire(){
         Gun gun = mock(Gun.class, Mockito.CALLS_REAL_METHODS);

@@ -10,7 +10,9 @@ import static org.mockito.Mockito.*;
 
 public class BulletTest {
     
-
+    /**
+     * Tests setter and getters for Bullet damage
+     */
     @Test 
     void testSetAndGetDamage(){
         Bullet bullet = mock(Bullet.class, Mockito.CALLS_REAL_METHODS);
@@ -21,6 +23,9 @@ public class BulletTest {
         assertEquals(20, bullet.getDamage());
     }
 
+    /**
+     * Tests setter and getter for Bullet range
+     */
     @Test 
     void testSetAndGetRange(){
         Bullet bullet = mock(Bullet.class, Mockito.CALLS_REAL_METHODS);
@@ -32,6 +37,9 @@ public class BulletTest {
 
     }
 
+    /**
+     * Tests setter and getter for Bullet hits
+     */
     @Test 
     void testSetAndGetBulletHit(){
         Bullet bullet = mock(Bullet.class, Mockito.CALLS_REAL_METHODS);
