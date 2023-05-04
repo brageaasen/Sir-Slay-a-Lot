@@ -21,7 +21,6 @@ public class BodyHelper {
      * @param height the height of the body in pixels
      * @param isStatic true if the body should be static, false if it should be dynamic
      * @param world the Box2D world that the body should be added to
-     * @return
      */
     public static Body createBody(float x, float y, float width, float height, boolean isStatic, World world){
         BodyDef bodyDef = new BodyDef();

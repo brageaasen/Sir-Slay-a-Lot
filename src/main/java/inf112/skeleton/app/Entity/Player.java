@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.utils.Timer;
 
 import inf112.skeleton.app.Weapons.Gun;
 import inf112.skeleton.app.Weapons.Knife;
@@ -259,7 +258,7 @@ public class Player extends GameEntity {
     }
 
     /**
-     * Checks and apply falldamage if the player has fallen from too high
+     * Checks and apply fall damage if the player has fallen from too high
      */
     public void checkFallDamage(){
         float multiplier = 1.0f;
@@ -322,7 +321,7 @@ public class Player extends GameEntity {
      */
     public void gotHurt(int damage) {
         if(iframes == 0) {
-            this.audioManager.Play("Hurt");
+            this.audioManager.play("Hurt");
             this.gotHurt = true;
 
             playerHealth.decreaseHP(damage);
@@ -350,7 +349,7 @@ public class Player extends GameEntity {
      * TESTING ONLY: WITHOUT TIMER
      */
     public void gotHurtTest() {
-        this.getAudio().Play("Hurt");
+        this.getAudio().play("Hurt");
         this.gotHurt = true;
     }
 
@@ -380,14 +379,6 @@ public class Player extends GameEntity {
     }
 
     /**
-     * Get the current kill count.
-     * @return the total amount of enemies killed.
-     */
-    public int getKillcount(){
-        return this.killCount;
-    }
-
-    /**
      * Currently used for testing
      */
     public AudioManager getAudio() {
@@ -400,18 +391,19 @@ public class Player extends GameEntity {
     public Sprite getSprite() {
         return this.sprite;
     }
-
-    /**
-     * Currently used for testing
-     */
-    public int getKillCount() {
-        return this.killCount;
-    }
     
     /**
      * Currently used for testing
      */
     public void setKillCount(int killCount) {
         this.killCount = killCount;
+    }
+
+    /**
+     * Get the current kill count.
+     * @return the total amount of enemies killed.
+     */
+    public int getKillCount(){
+        return this.killCount;
     }
 }

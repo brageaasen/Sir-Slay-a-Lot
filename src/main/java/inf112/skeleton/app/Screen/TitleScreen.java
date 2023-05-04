@@ -115,7 +115,7 @@ public class TitleScreen extends ScreenAdapter {
                 game.batch.draw(playButtonActive, x, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
                 if (Gdx.input.isTouched())
                 {
-                    this.audioManager.Play("Select");
+                    this.audioManager.play("Select");
                     this.dispose();
                     this.ortographicCamera = new OrthographicCamera();
                     this.ortographicCamera.setToOrtho(false, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
@@ -134,7 +134,7 @@ public class TitleScreen extends ScreenAdapter {
                 game.batch.draw(controlsButtonActive, x, CONTROLS_BUTTON_Y, CONTROLS_BUTTON_WIDTH, CONTROLS_BUTTON_HEIGHT);
                 if (Gdx.input.isTouched())
                 {
-                    this.audioManager.Play("Select");
+                    this.audioManager.play("Select");
                     this.dispose();
                     this.inControlsMenu = true;
                 }
@@ -152,7 +152,7 @@ public class TitleScreen extends ScreenAdapter {
                 if (Gdx.input.isTouched() && canClickExit)
                 {
                     System.out.println(canClickExit);
-                    this.audioManager.Play("Select");
+                    this.audioManager.play("Select");
                     Gdx.app.exit();
                 }
             }
@@ -176,7 +176,7 @@ public class TitleScreen extends ScreenAdapter {
                 game.batch.draw(backButtonActive, x, BACK_BUTTON_Y, BACK_BUTTON_WIDTH, BACK_BUTTON_HEIGHT);
                 if (Gdx.input.isTouched())
                 {
-                    this.audioManager.Play("Select");
+                    this.audioManager.play("Select");
                     this.dispose();
                     this.inControlsMenu = false;
                     timer.scheduleTask(new Timer.Task() {

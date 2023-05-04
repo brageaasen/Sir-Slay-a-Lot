@@ -31,6 +31,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
  * The code defines a GameScreen class that extends ScreenAdapter and contains the main logic for the game.
  */
 public class GameScreen extends ScreenAdapter {
+    private static final float TEXT_TIME = 2f;
 
     private final OrthographicCamera camera;
     private final SpriteBatch batch;
@@ -44,16 +45,14 @@ public class GameScreen extends ScreenAdapter {
     private final TileMapHelper tileMapHelper;
     
     private Player player;
-    private HealthBar healthBar;
-    private ShapeRenderer shapeRenderer;
-    private Timer regenTimer;
-    private Timer spawnTimer;
-    private Set<Enemy> enemies;
-    private Inventory inventory;
-    private PowerUp moreAmmo;
-    private PowerUp moreHealth;
-
-    private float textTime = 2f;
+    private final HealthBar healthBar;
+    private final ShapeRenderer shapeRenderer;
+    private final Timer regenTimer;
+    private final Timer spawnTimer;
+    private final Set<Enemy> enemies;
+    private final Inventory inventory;
+    private final PowerUp moreAmmo;
+    private final PowerUp moreHealth;
     private float timeElapsed;
     // private Box2DDebugRenderer box2dDebugRenderer;
 
@@ -66,6 +65,7 @@ public class GameScreen extends ScreenAdapter {
         this.camera = camera;
         this.batch = new SpriteBatch();
         this.world = new World(new Vector2(0,-25f),false);
+        this.keyH = new KeyHandler(null);   // will be set to `player` when using `setPlayer()`
 
         // this.box2dDebugRenderer = new Box2DDebugRenderer();        
 
@@ -90,7 +90,6 @@ public class GameScreen extends ScreenAdapter {
 		}
 
         shapeRenderer = new ShapeRenderer();
-        this.keyH = new KeyHandler(player);   //?? Should the player class hold input handling?
         this.moreAmmo = new PowerUp(player, new Vector2(1120,480), new Sprite(new Texture("assets/Player/Weapons/ammoCrates.png")), 1);
         this.moreHealth = new PowerUp(player, new Vector2(1710,360), new Sprite(new Texture("assets/Player/Weapons/health.png")), 2);
 
@@ -120,7 +119,6 @@ public class GameScreen extends ScreenAdapter {
             }
         }, 5, 5);
 
-            
     }   
     
     public void spawnEnemy(){
@@ -154,7 +152,7 @@ public class GameScreen extends ScreenAdapter {
         }
 
         if(player.isDead() == true){
-            game.setScreen(new EndScreen(game, player.getKillcount()));
+            game.setScreen(new EndScreen(game, player.getKillCount()));
         }
 
        
@@ -223,7 +221,7 @@ public class GameScreen extends ScreenAdapter {
 
         if (this.player.getGun().getUnlocked()){
             timeElapsed += delta;
-            if (timeElapsed <= textTime) {
+            if (timeElapsed <= TEXT_TIME) {
                 Texture gunUnlocked = new Texture("assets/UI/gunUnlocked.png");
                 // Draw gun unlocked
                 batch.draw(gunUnlocked, Gdx.graphics.getWidth() / 2 + 760, Gdx.graphics.getHeight() / 2 - 50, 200, 90);

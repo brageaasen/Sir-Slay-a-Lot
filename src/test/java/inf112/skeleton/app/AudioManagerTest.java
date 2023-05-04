@@ -23,8 +23,8 @@ public class AudioManagerTest {
      */
     @Test 
     void testSetAndGetVolume(){
-        audioManager.SetVolume(0.3f);
-        assertEquals(0.3f, audioManager.GetVolume());
+        audioManager.setVolume(0.3f);
+        assertEquals(0.3f, audioManager.getVolume());
     }
 
 }

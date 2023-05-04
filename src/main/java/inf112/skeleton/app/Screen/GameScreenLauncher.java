@@ -39,7 +39,7 @@ public class GameScreenLauncher extends Game{
         font = new BitmapFont();
         setScreen(new TitleScreen(instance));
         //System.out.println(this.audioManager);
-        audioManager.Play("MainSong");
+        audioManager.play("MainSong");
     }
     
     /**

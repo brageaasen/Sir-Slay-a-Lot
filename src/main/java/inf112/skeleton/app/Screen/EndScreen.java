@@ -95,7 +95,7 @@ public class EndScreen extends ScreenAdapter {
             game.batch.draw(restartButtonActive, x, RESTART_BUTTON_Y, RESTART_BUTTON_WIDTH, RESTART_BUTTON_HEIGHT);
             if (Gdx.input.isTouched())
             {
-                this.audioManager.Play("Select");
+                this.audioManager.play("Select");
                 this.dispose();
                 this.ortographicCamera = new OrthographicCamera();
                 this.ortographicCamera.setToOrtho(false, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
@@ -114,7 +114,7 @@ public class EndScreen extends ScreenAdapter {
             game.batch.draw(exitButtonActive, x, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
             if (Gdx.input.isTouched())
             {
-                this.audioManager.Play("Select");
+                this.audioManager.play("Select");
                 Gdx.app.exit();
             }
         }

@@ -15,13 +15,11 @@ import inf112.skeleton.app.Weapons.Gun;
  * The Inventory class represents the player's inventory in the game 
  */
 public class Inventory {
-
-    private Sprite gunSprite;
-    private Sprite knife;
-
-    private Sprite lock;
-    private Gun gun;
-    private BitmapFont font;
+    private final Sprite gunSprite;
+    private final Sprite knife;
+    private final Sprite lock;
+    private final Gun gun;
+    private final BitmapFont font;
 
     private final Player player;
 
@@ -59,13 +57,13 @@ public class Inventory {
      */
     public void render(ShapeRenderer shapeRenderer, SpriteBatch batch) {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+
         if (!player.gun.getHoldGun()){
             shapeRenderer.setColor(Color.BLACK);
             shapeRenderer.rect(75, 575, 60, 60);
-            }
-        else if (player.gun.getHoldGun()){
-        shapeRenderer.setColor(Color.BLACK);
-        shapeRenderer.rect(145, 575, 60, 60);
+        } else {
+            shapeRenderer.setColor(Color.BLACK);
+            shapeRenderer.rect(145, 575, 60, 60);
         }
        
         shapeRenderer.setColor(Color.WHITE);

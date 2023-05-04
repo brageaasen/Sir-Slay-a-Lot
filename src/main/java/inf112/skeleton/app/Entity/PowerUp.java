@@ -6,8 +6,8 @@ import com.badlogic.gdx.math.Vector2;
 
 public class PowerUp {
     
-    private Sprite Sprite;
-    private Player player;
+    private final Sprite Sprite;
+    private final Player player;
     private float playerPositionX, playerPositionY;
     private Vector2 position;
     private boolean ammoPickedUp;
@@ -15,7 +15,7 @@ public class PowerUp {
     private boolean healthPickedUp;
     private boolean healthActive;
     
-    private int id;
+    private final int id;
 
     public PowerUp(Player player, Vector2 pos, Sprite sprite, int id){
         this.Sprite = sprite;
@@ -31,10 +31,10 @@ public class PowerUp {
 
     public void render(SpriteBatch batch){
         if (id == 1){
-            if (player.getKillcount() > 0 && player.getKillcount() % 10 == 0){
+            if (player.getKillCount() > 0 && player.getKillCount() % 10 == 0){
                 this.ammoActive = true;
             }
-            if (player.getKillcount() % 9 == 0){
+            if (player.getKillCount() % 9 == 0){
                 this.ammoActive = false;
                 this.ammoPickedUp = false;
             }
@@ -45,10 +45,10 @@ public class PowerUp {
             }
         }
         else if (id == 2){
-            if (player.getKillcount() > 0 && player.getKillcount() % 15 == 0){
+            if (player.getKillCount() > 0 && player.getKillCount() % 15 == 0){
                 this.healthActive = true;
             }
-            if (player.getKillcount() % 14 == 0){
+            if (player.getKillCount() % 14 == 0){
                 this.healthActive = false;
                 this.healthPickedUp = false;
             }
@@ -114,10 +114,10 @@ public class PowerUp {
      * Currently used for testing
      */
     public void checkForPowerup() {
-        if (player.getKillcount() > 0 && player.getKillcount() % 10 == 0){
+        if (player.getKillCount() > 0 && player.getKillCount() % 10 == 0){
             this.ammoActive = true;
         }
-        if (player.getKillcount() > 0 && player.getKillcount() % 15 == 0){
+        if (player.getKillCount() > 0 && player.getKillCount() % 15 == 0){
             this.healthActive = true;
         }
     }

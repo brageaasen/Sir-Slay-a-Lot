@@ -34,8 +34,6 @@ public class Enemy extends GameEntity {
     private static final int PPM = 16;
 
     private long startTime = 0;
-    private long endTime;
-    private long elapsedTime;
     private float playerPositionX, playerPositionY;
     private float enemyPositionX, enemyPositionY;
     public static float enemyPos;
@@ -47,12 +45,13 @@ public class Enemy extends GameEntity {
     private boolean gotHit;
     private boolean canMove = true;
 
-    private int attackRange, attackDamage;
+    private int attackRange;
+    private int attackDamage;
     private boolean attack = false;
     private boolean dead = false;
 
     // Audio
-    private AudioManager audioManager = new AudioManager();
+    private final AudioManager audioManager = new AudioManager();
 
     // Sprite field variables
     private int attackTimer;
@@ -158,8 +157,8 @@ public class Enemy extends GameEntity {
         }
         lastPos = enemyPositionX;
 
-        endTime = System.currentTimeMillis();
-        elapsedTime = endTime - startTime;
+        long endTime = System.currentTimeMillis();
+        long elapsedTime = endTime - startTime;
         if(this.isGrounded() && elapsedTime >= 250){
             jumpCounter = 1;
         }
@@ -264,7 +263,6 @@ public class Enemy extends GameEntity {
 
     /**
      * Testing purposes
-     * @param health
      */
     public void setEnemyHealth(Health health){
         this.enemyHealth = health;
@@ -279,7 +277,7 @@ public class Enemy extends GameEntity {
     }
 
     /**
-     * Checks if a enemy is on the ground/surface and not midair
+     * Checks if an enemy is on the ground/surface and not midair
      * @return true if the player is on a surface, false otherwise
      */
     public boolean isGrounded() {
@@ -295,14 +293,6 @@ public class Enemy extends GameEntity {
     }
 
     /**
-     * Method that returns the direction of the enemy.
-     * @return the direction of the enemy.
-     */
-    public Direction getDirection() {
-        return this.facing;
-    }
-
-    /**
      * Method that returns the Health of the enemy.
      * @return the Health of the enemy.
      */
@@ -311,21 +301,12 @@ public class Enemy extends GameEntity {
     }
 
     /**
-     * Method that check whether or not the enemy got hit. If so, it plays  sound and stops it's movement.
+     * Method that check whether the enemy got hit. If so, it plays  sound and stops its movement.
      */
     public void gotHit() {
-        this.audioManager.Play("Hit");
+        this.audioManager.play("Hit");
         this.gotHit = true;
         this.canMove = false;
         this.attack = false;
     }
-
-    /**
-     * A method to clone an enemy.
-     * @return a clone of the enemy.
-     */
-    public Enemy clone() {
-        return new Enemy(width, height, this.getBody(), player);
-    }
-
 }
