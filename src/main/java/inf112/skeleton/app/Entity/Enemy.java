@@ -151,19 +151,19 @@ public class Enemy extends GameEntity {
         body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 25 ? body.getLinearVelocity().y : 25);
         enemyPos = body.getPosition().x;
 
-        if((lastPos == enemyPositionX || body.getLinearVelocity().x == 0) && jumpCounter < 2 && isGrounded()){
+        if((lastPos == enemyPositionX || body.getLinearVelocity().x == 0) && jumpCounter > 0 && isGrounded()){
             startTime = System.currentTimeMillis();
             float force = body.getMass() * 30 * 2;
             body.setLinearVelocity(body.getLinearVelocity().x, 0);
             body.applyLinearImpulse(new Vector2(0, force), body.getPosition(), true);
-            jumpCounter++;
+            jumpCounter--;
         }
         lastPos = enemyPositionX;
 
         endTime = System.currentTimeMillis();
         elapsedTime = endTime - startTime;
         if(this.isGrounded() && elapsedTime >= 250){
-            jumpCounter = 0;
+            jumpCounter = 1;
         }
     }
 

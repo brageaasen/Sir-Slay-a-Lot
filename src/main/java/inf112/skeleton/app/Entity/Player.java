@@ -34,9 +34,9 @@ public class Player extends GameEntity {
     }
     private final AnimationHandler<PlayerState> anim;
 
-    private static final int PPM = 16; //?? what does this mean???
+    private static final int PPM = 16; //Pixel Per Meter
 
-    public int jumpCounter;     //?? Set to private, change using API (e.g. 'Jump')
+    public int jumpCounter;
     private Direction facing;
     public Knife knifeObj;
     public Gun gun;
@@ -349,7 +349,7 @@ public class Player extends GameEntity {
 
         playerHealth.decreaseHP(damage);
 
-        iframes = 45;
+        iframes = 30;
         }
 
     }
