@@ -221,12 +221,22 @@ Developer - Ole Kristian Breivik
 <img src="/doc/Gitlab/diagramOblig4.png" alt="Opening Screen" title="Opening Screen">
 
 ## Beskrivelse av arkitektur
+Vi har delt opp klassene våre i 6 forskjellige mapper: Animations, Back_end, Controller, Entity, Screen og Weapons. 
+Animations tar for seg animasjonen i spillet, Back_end inneholder klasser som gjør viktige jobber for grunnmuren, Controller inneholder KeyHandleren, Entity inneholder alt som har med spillkarakteren å gjøre, Screen inneholder det som vises på skjermen og Weapons inneholder alle våpen. 
 
+I Screen finner vi GameScreen, som inneholder hovedlogikken i spillet. Den utvider ScreenAdapter, som er en del av spillrammeverket libGDX, og dermed fungerer den som skjermen som spillet vises på. Klassen inneholder variabler og objekter som representerer spillverdenen, som kamera, fysikk, sprite-rendering, fiender og mye mer. Klassen inneholder også metoder for å oppdatere spillobjekter og brukerinput, håndtere kollisjoner og sjekke om spillet skal avsluttes. Det er i denne klassen de fleste render-metodene blir kalt. 
+
+I Back_end finner vi TileMapHelper, denne klassen tar for seg tilesene i spillet. Vi har laget mappet i Tiled og der kan vi gi forskjellige navn og typer til tilesene. Alle statiske blokker er for eksempel et Polygon og når den da får inn et Polygon vil den lage statiske blokker. Dersom den får inn et polygon med navn "moving", vil den lage en bevegende platform. Men, dersom den får inn et Rektangel-objekt, vil den lage enten en spiller eller en fiende basert på rektanglets navn. TileMapHelper er derfor et viktig fundament for spillet vårt ettersom den lager alle blokkene. 
+
+To viktige klasser er også Player og Enemy i Entity mappen. Disse klassene utvider GameEntity-klassen vår som gir oss enkle egenskaper som bredde, høyde og body. Body representerer den fysiske kroppen til spilleren i en Box2D verden. Klassene inneholder forskjellige sett av animasjoner for de forskjellige tilstandene til karakterene. Disse animasjonene blir håndtert av AnimationHandler-klassen i Animations mappen. Enemy-klassen er spesielt viktig fordi den lar spillet simulere oppførselen til en fiende basert på spillerens handlinger. 
+
+Som vi ser på klassediagrammet er GameScreen og Player klassene med flest forhold til andre klasser. Dette er naturlig ettersom mye av oppførselen i spillet blant annet baserer seg på hva spilleren velger å gjøre. I tillegg er det naturlig at GameScreen må ha mange forhold for å kunne vite det som trengs for å ha en velfungerende spillskjerm. Vi kan samtidig se at AudioManager også har flere forhold. Ettersom denne styrer de forskjellige lydene til forskjellige hendelser i spillet, ender den opp med flere forhold til andre klasser. Det er da spesielt Player, Enemy, Gun, TitleScreen og EndScreen som bruker AudioManager ofte. 
 
 
 ## Spotbugs: 
 * Vi har testet ut SpotBugs og den fant ingen errors, men noen bugs. 
-Den returnerte blant annet disse bugsene: 
+Den returnerte blant annet disse bugs'ene: 
+
 * [ERROR] Medium: BugInstance message is inf112.skeleton.app.GameScreen.getEnemies() may expose internal representation by returning GameScreen.enemies
 Dette betyr at det ikke er enkapsulert nok. Derfor er dette nå endret fra å returnere listen med enemies, til en copy av listen med enemies. 
 
@@ -248,7 +258,7 @@ Det er noen ting vi kunne gjort annerledes. Vi kunne laget tester underveis, i s
 ## Møtereferater
 
 * REFERAT møte Torsdag. 20/04/2023
-    * Tilstede: Vetle, Kavya, Tarje, Brage
+    * Tilstede: Vetle, Kavya, Tarjei, Brage
     * Vi brukte dette møtet på å diskutere hva som manglet å gjøre frem mot endelig innlevering av produktet, og leste tilbakemeldings-utkast fra gruppeleder sammen. Videre delte vi ut oppgaver etter hva som manglet å gjøres
     * Tilbakemelding fra Belmin:
         - Mangler tester for å oppnå 75% test coverage
