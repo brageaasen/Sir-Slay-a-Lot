@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Timer;
 
-import inf112.skeleton.app.Animation.AnimationHandler;
+import inf112.skeleton.app.Animations.AnimationHandler;
 import inf112.skeleton.app.Back_end.AudioManager;
 import inf112.skeleton.app.Weapons.Bullet;
 

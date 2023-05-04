@@ -1,4 +1,4 @@
-package inf112.skeleton.app.Animation;
+package inf112.skeleton.app.Animations;
 
 import com.badlogic.gdx.graphics.Texture;
 
