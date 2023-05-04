@@ -1,9 +1,11 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.Weapons;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+
+import inf112.skeleton.app.Back_end.AudioManager;
 
 import java.util.ArrayList;
 import java.util.Iterator;

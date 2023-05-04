@@ -8,12 +8,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Timer;
 
-import inf112.skeleton.app.AudioManager;
-import inf112.skeleton.app.Gun;
-import inf112.skeleton.app.Health;
-import inf112.skeleton.app.KeyHandler;
-import inf112.skeleton.app.Knife;
-import inf112.skeleton.app.*;
+import inf112.skeleton.app.Animation.Animation;
+import inf112.skeleton.app.Animation.AnimationHandler;
+import inf112.skeleton.app.Weapons.Gun;
+import inf112.skeleton.app.Weapons.Knife;
+import inf112.skeleton.app.Back_end.*;
+import inf112.skeleton.app.Controller.KeyHandler;;
 
 
 /*

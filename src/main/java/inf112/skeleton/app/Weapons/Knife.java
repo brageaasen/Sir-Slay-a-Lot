@@ -1,4 +1,4 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.Weapons;
 
 /*
  * Class for the knife used by the player. 

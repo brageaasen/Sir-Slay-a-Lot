@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.mockito.Mockito;
+
+import inf112.skeleton.app.Weapons.Gun;
+
 import static org.mockito.Mockito.*;
 
 

@@ -1,6 +1,9 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.Controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+
+import inf112.skeleton.app.Back_end.AudioManager;
+import inf112.skeleton.app.Back_end.TileMapHelper;
 import inf112.skeleton.app.Entity.GameEntity;
 import inf112.skeleton.app.Entity.Player;
 

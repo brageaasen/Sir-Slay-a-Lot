@@ -9,6 +9,7 @@ import org.mockito.Mockito;
 import static org.mockito.Mockito.*;
 
 import inf112.skeleton.app.Entity.Enemy;
+import inf112.skeleton.app.Entity.Health;
 
 public class EnemyTest {
 

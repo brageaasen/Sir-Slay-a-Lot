@@ -8,10 +8,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Timer;
 
-import inf112.skeleton.app.AnimationHandler;
-import inf112.skeleton.app.AudioManager;
-import inf112.skeleton.app.Bullet;
-import inf112.skeleton.app.Health;
+import inf112.skeleton.app.Animation.AnimationHandler;
+import inf112.skeleton.app.Back_end.AudioManager;
+import inf112.skeleton.app.Weapons.Bullet;
 
 /*
  * This class is where the Enemy entity is created. It extends the GameEntity class.

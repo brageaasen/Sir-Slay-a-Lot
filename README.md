@@ -1,7 +1,7 @@
 # INF112 Prosjekt - *Sir Slay-a-lot*
 
 
-* Team: *Bit by bit* (Gruppe 5): Brage Aasen, Ole Kristian Breivik, Vetle Knutsen, Tarjei Landøy, Kavya Malhotra, Thomas Claussen Stakset
+* Team: *Bit by bit* (Gruppe 5): Brage Aasen (grafisk ansvarlig/developer), Ole Kristian Breivik (developer), Vetle Knutsen (kundekontakt/developer), Tarjei Landøy (mergeansvarlig/developer), Kavya Malhotra (developer), Thomas Claussen Stakset (developer)
 
 * Lenker:
   * [Gitlab repository](https://git.app.uib.no/bit-by-bit)

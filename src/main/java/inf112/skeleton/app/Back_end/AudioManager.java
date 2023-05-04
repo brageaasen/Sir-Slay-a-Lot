@@ -1,4 +1,4 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.Back_end;
 
 import java.util.HashMap;
 
@@ -37,7 +37,7 @@ public class AudioManager {
         try {
             sounds.get(sound).play(this.volume);
         } catch (Exception e) {
-            System.out.println("Couldn't find sound.");
+            
         }
         try {
             Music song = music.get(sound);
@@ -45,7 +45,7 @@ public class AudioManager {
             song.play();
             song.setLooping(true);
         } catch (Exception e) {
-            System.out.println("Couldn't find song.");
+            
         }
     }
     

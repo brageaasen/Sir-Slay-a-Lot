@@ -1,4 +1,4 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.Entity;
 
 /*
  * Simple implementation of a player's health.

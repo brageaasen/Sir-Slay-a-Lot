@@ -1,6 +1,8 @@
 package inf112.skeleton.app;
 
+import inf112.skeleton.app.Entity.Health;
 import inf112.skeleton.app.Entity.Player;
+import inf112.skeleton.app.Weapons.Gun;
 
 import org.mockito.Mockito;
 
