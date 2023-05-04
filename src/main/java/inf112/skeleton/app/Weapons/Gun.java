@@ -98,7 +98,7 @@ public class Gun {
                 // Create a new bullet entity and add it to the list
                 Bullet bullet = new Bullet(position, direction, bulletSpeed, damage, range, bulletSprite);
                 bullets.add(bullet);
-                this.audioManager.Play("Shoot");
+                this.audioManager.play("Shoot");
 
                 bulletChamber--;
 

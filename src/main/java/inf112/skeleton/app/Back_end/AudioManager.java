@@ -12,8 +12,8 @@ import com.badlogic.gdx.audio.Sound;
 public class AudioManager {
     
     private float volume = 1f;
-    private HashMap<String, Sound> sounds = new HashMap<String, Sound>();
-    private HashMap<String, Music> music = new HashMap<String, Music>();
+    private final HashMap<String, Sound> sounds = new HashMap<String, Sound>();
+    private final HashMap<String, Music> music = new HashMap<String, Music>();
 
     public AudioManager()
     {
@@ -32,7 +32,7 @@ public class AudioManager {
     /**
      * Plays given song with input as name
      */
-    public void Play(String sound)
+    public void play(String sound)
     {
         try {
             sounds.get(sound).play(this.volume);
@@ -52,7 +52,7 @@ public class AudioManager {
     /**
      * Stops given song with input as name
      */
-    public void Stop(String sound)
+    public void stop(String sound)
     {
         sounds.get(sound).stop();
     }
@@ -61,7 +61,7 @@ public class AudioManager {
      * Gets the current volume of AudioManager instance
      * @return volume
      */
-    public float GetVolume()
+    public float getVolume()
     {
         return this.volume;
     }
@@ -69,7 +69,7 @@ public class AudioManager {
     /**
      * Sets the current volume of AudioManager instance
      */
-    public void SetVolume(float volume)
+    public void setVolume(float volume)
     {
         this.volume = volume;
     }

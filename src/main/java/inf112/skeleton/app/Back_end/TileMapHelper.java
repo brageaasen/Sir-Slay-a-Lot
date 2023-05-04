@@ -35,9 +35,10 @@ public class TileMapHelper {
     private static final int PPM = 16;
 
     private Body body2;
-    private Timer timer;
-    private Sprite movingPlatform;
     private Vector2 position;
+
+    private final Timer timer;
+    private final Sprite movingPlatform;
 
 
     /**

@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.utils.Timer;
 
 import inf112.skeleton.app.Weapons.Gun;
 import inf112.skeleton.app.Weapons.Knife;
@@ -322,7 +321,7 @@ public class Player extends GameEntity {
      */
     public void gotHurt(int damage) {
         if(iframes == 0) {
-            this.audioManager.Play("Hurt");
+            this.audioManager.play("Hurt");
             this.gotHurt = true;
 
             playerHealth.decreaseHP(damage);
@@ -350,7 +349,7 @@ public class Player extends GameEntity {
      * TESTING ONLY: WITHOUT TIMER
      */
     public void gotHurtTest() {
-        this.getAudio().Play("Hurt");
+        this.getAudio().play("Hurt");
         this.gotHurt = true;
     }
 

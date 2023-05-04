@@ -314,7 +314,7 @@ public class Enemy extends GameEntity {
      * Method that check whether or not the enemy got hit. If so, it plays  sound and stops it's movement.
      */
     public void gotHit() {
-        this.audioManager.Play("Hit");
+        this.audioManager.play("Hit");
         this.gotHit = true;
         this.canMove = false;
         this.attack = false;
