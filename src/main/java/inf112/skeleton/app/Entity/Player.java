@@ -417,4 +417,18 @@ public class Player extends GameEntity {
     public Sprite getSprite() {
         return this.sprite;
     }
+
+    /**
+     * Currently used for testing
+     */
+    public int getKillCount() {
+        return this.killCount;
+    }
+    
+    /**
+     * Currently used for testing
+     */
+    public void setKillCount(int killCount) {
+        this.killCount = killCount;
+    }
 }

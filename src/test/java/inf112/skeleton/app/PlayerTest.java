@@ -103,4 +103,13 @@ public class PlayerTest {
         assertEquals(40, player.getGunAttackRange());
     }
 
+    /**
+     * Tests setter and getter for killcount
+     */
+    @Test 
+    void testSetAndGetKillcount(){
+        player.setKillCount(10);
+        assertEquals(10, player.getKillCount());
+    }
+
 }

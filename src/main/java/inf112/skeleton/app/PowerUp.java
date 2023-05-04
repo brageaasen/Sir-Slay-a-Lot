@@ -84,8 +84,44 @@ public class PowerUp {
         
     }
 
+    /**
+     * Currently used for testing
+     */
+    public boolean getAmmoActive() {
+        return this.ammoActive;
+    }
 
+    /**
+     * Currently used for testing
+     */
+    public void setAmmoActive(boolean ammoActive) {
+        this.ammoActive = ammoActive;
+    }
 
+        /**
+     * Currently used for testing
+     */
+    public boolean getHealthActive() {
+        return this.healthActive;
+    }
 
+    /**
+     * Currently used for testing
+     */
+    public void setHealthActive(boolean healthActive) {
+        this.healthActive = healthActive;
+    }
+
+    /**
+     * Currently used for testing
+     */
+    public void checkForPowerup() {
+        if (player.getKillcount() > 0 && player.getKillcount() % 10 == 0){
+            this.ammoActive = true;
+        }
+        if (player.getKillcount() > 0 && player.getKillcount() % 15 == 0){
+            this.healthActive = true;
+        }
+    }
 
 }

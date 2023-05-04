@@ -56,11 +56,11 @@
 * Laget flere tester
 
 
-## Manuelle tester: (Antall: 20)
+## Manuelle tester: (Antall: 21)
 
 * Her testet vi funksjonaliteter som ikke lot seg teste i unit test. 
 
-* Player Movement
+* Player Movement / Keyhandlig
     * Hva er forventet skal skje?
         * Spiller skal bevege til høyre og venstre med tasteklikkene A og D, og hoppe med Space.
     * Hvordan vurdere om det har skjedd en feil?
@@ -179,6 +179,12 @@
     * Hvordan vurdere om det har skjedd en feil?
         * Den vertikale parallax bakgrunnen går ikke over til evig himmel, men viser heller feil bilde/svart skjerm etter spiller går høyt opp på kartet.
 
+* TileMap
+    * Hva er forventet skal skje?
+        * Tiles vi plasserer ved hjelp av redskapet Tiled, skal være i samme poisisjon i spillet når det er lastet.
+    * Hvordan vurdere om det har skjedd en feil?
+        * Posisjionen på ulike plasserte tiles er i forskjellige plasser enn forventet fra Tiled plasseringen.
+
 ## Klassediagram
 <img src="/doc/Gitlab/klassediagram.png" alt="Opening Screen" title="Opening Screen">
 
@@ -211,8 +217,6 @@ Gruppedynamikken er fin. Det har ikke oppstått noen konflikter enda. Kommunikas
 * En bug vi har funnet er at spillet kjører mye raskere på Vetle sin mac enn de andre sin pc. Derfor eksperimenterer vi litt med jumpforce, speed og gravity for å finne det som funker best. 
 * Ettersom vi har funnet ut at det er vanskelig å teste med JUnit og LibGdx har vi laget noen manuelle tester.
 
-
-## Dette har vi fikset siden sist oblig:
 
 ## Møtereferater
 
