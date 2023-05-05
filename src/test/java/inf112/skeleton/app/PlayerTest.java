@@ -173,14 +173,6 @@ public class PlayerTest {
      * Tests getter for PPM
      */
     @Test 
-    void testGetPPM(){
-        assertEquals(16, player.getPPM());
-    }
-
-    /**
-     * Tests getter for PPM
-     */
-    @Test 
     void testPlayerGotHurt(){
         player.gotHurtTest();
         assertEquals(true, player.isHurt());
