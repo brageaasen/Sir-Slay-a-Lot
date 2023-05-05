@@ -52,14 +52,6 @@ public class AudioManager {
             
         }
     }
-    
-    /**
-     * Stops given song with input as name
-     */
-    public void stop(String sound)
-    {
-        sounds.get(sound).stop();
-    }
 
     /**
      * Gets the current volume of AudioManager instance
@@ -76,18 +68,5 @@ public class AudioManager {
     public void setVolume(float volume)
     {
         this.volume = volume;
-    }
-
-    public void dispose()
-    {
-        for (Sound sound : sounds.values())
-        {
-            sound.dispose();
-        }
-
-        for (Music music : this.music.values())
-        {
-            music.dispose();
-        }
     }
 }
