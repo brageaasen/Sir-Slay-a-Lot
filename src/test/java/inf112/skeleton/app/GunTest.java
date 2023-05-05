@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import org.mockito.Mockito;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
+
 import inf112.skeleton.app.Weapons.Gun;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -127,6 +129,5 @@ public class GunTest {
         gun.setFiring(true);
         assertTrue(gun.getFiring());
     }
-
 
 }

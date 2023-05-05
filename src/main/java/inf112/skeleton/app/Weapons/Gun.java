@@ -76,7 +76,7 @@ public class Gun {
         this.holdGun = false;
         this.isFiring = false;
     }
-
+    
     /**
      * @param delta the time elapsed since the last frame
      * Updates the timer for firing the gun and updates each bullet in the list, removing any that have exceeded their range.
