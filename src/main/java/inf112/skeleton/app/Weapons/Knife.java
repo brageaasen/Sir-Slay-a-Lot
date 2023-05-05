@@ -4,11 +4,11 @@ package inf112.skeleton.app.Weapons;
  * Class for the knife used by the player. 
  */
 public class Knife {
-    
+
+    public static final int NEXT_ATTACK_FRAMES = 50;
     private boolean holdKnife;
     private boolean dealingDamage;
     public int nextAttack;
-    private int nextAttackFrames = 50;
 
     /**
      * Creates a new instance of the Knife class with default values.
@@ -65,7 +65,7 @@ public class Knife {
      */
     public void setNextAttack(){
         if(this.nextAttack == 0){
-            this.nextAttack = nextAttackFrames;
+            this.nextAttack = NEXT_ATTACK_FRAMES;
         }
     }
 }
