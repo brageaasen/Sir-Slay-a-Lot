@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Timer;
 
+import inf112.skeleton.app.Animations.Animation;
 import inf112.skeleton.app.Animations.AnimationHandler;
 import inf112.skeleton.app.Back_end.AudioManager;
 import inf112.skeleton.app.Weapons.Bullet;
@@ -45,8 +46,8 @@ public class Enemy extends GameEntity {
     private boolean gotHit;
     private boolean canMove = true;
 
-    private int attackRange;
-    private int attackDamage;
+    private final int attackRange;
+    private final int attackDamage;
     private boolean attack = false;
     private boolean dead = false;
 
@@ -82,6 +83,28 @@ public class Enemy extends GameEntity {
         enemyHealth = new Health();
 
         new Timer();
+    }
+
+    /**
+     * For testing only.
+     */
+    public Enemy(float width, float height, Body body) {
+        super(width, height, body);
+        this.speed = 5f;
+        this.jumpCounter = 0;
+        this.player = new Player(width, height, body, true);
+        this.attackRange = 40;
+        this.attackDamage = 10;
+
+        anim = new AnimationHandler<>(EnemyState.Run, new Animation(6));
+        anim.addAnimation(EnemyState.Jump,  new Animation(1));
+        anim.addAnimation(EnemyState.Fall,  new Animation(1));
+        anim.addAnimation(EnemyState.Attack,new Animation(6));
+        anim.addAnimation(EnemyState.Dead,  new Animation(6));
+        anim.addAnimation(EnemyState.Hit,   new Animation(3));
+        this.sprite = new Sprite();
+        this.sprite.setScale(2);
+        enemyHealth = new Health();
     }
 
     /**
