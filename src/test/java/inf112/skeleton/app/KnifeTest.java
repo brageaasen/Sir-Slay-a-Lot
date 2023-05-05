@@ -1,12 +1,11 @@
 package inf112.skeleton.app;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import inf112.skeleton.app.Weapons.Knife;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class KnifeTest {
     
@@ -42,5 +41,11 @@ public class KnifeTest {
         knife.setDealingDamage(true);
         assertTrue(knife.getDealingDamage());
 
+    }
+
+    @Test
+    void testNextAttack() {
+        knife.setNextAttack();
+        assertEquals(50, knife.getNextAttack());
     }
 }

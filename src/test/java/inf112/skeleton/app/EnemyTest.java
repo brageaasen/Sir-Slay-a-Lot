@@ -3,6 +3,11 @@ package inf112.skeleton.app;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
+import inf112.skeleton.app.Back_end.BodyHelper;
+import inf112.skeleton.app.Entity.GameEntity;
 import org.junit.jupiter.api.Test;
 
 import org.mockito.Mockito;

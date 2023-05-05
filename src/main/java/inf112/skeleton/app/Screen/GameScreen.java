@@ -54,7 +54,6 @@ public class GameScreen extends ScreenAdapter {
     private final PowerUp moreAmmo;
     private final PowerUp moreHealth;
     private float timeElapsed;
-    // private Box2DDebugRenderer box2dDebugRenderer;
 
     /**
      * This is the constructor of the GameScreen class.
@@ -145,13 +144,13 @@ public class GameScreen extends ScreenAdapter {
                 enemiesToRemove.add(e);
             }
         }
-        enemies.removeAll(enemiesToRemove);
+        enemiesToRemove.forEach(enemies::remove);
         
         for (Enemy e : enemiesToRemove) {
             world.destroyBody(e.getBody());
         }
 
-        if(player.isDead() == true){
+        if (player.isDead()){
             game.setScreen(new EndScreen(game, player.getKillCount()));
         }
 
@@ -161,21 +160,21 @@ public class GameScreen extends ScreenAdapter {
 
     /**
      * This method updates the position of the camera to follow the player. 
-     * The camera follows the player on both x and y axis if the player is above a certain y coordinate.
+     * The camera follows the player on both x and y-axis if the player is above a certain y coordinate.
      * Otherwise, the camera follows only the player on the x-axis.
      */
     private void cameraUpdate()
     {
-        // Camera follow player on y axis based on current y, e.g: Camera doesn't follow current y axis when player at bottom of map
+        // Camera follow player on y-axis based on current y, e.g: Camera doesn't follow current y-axis when player at bottom of map
 
-        if (player.getBody().getPosition().y * player.getPPM() > 400) // Camera follow player in both x and y axis
+        if (player.getBody().getPosition().y * Player.PPM > 400) // Camera follow player in both x and y-axis
         {
-            camera.position.set(player.getBody().getPosition().x * player.getPPM() + 5, player.getBody().getPosition().y * player.getPPM() - 40, 0);
+            camera.position.set(player.getBody().getPosition().x * Player.PPM + 5, player.getBody().getPosition().y * Player.PPM - 40, 0);
         }
         
-        else // Camera follow player in x axis
+        else // Camera follow player in x-axis
         {
-            camera.position.set(player.getBody().getPosition().x * player.getPPM() + 5, camera.viewportHeight/2, 0);
+            camera.position.set(player.getBody().getPosition().x * Player.PPM + 5, camera.viewportHeight/2, 0);
         }
         camera.update();
     }
@@ -224,7 +223,7 @@ public class GameScreen extends ScreenAdapter {
             if (timeElapsed <= TEXT_TIME) {
                 Texture gunUnlocked = new Texture("assets/UI/gunUnlocked.png");
                 // Draw gun unlocked
-                batch.draw(gunUnlocked, Gdx.graphics.getWidth() / 2 + 760, Gdx.graphics.getHeight() / 2 - 50, 200, 90);
+                batch.draw(gunUnlocked, Gdx.graphics.getWidth() / 2f + 760, Gdx.graphics.getHeight() / 2f - 50, 200, 90);
             }
         }
         
@@ -277,9 +276,7 @@ public class GameScreen extends ScreenAdapter {
      * @return A Set of Enemy objects
      */
     public Set<Enemy> getEnemies(){
-        Set<Enemy> enemiesCopy = new HashSet<Enemy>();
-        enemiesCopy.addAll(enemies);
-        return enemiesCopy;
+        return new HashSet<>(enemies);
     }
     
 

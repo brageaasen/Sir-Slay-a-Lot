@@ -17,16 +17,20 @@ public class AudioManager {
 
     public AudioManager()
     {
-        // music
-        music.put("MainSong", Gdx.audio.newMusic(Gdx.files.internal("assets/Sound/music/main.mp3")));
+        try {
+            // music
+            music.put("MainSong", Gdx.audio.newMusic(Gdx.files.internal("assets/Sound/music/main.mp3")));
 
-        // sfx
-        sounds.put("Hit", Gdx.audio.newSound(Gdx.files.internal("assets/Sound/sfx/hit.wav")));
-        sounds.put("Hurt", Gdx.audio.newSound(Gdx.files.internal("assets/Sound/sfx/hurt.wav")));
-        sounds.put("Jump", Gdx.audio.newSound(Gdx.files.internal("assets/Sound/sfx/jump.wav")));
-        sounds.put("Pickup", Gdx.audio.newSound(Gdx.files.internal("assets/Sound/sfx/pickup.wav")));
-        sounds.put("Select", Gdx.audio.newSound(Gdx.files.internal("assets/Sound/sfx/select.wav")));
-        sounds.put("Shoot", Gdx.audio.newSound(Gdx.files.internal("assets/Sound/sfx/shoot.wav")));
+            // sfx
+            sounds.put("Hit", Gdx.audio.newSound(Gdx.files.internal("assets/Sound/sfx/hit.wav")));
+            sounds.put("Hurt", Gdx.audio.newSound(Gdx.files.internal("assets/Sound/sfx/hurt.wav")));
+            sounds.put("Jump", Gdx.audio.newSound(Gdx.files.internal("assets/Sound/sfx/jump.wav")));
+            sounds.put("Pickup", Gdx.audio.newSound(Gdx.files.internal("assets/Sound/sfx/pickup.wav")));
+            sounds.put("Select", Gdx.audio.newSound(Gdx.files.internal("assets/Sound/sfx/select.wav")));
+            sounds.put("Shoot", Gdx.audio.newSound(Gdx.files.internal("assets/Sound/sfx/shoot.wav")));
+        } catch (Exception ignored) {
+            // used for tests
+        }
     }
 
     /**
@@ -36,7 +40,7 @@ public class AudioManager {
     {
         try {
             sounds.get(sound).play(this.volume);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
             
         }
         try {
@@ -44,17 +48,9 @@ public class AudioManager {
             song.setVolume(this.volume - 0.75f);
             song.play();
             song.setLooping(true);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
             
         }
-    }
-    
-    /**
-     * Stops given song with input as name
-     */
-    public void stop(String sound)
-    {
-        sounds.get(sound).stop();
     }
 
     /**
@@ -72,18 +68,5 @@ public class AudioManager {
     public void setVolume(float volume)
     {
         this.volume = volume;
-    }
-
-    public void dispose()
-    {
-        for (Sound sound : sounds.values())
-        {
-            sound.dispose();
-        }
-
-        for (Music music : this.music.values())
-        {
-            music.dispose();
-        }
     }
 }

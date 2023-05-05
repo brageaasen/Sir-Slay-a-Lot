@@ -21,9 +21,7 @@ public class Gun {
     private final float fireRate;
     private float fireTimer;
 
-    private final Texture bulletTexture;
     private final Sprite bulletSprite;
-
     private final Sprite gunSprite;
     private final List<Bullet> bullets;
     private Integer bulletChamber;
@@ -31,19 +29,37 @@ public class Gun {
     private boolean isUnlocked;
     private boolean holdGun;
     private boolean isFiring;
-    private AudioManager audioManager;
+    private final AudioManager audioManager;
 
     /**
+     * Create a new Gun object
+     *
      * @param bulletSpeed the speed of the bullets fired from the gun
      * @param damage the amount of damage each bullet causes
      * @param range the maximum distance a bullet can travel before being destroyed
      * @param fireRate the amount of time in seconds between each shot fired from the gun
      * @param bulletTexturePath the file path for the texture used for the bullets
      * @param gunTexturePath the file path for the texture used for the gun
-     * 
+     *
      * Constructor for the Gun class that initializes the gun's attributes and textures.
      */
     public Gun(float bulletSpeed, int damage, int range, float fireRate, String bulletTexturePath, String gunTexturePath) {
+        this(bulletSpeed, damage, range, fireRate, new Sprite(new Texture(bulletTexturePath)), new Sprite(new Texture(gunTexturePath)));
+    }
+
+    /**
+     * Create a new Gun object
+     * (Used for testing)
+     * @param bulletSpeed the speed of the bullets fired from the gun
+     * @param damage the amount of damage each bullet causes
+     * @param range the maximum distance a bullet can travel before being destroyed
+     * @param fireRate the amount of time in seconds between each shot fired from the gun
+     * @param bulletSprite the sprite used for the bullets of the gun
+     * @param gunSprite the sprite used for the gun
+     *
+     * Constructor for the Gun class that initializes the gun's attributes and textures.
+     */
+    public Gun(float bulletSpeed, int damage, int range, float fireRate, Sprite bulletSprite, Sprite gunSprite) {
         this.bulletSpeed = bulletSpeed;
         this.damage = damage;
         this.range = range;
@@ -51,13 +67,12 @@ public class Gun {
         this.fireTimer = 0;
         this.bulletChamber = 20;
         this.audioManager = new AudioManager();
-        this.bulletTexture = new Texture(bulletTexturePath);
-        this.bulletSprite = new Sprite(bulletTexture);
+        this.bulletSprite = bulletSprite;
         this.isUnlocked = false;
-        this.gunSprite = new Sprite(new Texture(gunTexturePath));
-        this.bulletSprite.setOrigin(gunSprite.getOriginX() - 20, gunSprite.getOriginY() - 5);
+        this.gunSprite = gunSprite;
+        this.bulletSprite.setOrigin(this.gunSprite.getOriginX() - 20, this.gunSprite.getOriginY() - 5);
         this.bullets = new ArrayList<>();
-        
+
         this.holdGun = false;
         this.isFiring = false;
     }
@@ -115,9 +130,7 @@ public class Gun {
      * Renders the gun sprite.
      */
     public void renderGun(SpriteBatch batch) {
-       
         gunSprite.draw(batch);
-        
     }
 
     /**
@@ -129,7 +142,6 @@ public class Gun {
             bullet.render(batch);
         }
     }
-
 
     /**
      * @return List<Bullet> a copy of the list of bullets

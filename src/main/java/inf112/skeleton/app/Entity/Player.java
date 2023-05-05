@@ -18,7 +18,7 @@ import inf112.skeleton.app.Back_end.*;
  * This class is where the Player entity is created. It extends the GameEntity class.
  */
 public class Player extends GameEntity {
-
+    public static final int PRICE_GUN = 5; // Number of kills you need before unlocking the gun
     public static final int ANIM_FRAME_RATE_IDLE = 8;
     public static final int ANIM_FRAME_RATE_DEFAULT = 6;
 
@@ -32,7 +32,7 @@ public class Player extends GameEntity {
     }
     private final AnimationHandler<PlayerState> anim;
 
-    private static final int PPM = 16; //Pixel Per Meter
+    public static final int PPM = 16; //Pixel Per Meter
 
     public int jumpCounter;
     private Direction facing;
@@ -56,6 +56,8 @@ public class Player extends GameEntity {
     private float expectedFallDamage = 0;
 
     private boolean attack = false;
+
+    private final boolean playerTest;   // for testing, since we cannot use Gdx.graphics::getDeltaTime in tests.
 
     /**
      * Constructor method that creates a new Player object.
@@ -91,7 +93,48 @@ public class Player extends GameEntity {
         this.sprite = new Sprite(anim.getAnimTexture());
         this.sprite.setScale(2);
         flip();
+        playerTest = false;
     }
+
+
+    /**
+     * Constructor method that creates a new Player object.
+     * @param width the width of the player sprite
+     * @param height the height of the player sprite
+     * @param body a Body object that represents the physical body of the player in the Box2D world
+     */
+    public Player(float width, float height, Body body, boolean test) {
+        super(width, height, body);
+        this.speed = 20f;
+        this.attackDamage = 50;
+        this.knifeAttackRange = 40;
+        this.gunAttackRange = 40;
+
+        knifeObj = new Knife();
+
+        this.jumpCounter = 0;
+        this.facing = Direction.NONE;
+        this.knife = new Sprite();
+
+        playerHealth = new Health();
+
+        this.gun = new Gun(700f, 20, 500, 0.5f, new Sprite(), new Sprite());
+
+        anim = new AnimationHandler<>(PlayerState.Idle, new Animation(4));
+        anim.addAnimation(PlayerState.Run, new Animation(8));
+        anim.addAnimation(PlayerState.Hurt, new Animation(1));
+        anim.addAnimation(PlayerState.Jump, new Animation(3));
+        anim.addAnimation(PlayerState.Fall, new Animation(3));
+        anim.addAnimation(PlayerState.Attack, new Animation(3));
+        anim.setState(PlayerState.Idle);
+
+        this.sprite = new Sprite();
+        this.sprite.setScale(2);
+        flip();
+
+        playerTest = true;
+    }
+
 
     /**
      * This method updates the player object every game loop.
@@ -105,7 +148,7 @@ public class Player extends GameEntity {
         y = body.getPosition().y * PPM + 17;
 
         updateSprite();
-        gun.update(Gdx.graphics.getDeltaTime());
+        gun.update(playerTest ? 1/60f : Gdx.graphics.getDeltaTime());
         checkFallDamage();
         unlockGun();
         updateFrames();
@@ -190,14 +233,6 @@ public class Player extends GameEntity {
         sprite.flip(true, false);
         knife.flip(true, false);
         gun.getSprite().flip(true,false);
-    }
-
-    /**
-     * Get PPM of player entity
-     * @return the PPM
-     */
-    public int getPPM() {
-        return Player.PPM;
     }
 
     /**
@@ -321,14 +356,14 @@ public class Player extends GameEntity {
      */
     public void gotHurt(int damage) {
         if(iframes == 0) {
-            this.audioManager.play("Hurt");
+            if (!playerTest)
+                this.audioManager.play("Hurt");
             this.gotHurt = true;
 
             playerHealth.decreaseHP(damage);
 
             iframes = 30;
         }
-
     }
 
     /**
@@ -372,7 +407,7 @@ public class Player extends GameEntity {
      * Unlock the gun.
      */
     public void unlockGun(){
-        if (killCount >= 5){
+        if (killCount >= PRICE_GUN){
             this.gun.setUnlocked();
         }
     }

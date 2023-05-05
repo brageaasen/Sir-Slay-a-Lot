@@ -108,8 +108,4 @@ public class Bullet {
     public void setBulletHit(boolean hit){
         this.bulletHit = hit;
     }
-
-    public Vector2 getVelocity(){
-        return this.velocity;
-    }
 }

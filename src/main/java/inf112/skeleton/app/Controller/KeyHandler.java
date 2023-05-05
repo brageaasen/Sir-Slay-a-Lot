@@ -9,7 +9,6 @@ import inf112.skeleton.app.Entity.Player;
  * The KeyHandler class is responsible for handling key inputs for the Player object and updating the game state accordingly.
  */
 public class KeyHandler {
-    private static final int PRICE_GUN = 5; // Number of kills you need before unlocking the gun
     private Player player;
 
     // Time related variables
@@ -105,7 +104,7 @@ public class KeyHandler {
      */
     private void isHoldingGun() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
-            if (player.killCount >= PRICE_GUN){
+            if (player.killCount >= Player.PRICE_GUN){
                 startWithKnife = false;
                 player.knifeObj.setHoldKnife(false);
                 keyAlreadyPressed = false;
@@ -115,7 +114,7 @@ public class KeyHandler {
                     gunKeyAlreadyPressed = true;   
                 }
             } else {
-                System.out.println("You need " + (PRICE_GUN -player.killCount) + " more kill(s) before unlocking this");
+                System.out.println("You need " + (Player.PRICE_GUN -player.killCount) + " more kill(s) before unlocking this");
             }
         } else {
             gunKeyAlreadyPressed = false;
