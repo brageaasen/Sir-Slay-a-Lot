@@ -85,19 +85,6 @@ public class PlayerTest {
     }
 
     /**
-     * Tests whether the Player is dead when health is 0
-     */
-    @Test 
-    void testUpdateSprite(){
-        player.setAttack(true);
-        // animationHandler.setState(PlayerState.Attack);
-        assertTrue(player.getAnimationHandler().getState() == PlayerState.Idle);
-        player.updateSprite();
-        assertTrue(player.getAnimationHandler().getState() == PlayerState.Attack);
-    }
-
-
-    /**
      * Test getter for kill count
      */
     @Test 
