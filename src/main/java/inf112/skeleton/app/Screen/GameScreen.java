@@ -168,14 +168,14 @@ public class GameScreen extends ScreenAdapter {
     {
         // Camera follow player on y axis based on current y, e.g: Camera doesn't follow current y axis when player at bottom of map
 
-        if (player.getBody().getPosition().y * player.getPPM() > 400) // Camera follow player in both x and y axis
+        if (player.getBody().getPosition().y * Player.PPM > 400) // Camera follow player in both x and y axis
         {
-            camera.position.set(player.getBody().getPosition().x * player.getPPM() + 5, player.getBody().getPosition().y * player.getPPM() - 40, 0);
+            camera.position.set(player.getBody().getPosition().x * Player.PPM + 5, player.getBody().getPosition().y * Player.PPM - 40, 0);
         }
         
         else // Camera follow player in x axis
         {
-            camera.position.set(player.getBody().getPosition().x * player.getPPM() + 5, camera.viewportHeight/2, 0);
+            camera.position.set(player.getBody().getPosition().x * Player.PPM + 5, camera.viewportHeight/2, 0);
         }
         camera.update();
     }

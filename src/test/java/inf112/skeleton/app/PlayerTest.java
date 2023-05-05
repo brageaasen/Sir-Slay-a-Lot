@@ -1,5 +1,10 @@
 package inf112.skeleton.app;
 
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
+import inf112.skeleton.app.Back_end.BodyHelper;
+import inf112.skeleton.app.Entity.GameEntity;
 import inf112.skeleton.app.Entity.Health;
 import inf112.skeleton.app.Entity.Player;
 import inf112.skeleton.app.Weapons.Gun;
@@ -23,6 +28,28 @@ public class PlayerTest {
        player = mock(Player.class, Mockito.CALLS_REAL_METHODS);
     }
 
+    void setRealPlayer() {
+        var world = new World(new Vector2(0,-25f),false);
+        var rectangle = new Rectangle(0,0,10,10);
+        var body = BodyHelper.createEntityBody(
+                rectangle.getX() + rectangle.getWidth()/2,
+                rectangle.getY() + rectangle.getHeight()/2,
+                rectangle.getWidth(), rectangle.getHeight(), false, world);
+        player = new Player(10,10, body, true);
+    }
+
+    @Test
+    void testDirection() {
+        setRealPlayer();
+
+        player.move(GameEntity.Direction.LEFT);
+        assertEquals(-1, player.getVelocity().x);
+        player.move(GameEntity.Direction.RIGHT);
+        assertEquals(1, player.getVelocity().x);
+        player.move(GameEntity.Direction.NONE);
+        assertEquals(0, player.getVelocity().x);
+    }
+
     /**
      * Tests health decrease and subsequent regeneration for Player
      */
@@ -35,6 +62,11 @@ public class PlayerTest {
 
         player.getPlayerHealth().regenHealth();
         assertEquals(2, player.getPlayerHealth().getHP());
+
+        setRealPlayer();    // Default health for real player is 99
+
+        player.gotHurt(10);
+        assertEquals(90, player.getPlayerHealth().getHP());
     }
 
     /**

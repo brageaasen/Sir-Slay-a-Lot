@@ -32,7 +32,7 @@ public class Player extends GameEntity {
     }
     private final AnimationHandler<PlayerState> anim;
 
-    private static final int PPM = 16; //Pixel Per Meter
+    public static final int PPM = 16; //Pixel Per Meter
 
     public int jumpCounter;
     private Direction facing;
@@ -236,14 +236,6 @@ public class Player extends GameEntity {
     }
 
     /**
-     * Get PPM of player entity
-     * @return the PPM
-     */
-    public int getPPM() {
-        return Player.PPM;
-    }
-
-    /**
      * This method is used to move the player entity.
      * It takes a direction and sets the player's x-velocity depending on the direction.
      * @param direction the direction the player is going.
@@ -364,14 +356,14 @@ public class Player extends GameEntity {
      */
     public void gotHurt(int damage) {
         if(iframes == 0) {
-            this.audioManager.play("Hurt");
+            if (!playerTest)
+                this.audioManager.play("Hurt");
             this.gotHurt = true;
 
             playerHealth.decreaseHP(damage);
 
             iframes = 30;
         }
-
     }
 
     /**
@@ -386,14 +378,6 @@ public class Player extends GameEntity {
         if(knifeObj.nextAttack > 0){
             knifeObj.nextAttack--;
         }
-    }
-
-    /**
-     * TESTING ONLY: WITHOUT TIMER
-     */
-    public void gotHurtTest() {
-        this.getAudio().play("Hurt");
-        this.gotHurt = true;
     }
 
     /**

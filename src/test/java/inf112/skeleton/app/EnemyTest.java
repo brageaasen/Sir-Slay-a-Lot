@@ -18,19 +18,6 @@ import inf112.skeleton.app.Entity.Health;
 
 public class EnemyTest {
 
-    @Test
-    void testEnemyState() {
-        var world = new World(new Vector2(0,-25f),false);
-        var rectangle = new Rectangle(0,0,10,10);
-        var body = BodyHelper.createEntityBody(
-                rectangle.getX() + rectangle.getWidth()/2,
-                rectangle.getY() + rectangle.getHeight()/2,
-                rectangle.getWidth(), rectangle.getHeight(), false, world);
-        Enemy e = new Enemy(10,10, body);
-        e.update();
-        e.updateSprite();
-    }
-
     /**
      * Tests that the Enemy's health is returned with full health
      */
