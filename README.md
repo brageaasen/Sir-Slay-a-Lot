@@ -46,12 +46,16 @@ For å åpne spillet må du trykke på denne start knappen oppe i høyre hjørne
 
 * LibGDX for rammeverk
 
-* Sprites: Alle sprites/animasjoner (med unntak av kniv/enemies) er laget av Brage, ved hjelp av pixel-art programmet Aseprite.
+* Sprites: Alle sprites/animasjoner (med unntak av kniv/gun/enemies) er laget av Brage, ved hjelp av pixel-art programmet Aseprite.
+  * Se LICESE filen for mer informasjon. 
 * Unntak:
   * (enemies): Skeleton enemy er funnet med gratis download på spill-utviklings nettsiden itch.io [(lenke til sprites).](https://sanctumpixel.itch.io/sword-skeleton-pixel-art-character).
+    * (Sprites brukt med tillatelse av eier)
   * (knife): Knife er laget av Tarjei.
-  * (gun): Gun er laget selv. <!-- av...? -->
+  * (gun): Gun er laget av Vetle.
   * (ammocrate): https://www.pngwing.com/en/free-png-bjmep
+    * License: Non-commercial use, DMCA.
 
 * Lyd (sfx): All lyd (sfx) er laget av Brage, ved hjelp av programmet Bfxr.
 * Lyd (musikk): Spill musikken er laget av Nicky Flowers, og sangen heter "Pretty Girls Make Graves" [(lenke)](https://bandcamp.com/download?id=2952704477&ts=1681300815.144843886&tsig=1805ede82803919920cb635bf023338b&type=track)
+  * License: Non-commercial use.

@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.mockito.Mockito;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
+
 import inf112.skeleton.app.Weapons.Gun;
 
 import static org.mockito.Mockito.*;
@@ -78,6 +80,5 @@ public class GunTest {
         gun.setFiring(true);
         assertTrue(gun.getFiring());
     }
-
 
 }

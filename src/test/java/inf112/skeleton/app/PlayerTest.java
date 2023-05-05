@@ -1,7 +1,9 @@
 package inf112.skeleton.app;
 
+import inf112.skeleton.app.Animations.AnimationHandler;
 import inf112.skeleton.app.Entity.Health;
 import inf112.skeleton.app.Entity.Player;
+import inf112.skeleton.app.Entity.Player.PlayerState;
 import inf112.skeleton.app.Weapons.Gun;
 
 import org.mockito.Mockito;
@@ -50,6 +52,19 @@ public class PlayerTest {
         assertEquals(0, player.getPlayerHealth().getHP());
         assertTrue(player.isDead());
     }
+
+    /**
+     * Tests whether the Player is dead when health is 0
+     */
+    @Test 
+    void testUpdateSprite(){
+        player.setAttack(true);
+        // animationHandler.setState(PlayerState.Attack);
+        assertTrue(player.getAnimationHandler().getState() == PlayerState.Idle);
+        player.updateSprite();
+        assertTrue(player.getAnimationHandler().getState() == PlayerState.Attack);
+    }
+
 
     /**
      * Test getter for kill count
@@ -114,4 +129,31 @@ public class PlayerTest {
         assertEquals(10, player.getKillCount());
     }
 
+    /**
+     * Tests setter and getter for attack state
+     */
+    @Test 
+    void testSetAndGetAttack(){
+        player.setAttack(true);
+        assertEquals(true, player.getAttack());
+    }
+
+    /**
+     * Tests getter for PPM
+     */
+    @Test 
+    void testGetPPM(){
+        assertEquals(16, player.getPPM());
+    }
+
+    /**
+     * Tests getter for PPM
+     */
+    @Test 
+    void testPlayerGotHurt(){
+        player.gotHurtTest();
+        assertEquals(true, player.isHurt());
+    }
+
+    
 }

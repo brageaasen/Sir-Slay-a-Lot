@@ -346,10 +346,9 @@ public class Player extends GameEntity {
     }
 
     /**
-     * TESTING ONLY: WITHOUT TIMER
+     * TESTING ONLY: WITHOUT TIMER OR SOUND
      */
     public void gotHurtTest() {
-        this.getAudio().play("Hurt");
         this.gotHurt = true;
     }
 
@@ -406,4 +405,28 @@ public class Player extends GameEntity {
     public int getKillCount(){
         return this.killCount;
     }
+
+    /**
+     * Get the attack state of player.
+     * @return the attack state.
+     */
+    public boolean getAttack(){
+        return this.attack;
+    }
+
+    /**
+     * Set the attack state of player.
+     */
+    public void setAttack(boolean attack){
+        this.attack = attack;
+    }
+
+    /**
+     * Get the attack state of player.
+     * @return the attack state.
+     */
+    public AnimationHandler<PlayerState> getAnimationHandler(){
+        return this.anim;
+    }
+
 }
