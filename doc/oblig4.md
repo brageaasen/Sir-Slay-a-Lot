@@ -283,7 +283,7 @@ Det er noen ting vi kunne gjort annerledes. Vi kunne laget tester underveis, i s
         * Fikse at klassediagrammet ikke ser rotete ut lenger, fjerne unødvendig tekst / innhold. 
         * Fikse mangel / feil på brukerhistorier vi har skrevet (se Belmin sin tilbakemelding). 
         * Legge til “powerup” UI for ammo refill & health. Spiller må fysisk hente den etter at den er låst opp. 
-        * Fikse bug at enemy beveger seg når de blir skadet (har prøvd å implementere at de skal stå stille i et  sekund hvis de blir skadet). 
+        * Fikse bug at enemy beveger seg når de blir skadet (har prøvd å implementere at de skal stå stille i et sekund hvis de blir skadet). 
         * Gjøre Markdown-filen mer oversiktlig og lettere å lese (fått beskjed at den ikke er formatert bra i tilbakemelding fra Belmin): 
         * Oppdatere readme. 
         * Prøve å utvide testene: 
@@ -292,7 +292,12 @@ Det er noen ting vi kunne gjort annerledes. Vi kunne laget tester underveis, i s
        
 
 * REFERAT møte Torsdag. 27/04/2023
-    * Tilstede: Vetle, Kavya, Tarje, Brage, Ole Kristian
+    * Tilstede: Vetle, Kavya, Tarjei, Brage, Ole Kristian
     * Vi brukte dette møtet på å jobbe videre med oppgavene vi delte ut forrige møte. Videre diskuterte vi også smått hva som manglet å gjøre frem mot endelig innlevering av produktet.
+
+* REFERAT møte Torsdag. 04/05/2023
+    * Tilstede: Kavya, Ole Kristian
+    * Vi brukte dette møtet for å pusse opp på småting som må endres og bli klar for siste innlevering. Kavya jobbet på å lage javadocs for tester og fjerne unødvendige ting (ubrukte imports, filer). Ole jobbet med frame rate, slik at spillet kjører det samme på andre PC-er.
+    Det er ikke veldig mye igjen, og det er ikke tid for å legge til funksjonalitet, så vi ble enig om at vi skal forbedre det vi har, ordne på bugs, og bli klar til innlevering (alle kan bidra på hva som helst).
 
 
